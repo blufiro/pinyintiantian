@@ -100,7 +100,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   
   return (
     <div className="relative text-center flex flex-col items-center justify-center h-full space-y-6">
-      <span className="absolute top-0 right-0 text-xs text-gray-400 p-2">v0.5</span>
+      <span className="absolute top-0 right-0 text-xs text-gray-400 p-2">v0.6</span>
       <div>
         <h1 className="text-4xl md:text-5xl font-bold text-blue-600">拼音天天练</h1>
         <p className="text-lg text-gray-600">Pinyin Daily Practice</p>

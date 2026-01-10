@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Word, TestResult } from '../types';
 import { geminiService } from '../services/geminiService';
@@ -83,8 +84,11 @@ const TestScreen: React.FC<TestScreenProps> = ({ onTestComplete, onGoHome, words
   const handleSpeak = async () => {
     if (isSpeaking || !words[currentIndex]) return;
     setIsSpeaking(true);
-    await geminiService.speak(words[currentIndex].character);
-    setIsSpeaking(false);
+    try {
+      await geminiService.speak(words[currentIndex].character);
+    } finally {
+      setIsSpeaking(false);
+    }
   };
 
   if (words.length === 0 || !words[currentIndex]) {
@@ -94,50 +98,50 @@ const TestScreen: React.FC<TestScreenProps> = ({ onTestComplete, onGoHome, words
   const currentWord = words[currentIndex];
 
   return (
-    <div className="flex flex-col items-center p-4 space-y-6 relative">
+    <div className="flex flex-col items-center p-0 xl:p-4 space-y-3 xl:space-y-6 relative">
        <button 
           onClick={handleExit} 
-          className="absolute top-0 right-0 p-2 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-600 transition-colors"
+          className="absolute top-0 right-0 p-1 xl:p-2 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-600 transition-colors"
           aria-label="Exit Test"
         >
-          <XMarkIcon className="w-6 h-6"/>
+          <XMarkIcon className="w-5 h-5 xl:w-6 xl:h-6"/>
         </button>
-      <div className="w-full flex justify-between items-center">
-        <span className="text-lg font-semibold text-gray-500">
+      <div className="w-full flex justify-between items-center px-1">
+        <span className="text-sm xl:text-lg font-semibold text-gray-500">
           Word {currentIndex + 1} / {words.length}
         </span>
         <button 
           onClick={handleSpeak} 
           disabled={isSpeaking}
-          className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="p-1.5 xl:p-2 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          <SpeakerIcon className="w-6 h-6"/>
+          <SpeakerIcon className="w-5 h-5 xl:w-6 xl:h-6"/>
         </button>
       </div>
 
-      <div className="relative w-full h-48 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
-        <p className="text-7xl font-bold tracking-widest">{currentWord.character}</p>
+      <div className="relative w-full h-32 xl:h-56 bg-gray-100 rounded-xl flex items-center justify-center mb-1 xl:mb-4 border border-gray-200 shadow-sm">
+        <p className="text-6xl xl:text-8xl font-bold tracking-widest">{currentWord.character}</p>
         {answerStatus && (
-            <div className={`absolute inset-0 rounded-xl flex items-center justify-center text-white font-bold text-2xl transition-opacity duration-300 ${answerStatus === 'correct' ? 'bg-green-500/90' : 'bg-red-500/90'}`}>
+            <div className={`absolute inset-0 rounded-xl flex items-center justify-center text-white font-bold text-xl xl:text-2xl transition-opacity duration-300 ${answerStatus === 'correct' ? 'bg-green-500/90' : 'bg-red-500/90'}`}>
                 {answerStatus === 'correct' ? 'Correct! 🎉' : 'Oops!'}
             </div>
         )}
       </div>
         {answerStatus === 'incorrect' && (
-            <p className="text-center text-red-600 font-semibold text-lg">
-                Correct answer: <span className="font-mono">{currentWord.pinyin}</span>
+            <p className="text-center text-red-600 font-semibold text-base xl:text-lg">
+                Correct: <span className="font-mono">{currentWord.pinyin}</span>
             </p>
         )}
 
-      <form onSubmit={handleSubmit} className="w-full">
+      <form onSubmit={handleSubmit} className="w-full flex flex-col items-center space-y-2 xl:space-y-4">
         <input
           ref={inputRef}
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           disabled={!!answerStatus}
-          placeholder="Type the pinyin here (e.g. ni3 hao3)"
-          className="w-full text-center p-4 bg-gray-100 border-2 border-gray-300 rounded-lg text-xl focus:border-blue-500 focus:ring-blue-500 focus:bg-white transition-colors disabled:bg-gray-200"
+          placeholder="Type pinyin here"
+          className="w-full text-center p-3 xl:p-4 bg-gray-100 border-2 border-gray-300 rounded-lg text-lg xl:text-xl focus:border-blue-500 focus:ring-blue-500 focus:bg-white transition-colors disabled:bg-gray-200"
           autoCapitalize="off"
           autoCorrect="off"
           spellCheck="false"
@@ -145,7 +149,7 @@ const TestScreen: React.FC<TestScreenProps> = ({ onTestComplete, onGoHome, words
         <button
           type="submit"
           disabled={!!answerStatus || inputValue.trim() === ''}
-          className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg text-lg shadow-md disabled:bg-gray-400 disabled:cursor-not-allowed transform hover:scale-105 transition-transform duration-200"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg text-lg shadow-md disabled:bg-gray-400 disabled:cursor-not-allowed transform active:scale-95 transition-all duration-200"
         >
           {answerStatus ? 'Checking...' : 'Check Answer'}
         </button>

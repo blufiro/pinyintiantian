@@ -248,13 +248,13 @@ const App: React.FC = () => {
                         onStartTopMistakesTest={handleStartTopMistakesTest}
                         testSize={testSize}
                         onSetTestSize={setTestSize}
-                   />;
+                    />;
     }
   }
 
   return (
-    <div className="min-h-screen font-sans flex items-center justify-center p-4 transition-all duration-500" style={activeBackground.style}>
-      <div className="w-full max-w-2xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 md:p-8 text-gray-800">
+    <div className="min-h-screen font-sans flex items-start xl:items-center justify-center p-2 xl:p-4 transition-all duration-500" style={activeBackground.style}>
+      <div className="w-full max-w-2xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-4 xl:p-8 text-gray-800">
         {renderContent()}
         {isLessonSelectionOpen && (
             <TestLessonSelectionModal 

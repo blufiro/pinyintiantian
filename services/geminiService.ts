@@ -18,7 +18,10 @@ async function decodeAudioData(
   sampleRate: number,
   numChannels: number,
 ): Promise<AudioBuffer> {
-  const dataInt16 = new Int16Array(data.buffer);
+  // Gemini returns 16-bit PCM (2 bytes per sample).
+  // Ensure we don't try to read more than available even bytes.
+  const length = Math.floor(data.byteLength / 2);
+  const dataInt16 = new Int16Array(data.buffer, data.byteOffset, length);
   const frameCount = dataInt16.length / numChannels;
   const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
 
@@ -31,7 +34,6 @@ async function decodeAudioData(
   return buffer;
 }
 
-
 let audioContext: AudioContext | null = null;
 const getAudioContext = (): AudioContext => {
     if (!audioContext) {
@@ -43,28 +45,40 @@ const getAudioContext = (): AudioContext => {
 export const geminiService = {
   speak: async (text: string) => {
     if (!process.env.API_KEY) {
-        alert("API key is not set. Cannot use text-to-speech feature.");
+        console.error("API key is not set. Cannot use text-to-speech feature.");
         return;
     }
+    
+    // CRITICAL: We must resume the AudioContext while still in the synchronous user gesture stack.
+    const ctx = getAudioContext();
+    if (ctx.state === 'suspended') {
+        ctx.resume().catch(e => console.error("Failed to resume AudioContext:", e));
+    }
+    
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     try {
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash-preview-tts",
-            contents: [{ parts: [{ text: `Please say this: ${text}` }] }],
+            contents: [{ parts: [{ text: `Say clearly in Chinese: ${text}` }] }],
             config: {
                 responseModalities: [Modality.AUDIO],
                 speechConfig: {
                     voiceConfig: {
-                        prebuiltVoiceConfig: { voiceName: 'Kore' }, // A friendly voice for kids
+                        prebuiltVoiceConfig: { voiceName: 'Kore' },
                     },
                 },
             },
         });
 
-        const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+        const base64Audio = response.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
         if (base64Audio) {
-            const ctx = getAudioContext();
+            // Re-ensure context is running just before playback
+            if (ctx.state === 'suspended') {
+                await ctx.resume();
+            }
+
             const audioBuffer = await decodeAudioData(
                 decode(base64Audio),
                 ctx,
@@ -76,19 +90,10 @@ export const geminiService = {
             source.connect(ctx.destination);
             source.start();
         } else {
-            console.error("No audio data received from API.");
-            console.error("Full API response:", JSON.stringify(response, null, 2));
-            const textResponse = response.text;
-            if (textResponse) {
-                console.error("API returned a text response:", textResponse);
-                alert(`Sorry, I couldn't say the word. The API returned an error: ${textResponse}`);
-            } else {
-                alert("Sorry, I couldn't say the word. The API returned an empty response.");
-            }
+            console.warn("Speech generation failed: No audio data returned from the model.");
         }
     } catch (error) {
-        console.error("Error with Gemini TTS:", error);
-        alert("An error occurred while trying to speak the word.");
+        console.error("Gemini TTS Service Error:", error);
     }
   },
 };
