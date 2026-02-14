@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react';
+
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import HomeScreen from './components/HomeScreen';
 import TestScreen from './components/TestScreen';
 import ResultsScreen from './components/ResultsScreen';
@@ -11,6 +12,8 @@ import { wordService } from './services/wordService';
 import { backgrounds, defaultBackground } from './data/backgrounds';
 
 type View = 'home' | 'test' | 'results' | 'import' | 'shop';
+
+const DAILY_GOAL = 30;
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('home');
@@ -31,53 +34,45 @@ const App: React.FC = () => {
   const [activeBackgroundId, setActiveBackgroundId] = useLocalStorage<string>('activeBackground', defaultBackground.id);
   const [allBackgrounds] = useState<Background[]>([defaultBackground, ...backgrounds]);
 
-  const [testSize, setTestSize] = useLocalStorage<number>('testSize', 5);
+  const [testSize, setTestSize] = useLocalStorage<number>('testSize', 10);
+  const [streak, setStreak] = useLocalStorage<number>('dailyStreak', 0);
+  const [lastPracticeDate, setLastPracticeDate] = useLocalStorage<string>('lastPracticeDate', '');
           
   const activeBackground = allBackgrounds.find(bg => bg.id === activeBackgroundId) || defaultBackground;
-
 
   const refreshData = useCallback(() => {
     const allLessons = wordService.getAllLessons();
     setLessons(allLessons);
-    setTopMistakes(wordService.getTopMistakes(1000)); // Display up to 1000 mistakes on home
+    setTopMistakes(wordService.getTopMistakes(10)); 
     setLessonStatusMap(wordService.getAllLessonStates());
   }, []);
   
   useEffect(() => {
     wordService.initializeWords();
     refreshData();
+    checkStreak();
   }, [refreshData]);
-  
-  useEffect(() => {
-    if (view === 'home') {
-        refreshData();
+
+  const checkStreak = () => {
+    const today = new Date().toLocaleDateString();
+    if (lastPracticeDate === '') return;
+    
+    const last = new Date(lastPracticeDate);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - last.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays > 1) {
+      setStreak(0); // Missed a day
     }
-  }, [view, refreshData]);
+  };
 
-  // Secret debug key press to add points
-  useEffect(() => {
-    const pressedKeys = new Set<string>();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      pressedKeys.add(event.key.toLowerCase());
-      if (pressedKeys.has('q') && pressedKeys.has('p')) {
-        setScreenTime(prevTime => prevTime + 50);
-        pressedKeys.clear(); // Prevents continuous adding
-      }
-    };
-
-    const handleKeyUp = (event: KeyboardEvent) => {
-      pressedKeys.delete(event.key.toLowerCase());
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
-    };
-  }, [setScreenTime]);
+  const dailyPointsEarned = useMemo(() => {
+    const today = new Date().toLocaleDateString();
+    return historicalScores
+      .filter(s => s.date === today)
+      .reduce((sum, s) => sum + s.score, 0);
+  }, [historicalScores]);
 
   const handleStartTestRequest = () => {
     setLessonSelectionOpen(true);
@@ -87,7 +82,7 @@ const App: React.FC = () => {
     if (ids.length === 0) return;
     const words = wordService.getDailyTestWords(ids, testSize);
     if (words.length === 0) {
-      alert("No words available for the test in the selected lessons.");
+      alert("No words available in selected lessons.");
       return;
     }
     setTestWords(words);
@@ -103,7 +98,7 @@ const App: React.FC = () => {
   const handleStartTopMistakesTest = () => {
     const mistakeWords = wordService.getMistakeWordsForTest(testSize);
     if (mistakeWords.length === 0) {
-      alert("You have no mistakes to review. Great job!");
+      alert("No mistakes to review! Excellent!");
       return;
     }
     setTestWords(mistakeWords);
@@ -118,9 +113,14 @@ const App: React.FC = () => {
     wordService.saveTestResults(results);
     setScreenTime(prevTime => prevTime + correctAnswers);
     
-    // Save stats specifically if it was a single lesson test
     if (lastTestConfig?.type === 'lessons' && lastTestConfig.ids.length === 1) {
         wordService.saveLessonStats(lastTestConfig.ids[0], correctAnswers, results.length);
+    }
+
+    const today = new Date().toLocaleDateString();
+    if (lastPracticeDate !== today) {
+      setStreak(prev => prev + 1);
+      setLastPracticeDate(today);
     }
 
     let lessonNames: string[] = [];
@@ -132,17 +132,15 @@ const App: React.FC = () => {
         lessonNames = ["Mistakes Revision"];
     }
 
-
     const newScore: HistoricalScore = {
-        date: new Date().toLocaleDateString(),
+        date: today,
         score: correctAnswers,
         total: results.length,
         lessonNames: lessonNames,
     };
-    setHistoricalScores(prevScores => [newScore, ...prevScores].slice(0, 10)); // Keep last 10 scores
-    
+    setHistoricalScores(prevScores => [newScore, ...prevScores].slice(0, 15)); 
     setView('results');
-  }, [setScreenTime, setHistoricalScores, lessons, lastTestConfig]);
+  }, [setScreenTime, setHistoricalScores, lessons, lastTestConfig, lastPracticeDate, setLastPracticeDate, setStreak]);
 
   const handleRetry = () => {
     if (!lastTestConfig) {
@@ -159,23 +157,16 @@ const App: React.FC = () => {
   const goHome = () => {
     setLessonToEdit(null);
     setView('home');
+    refreshData();
   };
 
-  const goToImport = () => {
-    setLessonToEdit(null);
-    setView('import');
-  };
-
-  const goToShop = () => {
-    setView('shop');
-  };
+  const goToImport = () => setView('import');
+  const goToShop = () => setView('shop');
 
   const handlePurchaseBackground = (background: Background) => {
     if (screenTime >= background.cost && !purchasedBackgroundIds.includes(background.id)) {
         setScreenTime(prev => prev - background.cost);
         setPurchasedBackgroundIds(prev => [...prev, background.id]);
-    } else {
-        console.error("Cannot purchase background. Not enough points or already owned.");
     }
   };
 
@@ -185,76 +176,40 @@ const App: React.FC = () => {
       }
   };
 
-  const handleEditLesson = (lesson: Lesson) => {
-    setLessonToEdit(lesson);
-    setView('import');
-  };
-
-  const handleDeleteLesson = (lessonId: string) => {
-    if (window.confirm("Are you sure you want to delete this lesson? This cannot be undone.")) {
-      wordService.deleteLesson(lessonId);
-      refreshData();
-    }
-  };
-
   const renderContent = () => {
+    const homeProps = {
+      onStartTestRequest: handleStartTestRequest, 
+      onGoToImport: goToImport, 
+      screenTime, 
+      historicalScores, 
+      topMistakes,
+      lessons,
+      lessonStatusMap,
+      onEditLesson: (l: Lesson) => { setLessonToEdit(l); setView('import'); },
+      onDeleteLesson: (id: string) => { if(confirm("Delete?")) { wordService.deleteLesson(id); refreshData(); } },
+      onGoToShop: goToShop,
+      onStartSingleLessonTest: handleStartSingleLessonTest,
+      onStartTopMistakesTest: handleStartTopMistakesTest,
+      testSize,
+      onSetTestSize: setTestSize,
+      streak,
+      dailyPoints: dailyPointsEarned,
+      dailyGoal: DAILY_GOAL
+    };
+
     switch(view) {
-        case 'home':
-            return <HomeScreen 
-                        onStartTestRequest={handleStartTestRequest} 
-                        onGoToImport={goToImport} 
-                        screenTime={screenTime} 
-                        historicalScores={historicalScores} 
-                        topMistakes={topMistakes}
-                        lessons={lessons}
-                        lessonStatusMap={lessonStatusMap}
-                        onEditLesson={handleEditLesson}
-                        onDeleteLesson={handleDeleteLesson}
-                        onGoToShop={goToShop}
-                        onStartSingleLessonTest={handleStartSingleLessonTest}
-                        onStartTopMistakesTest={handleStartTopMistakesTest}
-                        testSize={testSize}
-                        onSetTestSize={setTestSize}
-                    />;
-        case 'test':
-            return <TestScreen onTestComplete={finishTest} onGoHome={goHome} words={testWords}/>;
-        case 'results':
-            return <ResultsScreen score={score} totalQuestions={lastTestResults.length} results={lastTestResults} onRetry={handleRetry} onHome={goHome} />;
-        case 'import':
-            return <ImportScreen onGoHome={goHome} lessonToEdit={lessonToEdit} />;
-        case 'shop':
-            return <ShopScreen
-                        onGoHome={goHome}
-                        screenTime={screenTime}
-                        backgrounds={allBackgrounds}
-                        purchasedIds={purchasedBackgroundIds}
-                        activeId={activeBackgroundId}
-                        onPurchase={handlePurchaseBackground}
-                        onApply={handleApplyBackground}
-                    />;
-        default:
-            return <HomeScreen 
-                        onStartTestRequest={handleStartTestRequest} 
-                        onGoToImport={goToImport} 
-                        screenTime={screenTime} 
-                        historicalScores={historicalScores} 
-                        topMistakes={topMistakes}
-                        lessons={lessons}
-                        lessonStatusMap={lessonStatusMap}
-                        onEditLesson={handleEditLesson}
-                        onDeleteLesson={handleDeleteLesson}
-                        onGoToShop={goToShop}
-                        onStartSingleLessonTest={handleStartSingleLessonTest}
-                        onStartTopMistakesTest={handleStartTopMistakesTest}
-                        testSize={testSize}
-                        onSetTestSize={setTestSize}
-                    />;
+        case 'home': return <HomeScreen {...homeProps} />;
+        case 'test': return <TestScreen onTestComplete={finishTest} onGoHome={goHome} words={testWords}/>;
+        case 'results': return <ResultsScreen score={score} totalQuestions={lastTestResults.length} results={lastTestResults} onRetry={handleRetry} onHome={goHome} />;
+        case 'import': return <ImportScreen onGoHome={goHome} lessonToEdit={lessonToEdit} />;
+        case 'shop': return <ShopScreen onGoHome={goHome} screenTime={screenTime} backgrounds={allBackgrounds} purchasedIds={purchasedBackgroundIds} activeId={activeBackgroundId} onPurchase={handlePurchaseBackground} onApply={handleApplyBackground} />;
+        default: return <HomeScreen {...homeProps} />;
     }
   }
 
   return (
-    <div className="min-h-screen font-sans flex items-start xl:items-center justify-center p-2 xl:p-4 transition-all duration-500" style={activeBackground.style}>
-      <div className="w-full max-w-2xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-4 xl:p-8 text-gray-800">
+    <div className="min-h-screen font-sans flex items-start justify-center p-2 md:p-6 transition-all duration-500 overflow-x-hidden" style={activeBackground.style}>
+      <div className="w-full max-w-2xl bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-4 md:p-8 text-gray-800 border border-white/50">
         {renderContent()}
         {isLessonSelectionOpen && (
             <TestLessonSelectionModal 

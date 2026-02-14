@@ -64,9 +64,9 @@ export const backgrounds: Background[] = [
     name: 'NES Mario Pattern',
     cost: 1000,
     style: {
-      backgroundColor: '#5c94fc', // Sky blue
+      backgroundColor: '#5c94fc', // Classic sky blue
       backgroundImage: `url("data:image/svg+xml,%3csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg' version='1.1' width='100' height='100'%3e%3cg%3e%3cpath style='fill:%23F83700;stroke:none;' d='M34 30h18v4h12v4H30v-4h4zm4 28h4v8h8v-4h4v8h-4v4h4v-4h4v8h4v8H50v-4h-8v4H30v-8h4v-8h4v4h4v-4h-4z'/%3e%3cpath style='fill:%23AE7E00;stroke:none;' d='M30 38h12v4h-4v4h4v4h-8v-8h-4zm20 0h4v8h-4zm4 8h4v4h8v4H50v-4h4zm-20 8h-8V42h4v8h4zm-4 4h8v12h-4v4h-4v-4h-8v-4h4v-4h4zm12 0h12v4h-4v4h-8zm12 4h12v4h4v4h-8v4h-4v-4h-4zm0 24h12v4h4v4H54zm-16 0H26v4h-4v4h16z'/%3e%3cpath style='fill:%23FFA246;stroke:none;' d='M30 42h4v8h-4zm12 -4h8v8h4v4h-4v4h12v4H34v-8h8v-4h-4v-4h4zm12 0h4v4h8v4h4v4H58v-4h-4zm8 32h8v12h-8v-4h-4v-4h4zm-32 0v4h4v4h-4v4h-8V70zm8 0h4v4h-4zm12 0h4v4h-4z'/%3e%3c/g%3e%3c/svg%3e")`,
-      backgroundSize: '80px 80px',
+      backgroundSize: '100px 100px',
       backgroundRepeat: 'repeat',
     }
   },

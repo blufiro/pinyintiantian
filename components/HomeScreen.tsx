@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { CoinIcon } from './icons/CoinIcon';
 import { ImportIcon } from './icons/ImportIcon';
@@ -28,10 +29,13 @@ interface HomeScreenProps {
   onStartTopMistakesTest: () => void;
   testSize: number;
   onSetTestSize: (size: number) => void;
+  streak: number;
+  dailyPoints: number;
+  dailyGoal: number;
 }
 
 const TABS = [
-    { id: 'my', label: 'My Lessons' },
+    { id: 'my', label: 'My Lists' },
     { id: 'p1', label: 'P1' },
     { id: 'p2', label: 'P2' },
     { id: 'p3', label: 'P3' },
@@ -52,7 +56,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     onStartSingleLessonTest, 
     onStartTopMistakesTest,
     testSize,
-    onSetTestSize
+    onSetTestSize,
+    streak,
+    dailyPoints,
+    dailyGoal
 }) => {
   const [activeTab, setActiveTab] = useState('my');
 
@@ -66,99 +73,111 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   const renderStatusIcon = (lessonId: string) => {
       const status = lessonStatusMap[lessonId];
       switch(status) {
-          case 'expert':
-              return <TrophyIcon className="w-5 h-5 text-yellow-500" aria-label="Expert status" />;
-          case 'competent':
-              return <MedalIcon className="w-5 h-5 text-blue-400" aria-label="Competent status" />;
-          case 'learning':
-              return <LeafIcon className="w-5 h-5 text-green-500" aria-label="Learning status" />;
-          case 'beginner':
-              return <FootprintIcon className="w-5 h-5 text-gray-400" aria-label="Beginner status" />;
-          default:
-              return null; // Not started - no icon
+          case 'expert': return <TrophyIcon className="w-5 h-5 text-yellow-500" />;
+          case 'competent': return <MedalIcon className="w-5 h-5 text-blue-400" />;
+          case 'learning': return <LeafIcon className="w-5 h-5 text-green-500" />;
+          case 'beginner': return <FootprintIcon className="w-5 h-5 text-gray-400" />;
+          default: return null;
       }
   };
   
   const handleExport = () => {
     const allLessons = wordService.getCustomLessons();
-    if (allLessons.length === 0) {
-      alert("There are no custom lessons to export.");
-      return;
-    }
-    const jsonString = JSON.stringify(allLessons, null, 2);
-    const blob = new Blob([jsonString], { type: 'application/json' });
+    if (allLessons.length === 0) return;
+    const blob = new Blob([JSON.stringify(allLessons, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    const date = new Date().toISOString().slice(0, 10);
-    link.download = `pinyin-lessons-backup-${date}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `pinyin-lessons-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
     URL.revokeObjectURL(url);
   };
   
+  const goalPercent = Math.min(100, (dailyPoints / dailyGoal) * 100);
+
   return (
-    <div className="relative text-center flex flex-col items-center justify-center h-full space-y-6">
-      <span className="absolute top-0 right-0 text-xs text-gray-400 p-2">v0.6</span>
-      <div>
-        <h1 className="text-4xl md:text-5xl font-bold text-blue-600">拼音天天练</h1>
-        <p className="text-lg text-gray-600">Pinyin Daily Practice</p>
+    <div className="relative text-center flex flex-col items-center space-y-6 animate-fade-in">
+      {/* Streak on Top Left */}
+      <div className="absolute -top-2 -left-2 flex items-center gap-2">
+         <div className={`flex items-center gap-1 px-3 py-1 rounded-full bg-orange-100 border border-orange-200 text-orange-600 font-bold ${streak > 0 ? 'streak-active' : ''}`}>
+            <span>🔥</span>
+            <span>{streak} Days</span>
+         </div>
+      </div>
+
+      {/* Version on Top Right */}
+      <div className="absolute -top-2 -right-2">
+        <span className="text-[10px] text-gray-400 font-mono opacity-50 bg-gray-100/50 px-2 py-0.5 rounded-full">v1.2.5</span>
+      </div>
+
+      <div className="pt-4 flex flex-col items-center">
+        <h1 className="text-5xl font-bold text-blue-600 font-chinese mb-1">拼音天天练</h1>
+        <p className="text-sm uppercase tracking-widest text-gray-400 font-bold">Pinyin Daily Practice</p>
       </div>
       
-      <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-        <div className="bg-yellow-100 border-2 border-yellow-300 rounded-full pl-6 pr-4 py-3 flex items-center space-x-3 shadow-md">
-          <CoinIcon className="w-8 h-8 text-yellow-500" />
-          <span className="text-2xl font-bold text-yellow-700">{screenTime}</span>
-          <span className="text-lg text-yellow-600">Points</span>
+      {/* Daily Progress */}
+      <div className="w-full max-w-md bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+         <div className="flex justify-between items-end mb-2">
+            <span className="text-sm font-bold text-gray-500">Today's Goal</span>
+            <span className="text-xs font-bold text-blue-500">{dailyPoints} / {dailyGoal} pts</span>
+         </div>
+         <div className="w-full bg-gray-100 h-3 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-1000" 
+              style={{ width: `${goalPercent}%` }}
+            ></div>
+         </div>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <div className="bg-yellow-100 border-2 border-yellow-300 rounded-full pl-5 pr-4 py-2 flex items-center space-x-2 shadow-sm">
+          <CoinIcon className="w-7 h-7 text-yellow-500" />
+          <span className="text-xl font-black text-yellow-700">{screenTime}</span>
         </div>
         
-        <div className="flex items-center gap-4">
-            <div className="bg-white/80 backdrop-blur-sm rounded-full p-1.5 shadow-md flex items-center border border-gray-200">
-                <span className="text-xs font-bold text-gray-400 px-2 uppercase tracking-wider">Words</span>
-                {[5, 10, 20].map(size => (
-                    <button
-                        key={size}
-                        onClick={() => onSetTestSize(size)}
-                        className={`w-8 h-8 rounded-full text-sm font-bold transition-all duration-200 ${
-                            testSize === size 
-                            ? 'bg-blue-500 text-white shadow-sm scale-110' 
-                            : 'text-gray-500 hover:text-blue-500 hover:bg-blue-50'
-                        }`}
-                    >
-                        {size}
-                    </button>
-                ))}
-            </div>
-
-            <button
-            onClick={onGoToShop}
-            className="bg-pink-500 hover:bg-pink-600 text-white rounded-full p-4 shadow-lg transform hover:scale-110 transition-transform duration-200"
-            aria-label="Open Shop"
-            >
-            <ShopIcon className="w-8 h-8"/>
-            </button>
+        <div className="bg-white/80 rounded-full p-1 shadow-sm flex items-center border border-gray-100">
+            <span className="text-[10px] font-black text-gray-400 px-2 uppercase tracking-tighter">Length</span>
+            {[5, 10, 20].map(size => (
+                <button
+                    key={size}
+                    onClick={() => onSetTestSize(size)}
+                    className={`w-9 h-9 rounded-full text-sm font-black transition-all ${
+                        testSize === size 
+                        ? 'bg-blue-500 text-white shadow-md scale-110' 
+                        : 'text-gray-400 hover:text-blue-500'
+                    }`}
+                >
+                    {size}
+                </button>
+            ))}
         </div>
+
+        <button
+          onClick={onGoToShop}
+          className="bg-gradient-to-tr from-pink-500 to-rose-400 hover:from-pink-600 hover:to-rose-500 text-white rounded-full p-3 shadow-lg transform hover:scale-110 transition-all"
+        >
+          <ShopIcon className="w-7 h-7"/>
+        </button>
       </div>
       
       <button
         onClick={onStartTestRequest}
-        className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-full text-lg shadow-lg transform hover:scale-105 transition-transform duration-200"
+        className="w-full bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-black py-4 px-4 rounded-2xl text-xl shadow-xl transform active:scale-95 transition-all"
       >
-        Start Daily Test (Mix & Match)
+        PLAY DAILY TEST! 🚀
       </button>
 
-      {/* Lessons Section */}
-      <div className="w-full bg-gray-50 p-4 rounded-lg shadow-inner">
-        <div className="flex border-b border-gray-200">
+      {/* Lists Tab Section */}
+      <div className="w-full bg-gray-50/50 p-4 rounded-3xl border border-gray-100">
+        <div className="flex space-x-1 bg-gray-200/50 p-1 rounded-xl mb-4">
             {TABS.map(tab => (
                 <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`-mb-px py-2 px-4 text-sm font-semibold transition-colors duration-200 ${
+                    className={`flex-1 py-2 px-1 text-[11px] md:text-xs font-black rounded-lg transition-all ${
                         activeTab === tab.id
-                        ? 'border-b-2 border-blue-500 text-blue-600'
-                        : 'text-gray-500 hover:text-blue-500'
+                        ? 'bg-white text-blue-600 shadow-sm'
+                        : 'text-gray-500 hover:text-gray-700'
                     }`}
                 >
                     {tab.label}
@@ -166,110 +185,90 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             ))}
         </div>
 
-        <div className="pt-4">
+        <div className="min-h-[160px]">
             {lessonsToDisplay.length > 0 ? (
-                <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
+                <div className="grid grid-cols-1 gap-2 max-h-56 overflow-y-auto pr-1">
                 {lessonsToDisplay.map(lesson => (
-                    <div key={lesson.id} className="flex justify-between items-center p-2 bg-white rounded-lg border">
-                    <div className="flex items-center gap-2 overflow-hidden">
-                         <div className="flex-shrink-0 w-6 flex justify-center">
-                            {renderStatusIcon(lesson.id)}
-                         </div>
-                         <span className="font-semibold text-gray-800 truncate" title={lesson.name}>{lesson.name}</span>
-                         <span className="text-gray-400 text-sm">({lesson.words.length})</span>
+                    <div key={lesson.id} className="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm hover:border-blue-200 transition-colors">
+                    <div className="flex items-center gap-3 overflow-hidden">
+                         {renderStatusIcon(lesson.id) || <div className="w-5 h-5 rounded-full border-2 border-dashed border-gray-200" />}
+                         <span className="font-bold text-gray-700 truncate text-sm" title={lesson.name}>{lesson.name}</span>
                     </div>
                     
-                    <div className="flex items-center space-x-2 flex-shrink-0">
+                    <div className="flex items-center gap-1">
                         {activeTab === 'my' && (
                             <>
-                                <button onClick={() => onEditLesson(lesson)} className="p-2 text-blue-500 hover:text-blue-700" aria-label={`Edit ${lesson.name}`}>
-                                    <PencilIcon className="w-5 h-5" />
-                                </button>
-                                <button onClick={() => onDeleteLesson(lesson.id)} className="p-2 text-red-500 hover:text-red-700" aria-label={`Delete ${lesson.name}`}>
-                                    <TrashIcon className="w-5 h-5" />
-                                </button>
+                                <button onClick={() => onEditLesson(lesson)} className="p-2 text-gray-400 hover:text-blue-500"><PencilIcon className="w-4 h-4" /></button>
+                                <button onClick={() => onDeleteLesson(lesson.id)} className="p-2 text-gray-400 hover:text-red-500"><TrashIcon className="w-4 h-4" /></button>
                             </>
                         )}
-                        <button onClick={() => onStartSingleLessonTest(lesson.id)} className="p-2 text-green-500 hover:text-green-700" aria-label={`Start test for ${lesson.name}`}>
-                        <PlayIcon className="w-5 h-5" />
+                        <button onClick={() => onStartSingleLessonTest(lesson.id)} className="ml-1 bg-blue-50 text-blue-600 p-2 rounded-lg hover:bg-blue-600 hover:text-white transition-colors">
+                          <PlayIcon className="w-4 h-4" />
                         </button>
                     </div>
                     </div>
                 ))}
                 </div>
             ) : (
-                <p className="text-gray-500 italic py-4">
-                    {activeTab === 'my' ? "You have no custom lessons. Import one to get started!" : "No lessons available for this level yet."}
-                </p>
+                <div className="flex flex-col items-center justify-center py-8 text-gray-400">
+                    <div className="text-4xl mb-2">📥</div>
+                    <p className="text-xs font-bold uppercase tracking-widest">No lists here yet!</p>
+                </div>
             )}
 
             {activeTab === 'my' && (
-                <div className="flex justify-center items-center gap-6 text-center mt-4 pt-3 border-t">
-                    <button
-                        onClick={onGoToImport}
-                        className="flex items-center justify-center gap-2 text-sm text-purple-600 hover:text-purple-800 hover:underline"
-                    >
-                        <ImportIcon className="w-4 h-4" />
-                        Import New Lesson
+                <div className="flex justify-center gap-4 mt-4 pt-4 border-t border-gray-100">
+                    <button onClick={onGoToImport} className="flex items-center gap-1.5 text-[11px] font-black text-purple-600 uppercase tracking-wider hover:bg-purple-50 px-3 py-2 rounded-lg transition-colors">
+                        <ImportIcon className="w-4 h-4" /> Add List
                     </button>
-                    <button 
-                        onClick={handleExport}
-                        className="flex items-center justify-center gap-2 text-sm text-blue-600 hover:text-blue-800 hover:underline"
-                    >
-                        <DownloadIcon className="w-4 h-4" />
-                        Export My Lessons
+                    <button onClick={handleExport} className="flex items-center gap-1.5 text-[11px] font-black text-blue-600 uppercase tracking-wider hover:bg-blue-50 px-3 py-2 rounded-lg transition-colors">
+                        <DownloadIcon className="w-4 h-4" /> Backup
                     </button>
                 </div>
             )}
         </div>
       </div>
 
-
-      <div className="w-full grid grid-cols-1 md:grid-cols-5 gap-6 pt-4">
-        {/* Top Mistakes */}
-        <div className="bg-red-50 p-4 rounded-lg shadow-inner md:col-span-2">
-            <div className="flex justify-between items-center mb-2">
-                <h3 className="text-lg font-bold text-red-700">Top Mistakes</h3>
+      {/* Stats Quick View */}
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-rose-50/50 p-4 rounded-3xl border border-rose-100 text-left">
+            <div className="flex justify-between items-center mb-3">
+                <h3 className="text-sm font-black text-rose-700 uppercase tracking-wider">Mistakes</h3>
                 {topMistakes.length > 0 && (
-                <button onClick={onStartTopMistakesTest} className="p-2 text-green-500 hover:text-green-700" aria-label="Start test for Top Mistakes">
-                    <PlayIcon className="w-5 h-5" />
-                </button>
+                  <button onClick={onStartTopMistakesTest} className="text-rose-500 hover:scale-110 transition-transform"><PlayIcon className="w-5 h-5" /></button>
                 )}
             </div>
           {topMistakes.length > 0 ? (
-            <ul className="space-y-1 text-left max-h-40 overflow-y-auto pr-2">
+            <div className="space-y-1 max-h-32 overflow-y-auto pr-1">
               {topMistakes.map(word => (
-                <li key={word.id} className="flex justify-between items-center p-1 bg-white rounded gap-2">
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                        <span className="text-xl font-semibold">{word.character}</span>
-                        <span className="font-mono text-gray-600 truncate">{word.pinyin}</span>
+                <div key={word.id} className="flex justify-between items-center p-2 bg-white rounded-xl text-xs border border-rose-100">
+                    <div className="flex items-center gap-2">
+                        <span className="text-lg font-bold">{word.character}</span>
+                        <span className="font-mono text-gray-400">{word.pinyin}</span>
                     </div>
-                    <span className="text-xs font-bold text-red-500 bg-red-100 rounded-full px-2 py-0.5 whitespace-nowrap">{word.mistakeCount} wrong</span>
-                </li>
+                    <span className="font-bold text-rose-500">{word.mistakeCount}❌</span>
+                </div>
               ))}
-            </ul>
+            </div>
           ) : (
-            <p className="text-gray-500 italic">No mistakes recorded yet. Great job!</p>
+            <p className="text-xs text-rose-400 font-bold text-center py-4">PERFECT SCORE SO FAR! 🌟</p>
           )}
         </div>
 
-        {/* Recent Scores */}
-        <div className="bg-blue-50 p-4 rounded-lg shadow-inner md:col-span-3">
-          <h3 className="text-lg font-bold mb-2 text-blue-700">Recent Scores</h3>
+        <div className="bg-blue-50/50 p-4 rounded-3xl border border-blue-100 text-left">
+          <h3 className="text-sm font-black text-blue-700 uppercase tracking-wider mb-3">Recent Scores</h3>
           {historicalScores.length > 0 ? (
-            <ul className="space-y-1 text-left max-h-40 overflow-y-auto pr-2">
+            <div className="space-y-1 max-h-32 overflow-y-auto pr-1">
               {historicalScores.map((s, i) => (
-                <li key={i} className="flex justify-between items-center p-1 bg-white rounded gap-2">
-                  <span className="text-sm text-gray-500">{s.date}</span>
-                  <span className="text-sm text-gray-600 text-center flex-1 truncate" title={s.lessonNames?.join(', ')}>
-                    {s.lessonNames?.join(', ') || '...'}
-                  </span>
-                  <span className="font-bold text-blue-600 whitespace-nowrap">{s.score} / {s.total}</span>
-                </li>
+                <div key={i} className="flex justify-between items-center p-2 bg-white rounded-xl text-[10px] border border-blue-100">
+                  <span className="font-bold text-gray-400">{s.date.split('/')[1]}/{s.date.split('/')[0]}</span>
+                  <span className="flex-1 px-2 truncate font-bold text-gray-600">{s.lessonNames?.[0] || '...'}</span>
+                  <span className="font-black text-blue-600">{s.score}/{s.total}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           ) : (
-            <p className="text-gray-500 italic">No tests taken yet. Let's start!</p>
+            <p className="text-xs text-blue-400 font-bold text-center py-4">NO TESTS YET. LET'S GO! 🎯</p>
           )}
         </div>
       </div>
