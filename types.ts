@@ -1,12 +1,18 @@
 
 import React from 'react';
 
+export interface Definition {
+  meaning: string;
+  example: string;
+}
+
 export interface Word {
   id: string;
   character: string;
   pinyin: string; // e.g., "ni3 hao3"
-  meaning?: string;
-  exampleSentence?: string;
+  meaning?: string; // Legacy support
+  exampleSentence?: string; // Legacy support
+  definitions?: Definition[]; // New multi-meaning support
 }
 
 export interface TestResult {

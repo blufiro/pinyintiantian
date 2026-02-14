@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import HomeScreen from './components/HomeScreen';
 import TestScreen from './components/TestScreen';
 import ResultsScreen from './components/ResultsScreen';
@@ -40,6 +40,8 @@ const App: React.FC = () => {
           
   const activeBackground = allBackgrounds.find(bg => bg.id === activeBackgroundId) || defaultBackground;
 
+  const pressedKeys = useRef<Set<string>>(new Set());
+
   const refreshData = useCallback(() => {
     const allLessons = wordService.getAllLessons();
     setLessons(allLessons);
@@ -52,6 +54,30 @@ const App: React.FC = () => {
     refreshData();
     checkStreak();
   }, [refreshData]);
+
+  // Cheat code effect
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      pressedKeys.current.add(e.key.toLowerCase());
+      if (pressedKeys.current.has('q') && pressedKeys.current.has('p')) {
+        setScreenTime(prev => prev + 50);
+        // Optional: clear to prevent accidental double-triggering if keys are held
+        pressedKeys.current.delete('q');
+        pressedKeys.current.delete('p');
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      pressedKeys.current.delete(e.key.toLowerCase());
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [setScreenTime]);
 
   const checkStreak = () => {
     const today = new Date().toLocaleDateString();

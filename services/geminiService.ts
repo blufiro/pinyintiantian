@@ -18,8 +18,6 @@ async function decodeAudioData(
   sampleRate: number,
   numChannels: number,
 ): Promise<AudioBuffer> {
-  // Gemini returns 16-bit PCM (2 bytes per sample).
-  // Ensure we don't try to read more than available even bytes.
   const length = Math.floor(data.byteLength / 2);
   const dataInt16 = new Int16Array(data.buffer, data.byteOffset, length);
   const frameCount = dataInt16.length / numChannels;
@@ -42,17 +40,35 @@ const getAudioContext = (): AudioContext => {
     return audioContext;
 };
 
+// Client-side caches
+const audioCache = new Map<string, AudioBuffer>();
+const explanationCache = new Map<string, string>();
+
 export const geminiService = {
-  speak: async (text: string) => {
-    if (!process.env.API_KEY) {
-        console.error("API key is not set. Cannot use text-to-speech feature.");
-        return;
-    }
+  /**
+   * Plays back the provided text using Gemini TTS.
+   * Results are cached to prevent redundant API calls.
+   */
+  speak: async (text: string, isEnglish: boolean = false) => {
+    if (!process.env.API_KEY || !text) return;
     
-    // CRITICAL: We must resume the AudioContext while still in the synchronous user gesture stack.
     const ctx = getAudioContext();
     if (ctx.state === 'suspended') {
         ctx.resume().catch(e => console.error("Failed to resume AudioContext:", e));
+    }
+
+    const cacheKey = `${isEnglish ? 'en' : 'zh'}:${text}`;
+    
+    // Check audio cache
+    if (audioCache.has(cacheKey)) {
+        const cachedBuffer = audioCache.get(cacheKey);
+        if (cachedBuffer) {
+            const source = ctx.createBufferSource();
+            source.buffer = cachedBuffer;
+            source.connect(ctx.destination);
+            source.start();
+            return;
+        }
     }
     
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -60,12 +76,12 @@ export const geminiService = {
     try {
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash-preview-tts",
-            contents: [{ parts: [{ text: `Say clearly in Chinese: ${text}` }] }],
+            contents: [{ parts: [{ text: isEnglish ? `Read clearly: ${text}` : `Say clearly in Chinese: ${text}` }] }],
             config: {
                 responseModalities: [Modality.AUDIO],
                 speechConfig: {
                     voiceConfig: {
-                        prebuiltVoiceConfig: { voiceName: 'Kore' },
+                        prebuiltVoiceConfig: { voiceName: isEnglish ? 'Puck' : 'Kore' },
                     },
                 },
             },
@@ -74,26 +90,54 @@ export const geminiService = {
         const base64Audio = response.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
 
         if (base64Audio) {
-            // Re-ensure context is running just before playback
-            if (ctx.state === 'suspended') {
-                await ctx.resume();
-            }
+            if (ctx.state === 'suspended') await ctx.resume();
 
-            const audioBuffer = await decodeAudioData(
-                decode(base64Audio),
-                ctx,
-                24000,
-                1,
-            );
+            const audioBuffer = await decodeAudioData(decode(base64Audio), ctx, 24000, 1);
+            audioCache.set(cacheKey, audioBuffer);
+
             const source = ctx.createBufferSource();
             source.buffer = audioBuffer;
             source.connect(ctx.destination);
             source.start();
-        } else {
-            console.warn("Speech generation failed: No audio data returned from the model.");
         }
     } catch (error) {
         console.error("Gemini TTS Service Error:", error);
     }
   },
+
+  /**
+   * Explains a Chinese sentence in English, focusing on the target word.
+   * Caches both the text explanation and the resulting audio.
+   */
+  explainAndSpeak: async (chineseSentence: string, targetWord: string) => {
+    if (!process.env.API_KEY) return;
+
+    const cacheKey = `${chineseSentence}:${targetWord}`;
+    
+    // Check text cache
+    let explanationText = explanationCache.get(cacheKey);
+
+    if (!explanationText) {
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        try {
+            const response = await ai.models.generateContent({
+                model: 'gemini-3-flash-preview',
+                contents: `Explain this Chinese sentence to a young child in simple English: "${chineseSentence}". 
+                Highlight the meaning of the specific word "${targetWord}" used in the sentence. 
+                Keep it brief: first the translation, then a one-sentence explanation of the words.`,
+            });
+            explanationText = response.text;
+            if (explanationText) {
+                explanationCache.set(cacheKey, explanationText);
+            }
+        } catch (error) {
+            console.error("Gemini Explanation Error:", error);
+            return;
+        }
+    }
+
+    if (explanationText) {
+        await geminiService.speak(explanationText, true);
+    }
+  }
 };

@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
-import { Lesson, Word } from '../types';
+import { Lesson, Word, Definition } from '../types';
 import { XMarkIcon } from './icons/XMarkIcon';
 import { SpeakerIcon } from './icons/SpeakerIcon';
+import { InformationCircleIcon } from './icons/InformationCircleIcon';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
 import { geminiService } from '../services/geminiService';
 
@@ -14,6 +15,56 @@ interface StudyModeModalProps {
   onSetTestSize: (size: number) => void;
 }
 
+const LoadingSpinner: React.FC<{ className?: string }> = ({ className = "w-4 h-4" }) => (
+  <svg className={`animate-spin ${className}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+  </svg>
+);
+
+const SentenceControls: React.FC<{ sentence: string; targetWord: string }> = ({ sentence, targetWord }) => {
+  const [loading, setLoading] = useState<'hear' | 'explain' | null>(null);
+
+  const handleHear = async () => {
+    setLoading('hear');
+    try {
+      await geminiService.speak(sentence);
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const handleExplain = async () => {
+    setLoading('explain');
+    try {
+      await geminiService.explainAndSpeak(sentence, targetWord);
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  return (
+    <div className="flex gap-2 mt-2 pl-6">
+      <button 
+        onClick={handleHear}
+        disabled={!!loading}
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm disabled:opacity-50"
+      >
+        {loading === 'hear' ? <LoadingSpinner className="w-3 h-3" /> : <SpeakerIcon className="w-3.5 h-3.5" />}
+        {loading === 'hear' ? 'Loading...' : 'Hear'}
+      </button>
+      <button 
+        onClick={handleExplain}
+        disabled={!!loading}
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-purple-50 text-purple-600 hover:bg-purple-600 hover:text-white transition-all shadow-sm disabled:opacity-50"
+      >
+        {loading === 'explain' ? <LoadingSpinner className="w-3 h-3 text-purple-600" /> : <InformationCircleIcon className="w-3.5 h-3.5" />}
+        {loading === 'explain' ? 'Thinking...' : 'Explain'}
+      </button>
+    </div>
+  );
+};
+
 const StudyWordCard: React.FC<{ 
   word: Word; 
   hidePinyin: boolean; 
@@ -22,11 +73,22 @@ const StudyWordCard: React.FC<{
   const [isExpanded, setIsExpanded] = useState(false);
   const [showPinyinOverride, setShowPinyinOverride] = useState(false);
   const [showCharOverride, setShowCharOverride] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
-  const handleSpeak = (e: React.MouseEvent) => {
+  const handleSpeak = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    geminiService.speak(word.character);
+    if (isSpeaking) return;
+    setIsSpeaking(true);
+    try {
+      await geminiService.speak(word.character);
+    } finally {
+      setIsSpeaking(false);
+    }
   };
+
+  const displayMeaning = word.definitions && word.definitions.length > 0
+    ? word.definitions.map(d => d.meaning).join('; ')
+    : word.meaning || 'Tap to learn meaning';
 
   return (
     <div className="bg-white rounded-2xl border border-purple-100 shadow-sm overflow-hidden transition-all duration-300">
@@ -34,9 +96,10 @@ const StudyWordCard: React.FC<{
         <div className="flex items-center gap-4 flex-1 overflow-hidden">
           <button 
             onClick={handleSpeak}
-            className="p-2 bg-purple-50 text-purple-600 rounded-full hover:bg-purple-100 transition-colors shrink-0"
+            disabled={isSpeaking}
+            className="p-2 bg-purple-50 text-purple-600 rounded-full hover:bg-purple-100 transition-colors shrink-0 min-w-[40px] flex items-center justify-center"
           >
-            <SpeakerIcon className="w-5 h-5" />
+            {isSpeaking ? <LoadingSpinner className="w-5 h-5 text-purple-600" /> : <SpeakerIcon className="w-5 h-5" />}
           </button>
           
           <div className="flex flex-col min-w-0">
@@ -58,7 +121,9 @@ const StudyWordCard: React.FC<{
                 {word.pinyin}
               </span>
             </div>
-            <p className="text-gray-500 text-sm font-medium truncate italic">{word.meaning || 'Tap to learn meaning'}</p>
+            <p className="text-gray-500 text-sm font-medium truncate italic" title={displayMeaning}>
+              {displayMeaning}
+            </p>
           </div>
         </div>
 
@@ -72,12 +137,30 @@ const StudyWordCard: React.FC<{
 
       {isExpanded && (
         <div className="px-4 pb-4 pt-2 bg-purple-50/30 border-t border-purple-50 animate-slide-down">
-          <div className="flex flex-col space-y-2">
-            <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest">Example Sentence</span>
-            <p className="text-gray-700 font-chinese text-lg leading-relaxed">
-              {word.exampleSentence || "Let's use this word in a sentence!"}
-            </p>
-          </div>
+          {word.definitions && word.definitions.length > 0 ? (
+            <div className="space-y-4">
+              {word.definitions.map((def, idx) => (
+                <div key={idx} className="flex flex-col space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="flex items-center justify-center w-4 h-4 rounded-full bg-purple-200 text-purple-700 text-[10px] font-black">{idx + 1}</span>
+                    <span className="text-xs font-black text-purple-400 uppercase tracking-widest">{def.meaning}</span>
+                  </div>
+                  <p className="text-gray-700 font-chinese text-lg leading-relaxed pl-6">
+                    {def.example}
+                  </p>
+                  <SentenceControls sentence={def.example} targetWord={word.character} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col space-y-2">
+              <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest">Example Sentence</span>
+              <p className="text-gray-700 font-chinese text-lg leading-relaxed">
+                {word.exampleSentence || "Let's use this word in a sentence!"}
+              </p>
+              {word.exampleSentence && <SentenceControls sentence={word.exampleSentence} targetWord={word.character} />}
+            </div>
+          )}
         </div>
       )}
     </div>

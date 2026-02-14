@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { TestResult } from '../types';
 import { HomeIcon } from './icons/HomeIcon';
@@ -13,23 +14,39 @@ interface ResultsScreenProps {
   onHome: () => void;
 }
 
+const LoadingSpinner: React.FC<{ className?: string }> = ({ className = "w-4 h-4" }) => (
+  <svg className={`animate-spin ${className}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+  </svg>
+);
+
 const MistakeItem: React.FC<{ word: { character: string, pinyin: string, id: string }, userInput: string, hideAllPinyin: boolean }> = ({ word, userInput, hideAllPinyin }) => {
   const [revealed, setRevealed] = useState(false);
-
-  // Reset revelation when hideAllPinyin changes back to true (if we want that behavior)
-  // Actually, usually it's better if it's sticky until they toggle the main button again.
+  const [isSpeaking, setIsSpeaking] = useState(false);
   
   const isPinyinHidden = hideAllPinyin && !revealed;
+
+  const handleSpeak = async () => {
+    if (isSpeaking) return;
+    setIsSpeaking(true);
+    try {
+      await geminiService.speak(word.character);
+    } finally {
+      setIsSpeaking(false);
+    }
+  };
 
   return (
     <li className="flex items-center justify-between p-3 bg-white rounded-xl border border-gray-100 shadow-sm transition-all hover:shadow-md">
       <div className="flex items-center gap-4">
         <button 
-          onClick={() => geminiService.speak(word.character)}
-          className="p-2 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors shadow-sm active:scale-95"
+          onClick={handleSpeak}
+          disabled={isSpeaking}
+          className="p-2 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors shadow-sm active:scale-95 min-w-[36px] flex items-center justify-center"
           title="Hear pronunciation"
         >
-          <SpeakerIcon className="w-5 h-5" />
+          {isSpeaking ? <LoadingSpinner className="w-5 h-5 text-blue-600" /> : <SpeakerIcon className="w-5 h-5" />}
         </button>
         <span className="text-3xl font-bold text-gray-800 font-chinese">{word.character}</span>
       </div>

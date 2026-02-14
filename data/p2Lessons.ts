@@ -14,19 +14,51 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l01-w4", "character": "新", "pinyin": "xin1", "meaning": "New", "exampleSentence": "我有新鞋子。" },
       { "id": "p2-l01-w5", "character": "卖", "pinyin": "mai4", "meaning": "Sell", "exampleSentence": "商店卖水果。" },
       { "id": "p2-l01-w6", "character": "加", "pinyin": "jia1", "meaning": "Add", "exampleSentence": "一加一等于二。" },
-      { "id": "p2-l01-w7", "character": "亲", "pinyin": "qin1", "meaning": "Kiss/Relative", "exampleSentence": "亲爱的妈妈。" },
-      { "id": "p2-l01-w8", "character": "过", "pinyin": "guo4", "meaning": "Pass/Cross", "exampleSentence": "过马路要小心。" },
+      { 
+        "id": "p2-l01-w7", 
+        "character": "亲", 
+        "pinyin": "qin1", 
+        "definitions": [
+          { "meaning": "Kiss", "example": "妈妈亲了我一下。" },
+          { "meaning": "Relative / Dear", "example": "亲爱的妈妈。" }
+        ]
+      },
+      { 
+        "id": "p2-l01-w8", 
+        "character": "过", 
+        "pinyin": "guo4", 
+        "definitions": [
+          { "meaning": "Pass / Cross", "example": "过马路要小心。" },
+          { "meaning": "Spend (time)", "example": "大家一起过生日。" }
+        ]
+      },
       { "id": "p2-l01-w9", "character": "现", "pinyin": "xian4", "meaning": "Now", "exampleSentence": "现在几点了？" },
       { "id": "p2-l01-w10", "character": "些", "pinyin": "xie1", "meaning": "Some", "exampleSentence": "这里有一些糖。" },
       { "id": "p2-l01-w11", "character": "适", "pinyin": "shi4", "meaning": "Suitable", "exampleSentence": "这件衣服很合适。" },
-      { "id": "p2-l01-w12", "character": "试", "pinyin": "shi4", "meaning": "Try", "exampleSentence": "试一试新鞋。" },
+      { 
+        "id": "p2-l01-w12", 
+        "character": "试", 
+        "pinyin": "shi4", 
+        "definitions": [
+          { "meaning": "Try", "example": "试一试新鞋。" },
+          { "meaning": "Test / Examination", "example": "明天的华文考试。" }
+        ]
+      },
       { "id": "p2-l01-w13", "character": "年", "pinyin": "nian2", "meaning": "Year", "exampleSentence": "今年是牛年。" },
       { "id": "p2-l01-w14", "character": "读", "pinyin": "du2", "meaning": "Read", "exampleSentence": "我喜欢读书。" },
       { "id": "p2-l01-w15", "character": "级", "pinyin": "ji2", "meaning": "Grade", "exampleSentence": "我读二年级。" },
       { "id": "p2-l01-w16", "character": "班", "pinyin": "ban1", "meaning": "Class", "exampleSentence": "我们在同一个班。" },
       { "id": "p2-l01-w17", "character": "折", "pinyin": "zhe2", "meaning": "Fold", "exampleSentence": "我会折纸飞机。" },
       { "id": "p2-l01-w18", "character": "帮", "pinyin": "bang1", "meaning": "Help", "exampleSentence": "谢谢你的帮助。" },
-      { "id": "p2-l01-w19", "character": "专", "pinyin": "zhuan1", "meaning": "Special/Focus", "exampleSentence": "专心听老师讲课。" },
+      { 
+        "id": "p2-l01-w19", 
+        "character": "专", 
+        "pinyin": "zhuan1", 
+        "definitions": [
+          { "meaning": "Special", "example": "他有专长。" },
+          { "meaning": "Focus", "example": "专心听老师讲课。" }
+        ]
+      },
       { "id": "p2-l01-w20", "character": "助", "pinyin": "zhu4", "meaning": "Assist", "exampleSentence": "我们要互相帮助。" }
     ]
   },
@@ -37,25 +69,81 @@ export const p2Lessons: Lesson[] = [
     "level": "p2",
     "words": [
       { "id": "p2-l02-w1", "character": "吉", "pinyin": "ji2", "meaning": "Lucky", "exampleSentence": "大吉大利。" },
-      { "id": "p2-l02-w2", "character": "利", "pinyin": "li4", "meaning": "Smooth/Profit", "exampleSentence": "一切顺利。" },
+      { 
+        "id": "p2-l02-w2", 
+        "character": "利", 
+        "pinyin": "li4", 
+        "definitions": [
+          { "meaning": "Smooth / Successful", "example": "一切顺利。" },
+          { "meaning": "Profit / Benefit", "example": "利益很大。" }
+        ]
+      },
       { "id": "p2-l02-w3", "character": "岁", "pinyin": "sui4", "meaning": "Year of age", "exampleSentence": "我今年八岁。" },
-      { "id": "p2-l02-w4", "character": "平", "pinyin": "ping2", "meaning": "Safe/Flat", "exampleSentence": "祝你平平安安。" },
+      { 
+        "id": "p2-l02-w4", 
+        "character": "平", 
+        "pinyin": "ping2", 
+        "definitions": [
+          { "meaning": "Safe / Peaceful", "example": "祝你平平安安。" },
+          { "meaning": "Flat / Level", "example": "地很平。" }
+        ]
+      },
       { "id": "p2-l02-w5", "character": "余", "pinyin": "yu2", "meaning": "Surplus", "exampleSentence": "年年有余。" },
       { "id": "p2-l02-w6", "character": "全", "pinyin": "quan2", "meaning": "All", "exampleSentence": "全家人一起吃饭。" },
-      { "id": "p2-l02-w7", "character": "除", "pinyin": "chu2", "meaning": "Remove/Except", "exampleSentence": "除夕吃大餐。" },
+      { 
+        "id": "p2-l02-w7", 
+        "character": "除", 
+        "pinyin": "chu2", 
+        "definitions": [
+          { "meaning": "Remove / Get rid of", "example": "除掉杂草。" },
+          { "meaning": "Except", "example": "除夕吃大餐。" }
+        ]
+      },
       { "id": "p2-l02-w8", "character": "贴", "pinyin": "tie1", "meaning": "Paste", "exampleSentence": "在门上贴春联。" },
       { "id": "p2-l02-w9", "character": "福", "pinyin": "fu2", "meaning": "Blessing", "exampleSentence": "福到了！" },
       { "id": "p2-l02-w10", "character": "时", "pinyin": "shi2", "meaning": "Time", "exampleSentence": "时间过得真快。" },
-      { "id": "p2-l02-w11", "character": "表", "pinyin": "biao3", "meaning": "Watch/Table", "exampleSentence": "手表在桌上。" },
+      { 
+        "id": "p2-l02-w11", 
+        "character": "表", 
+        "pinyin": "biao3", 
+        "definitions": [
+          { "meaning": "Watch", "example": "手表在桌上。" },
+          { "meaning": "Table / Chart", "example": "看课程表。" }
+        ]
+      },
       { "id": "p2-l02-w12", "character": "演", "pinyin": "yan3", "meaning": "Perform", "exampleSentence": "演员在表演。" },
       { "id": "p2-l02-w13", "character": "舞", "pinyin": "wu3", "meaning": "Dance", "exampleSentence": "妹妹喜欢跳舞。" },
       { "id": "p2-l02-w14", "character": "龙", "pinyin": "long2", "meaning": "Dragon", "exampleSentence": "舞龙表演很精彩。" },
       { "id": "p2-l02-w15", "character": "婆", "pinyin": "po2", "meaning": "Grandma", "exampleSentence": "外婆做的菜很好吃。" },
-      { "id": "p2-l02-w16", "character": "拜", "pinyin": "bai4", "meaning": "Worship/Visit", "exampleSentence": "去给爷爷拜年。" },
+      { 
+        "id": "p2-l02-w16", 
+        "character": "拜", 
+        "pinyin": "bai4", 
+        "definitions": [
+          { "meaning": "Worship / Bow", "example": "拜佛。" },
+          { "meaning": "Visit / Greet", "example": "去给爷爷拜年。" }
+        ]
+      },
       { "id": "p2-l02-w17", "character": "着", "pinyin": "zhe5", "meaning": "Particle indicating action", "exampleSentence": "小猫趴着睡觉。" },
       { "id": "p2-l02-w18", "character": "您", "pinyin": "nin2", "meaning": "You (polite)", "exampleSentence": "老师，您好。" },
-      { "id": "p2-l02-w19", "character": "接", "pinyin": "jie1", "meaning": "Receive/Catch", "exampleSentence": "妈妈来学校接我。" },
-      { "id": "p2-l02-w20", "character": "卷", "pinyin": "juan3", "meaning": "Roll/Curly", "exampleSentence": "春卷很好吃。" },
+      { 
+        "id": "p2-l02-w19", 
+        "character": "接", 
+        "pinyin": "jie1", 
+        "definitions": [
+          { "meaning": "Receive / Meet", "example": "妈妈来学校接我。" },
+          { "meaning": "Catch", "example": "双手接球。" }
+        ]
+      },
+      { 
+        "id": "p2-l02-w20", 
+        "character": "卷", 
+        "pinyin": "juan3", 
+        "definitions": [
+          { "meaning": "Roll", "example": "春卷很好吃。" },
+          { "meaning": "Curly", "example": "长着卷发。" }
+        ]
+      },
       { "id": "p2-l02-w21", "character": "真", "pinyin": "zhen1", "meaning": "Real/Very", "exampleSentence": "今天真开心。" }
     ]
   },
@@ -73,14 +161,30 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l03-w6", "character": "壶", "pinyin": "hu2", "meaning": "Pot", "exampleSentence": "茶壶里有茶。" },
       { "id": "p2-l03-w7", "character": "客", "pinyin": "ke4", "meaning": "Guest", "exampleSentence": "家里来了客人。" },
       { "id": "p2-l03-w8", "character": "送", "pinyin": "song4", "meaning": "Send/Give", "exampleSentence": "送朋友一个礼物。" },
-      { "id": "p2-l03-w9", "character": "主", "pinyin": "zhu3", "meaning": "Owner/Main", "exampleSentence": "我是这个房间的主人。" },
+      { 
+        "id": "p2-l03-w9", 
+        "character": "主", 
+        "pinyin": "zhu3", 
+        "definitions": [
+          { "meaning": "Owner / Host", "example": "我是这个房间的主人。" },
+          { "meaning": "Main", "example": "我们要抓主要问题。" }
+        ]
+      },
       { "id": "p2-l03-w10", "character": "递", "pinyin": "di4", "meaning": "Hand over", "exampleSentence": "请递给我一把尺。" },
       { "id": "p2-l03-w11", "character": "汽", "pinyin": "qi4", "meaning": "Steam/Gas", "exampleSentence": "我喜欢喝汽水。" },
       { "id": "p2-l03-w12", "character": "忙", "pinyin": "mang2", "meaning": "Busy", "exampleSentence": "爸爸工作很忙。" },
       { "id": "p2-l03-w13", "character": "骨", "pinyin": "gu3", "meaning": "Bone", "exampleSentence": "小狗喜欢啃骨头。" },
       { "id": "p2-l03-w14", "character": "伸", "pinyin": "shen1", "meaning": "Stretch", "exampleSentence": "伸出你的双手。" },
       { "id": "p2-l03-w15", "character": "尝", "pinyin": "chang2", "meaning": "Taste", "exampleSentence": "尝一尝这盘菜。" },
-      { "id": "p2-l03-w16", "character": "原", "pinyin": "yuan2", "meaning": "Original/Field", "exampleSentence": "原来他是我的同学。" },
+      { 
+        "id": "p2-l03-w16", 
+        "character": "原", 
+        "pinyin": "yuan2", 
+        "definitions": [
+          { "meaning": "Original", "example": "原来他是我的同学。" },
+          { "meaning": "Field / Plain", "example": "大草原上有很多马。" }
+        ]
+      },
       { "id": "p2-l03-w17", "character": "各", "pinyin": "ge4", "meaning": "Each", "exampleSentence": "各种各样的花。" },
       { "id": "p2-l03-w18", "character": "定", "pinyin": "ding4", "meaning": "Fix/Certain", "exampleSentence": "我们约定好见面。" },
       { "id": "p2-l03-w19", "character": "第", "pinyin": "di4", "meaning": "Prefix for numbers", "exampleSentence": "他是第一个到校的。" },
@@ -97,19 +201,59 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l04-w1", "character": "棵", "pinyin": "ke1", "meaning": "Measure word for trees", "exampleSentence": "花园里有一棵树。" },
       { "id": "p2-l04-w2", "character": "树", "pinyin": "shu4", "meaning": "Tree", "exampleSentence": "树叶绿了。" },
       { "id": "p2-l04-w3", "character": "剪", "pinyin": "jian3", "meaning": "Cut", "exampleSentence": "用剪刀剪纸。" },
-      { "id": "p2-l04-w4", "character": "排", "pinyin": "pai2", "meaning": "Row/Arrange", "exampleSentence": "同学们排好队。" },
+      { 
+        "id": "p2-l04-w4", 
+        "character": "排", 
+        "pinyin": "pai2", 
+        "definitions": [
+          { "meaning": "Row / Line", "example": "第一排座位。" },
+          { "meaning": "Arrange", "example": "同学们排好队。" }
+        ]
+      },
       { "id": "p2-l04-w5", "character": "林", "pinyin": "lin2", "meaning": "Forest", "exampleSentence": "树林里有小鸟。" },
       { "id": "p2-l04-w6", "character": "形", "pinyin": "xing2", "meaning": "Shape", "exampleSentence": "这个苹果是圆形。" },
-      { "id": "p2-l04-w7", "character": "角", "pinyin": "jiao3", "meaning": "Corner/Horn", "exampleSentence": "三角形有三个角。" },
-      { "id": "p2-l04-w8", "character": "然", "pinyin": "ran2", "meaning": "Correct/So", "exampleSentence": "然后我们去公园。" },
+      { 
+        "id": "p2-l04-w7", 
+        "character": "角", 
+        "pinyin": "jiao3", 
+        "definitions": [
+          { "meaning": "Corner", "example": "躲在墙角。" },
+          { "meaning": "Horn", "example": "牛头上有两个角。" }
+        ]
+      },
+      { 
+        "id": "p2-l04-w8", 
+        "character": "然", 
+        "pinyin": "ran2", 
+        "definitions": [
+          { "meaning": "Correct / Right", "example": "理所当然。" },
+          { "meaning": "So / But", "example": "然后我们去公园。" }
+        ]
+      },
       { "id": "p2-l04-w9", "character": "拉", "pinyin": "la1", "meaning": "Pull", "exampleSentence": "用力拉开门。" },
       { "id": "p2-l04-w10", "character": "森", "pinyin": "sen1", "meaning": "Forest", "exampleSentence": "森林里很大。" },
-      { "id": "p2-l04-w11", "character": "从", "pinyin": "cong2", "meaning": "From/Follow", "exampleSentence": "从小到大。" },
+      { 
+        "id": "p2-l04-w11", 
+        "character": "从", 
+        "pinyin": "cong2", 
+        "definitions": [
+          { "meaning": "From", "example": "从小到大。" },
+          { "meaning": "Follow", "example": "我们要从小养成好习惯。" }
+        ]
+      },
       { "id": "p2-l04-w12", "character": "众", "pinyin": "zhong4", "meaning": "Crowd", "exampleSentence": "观众在鼓掌。" },
       { "id": "p2-l04-w13", "character": "颜", "pinyin": "yan2", "meaning": "Color", "exampleSentence": "五颜六色的花。" },
       { "id": "p2-l04-w14", "character": "共", "pinyin": "gong4", "meaning": "Common/Total", "exampleSentence": "公共汽车来了。" },
       { "id": "p2-l04-w15", "character": "页", "pinyin": "ye4", "meaning": "Page", "exampleSentence": "请打开第十页。" },
-      { "id": "p2-l04-w16", "character": "空", "pinyin": "kong1", "meaning": "Sky/Empty", "exampleSentence": "天空是蓝色的。" },
+      { 
+        "id": "p2-l04-w16", 
+        "character": "空", 
+        "pinyin": "kong1", 
+        "definitions": [
+          { "meaning": "Sky", "example": "天空是蓝色的。" },
+          { "meaning": "Empty", "example": "这个箱子是空的。" }
+        ]
+      },
       { "id": "p2-l04-w17", "character": "彩", "pinyin": "cai3", "meaning": "Colorful", "exampleSentence": "天上有彩虹。" },
       { "id": "p2-l04-w18", "character": "蓝", "pinyin": "lan2", "meaning": "Blue", "exampleSentence": "蓝蓝的天空。" },
       { "id": "p2-l04-w19", "character": "绿", "pinyin": "lv4", "meaning": "Green", "exampleSentence": "绿绿的草地。" },
@@ -127,7 +271,15 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l05-w2", "character": "室", "pinyin": "shi4", "meaning": "Room", "exampleSentence": "教室里很安静。" },
       { "id": "p2-l05-w3", "character": "哪", "pinyin": "na3", "meaning": "Which/Where", "exampleSentence": "哪一个是你的？" },
       { "id": "p2-l05-w4", "character": "顶", "pinyin": "ding3", "meaning": "Top", "exampleSentence": "山顶很冷。" },
-      { "id": "p2-l05-w5", "character": "楼", "pinyin": "lou2", "meaning": "Building/Floor", "exampleSentence": "我家在三楼。" },
+      { 
+        "id": "p2-l05-w5", 
+        "character": "楼", 
+        "pinyin": "lou2", 
+        "definitions": [
+          { "meaning": "Building", "example": "这里有很多高楼。" },
+          { "meaning": "Floor", "example": "我家在三楼。" }
+        ]
+      },
       { "id": "p2-l05-w6", "character": "术", "pinyin": "shu4", "meaning": "Skill/Art", "exampleSentence": "美术课真开心。" },
       { "id": "p2-l05-w7", "character": "旁", "pinyin": "pang2", "meaning": "Side", "exampleSentence": "小明坐在我旁边。" },
       { "id": "p2-l05-w8", "character": "向", "pinyin": "xiang4", "meaning": "Towards", "exampleSentence": "向左转。" },
@@ -135,10 +287,26 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l05-w10", "character": "往", "pinyin": "wang3", "meaning": "Towards", "exampleSentence": "一直往前走。" },
       { "id": "p2-l05-w11", "character": "转", "pinyin": "zhuan3", "meaning": "Turn", "exampleSentence": "路口向右转。" },
       { "id": "p2-l05-w12", "character": "操", "pinyin": "cao1", "meaning": "Exercise", "exampleSentence": "我们在操场上课。" },
-      { "id": "p2-l05-w13", "character": "运", "pinyin": "yun4", "meaning": "Carry/Sport", "exampleSentence": "我喜欢体育运动。" },
+      { 
+        "id": "p2-l05-w13", 
+        "character": "运", 
+        "pinyin": "yun4", 
+        "definitions": [
+          { "meaning": "Carry / Transport", "example": "我们要运送水果。" },
+          { "meaning": "Sport", "example": "我喜欢体育运动。" }
+        ]
+      },
       { "id": "p2-l05-w14", "character": "路", "pinyin": "lu4", "meaning": "Road", "exampleSentence": "这条路很宽。" },
       { "id": "p2-l05-w15", "character": "远", "pinyin": "yuan3", "meaning": "Far", "exampleSentence": "学校离我家不远。" },
-      { "id": "p2-l05-w16", "character": "迷", "pinyin": "mi2", "meaning": "Lost/Fan", "exampleSentence": "我在森林里迷路了。" },
+      { 
+        "id": "p2-l05-w16", 
+        "character": "迷", 
+        "pinyin": "mi2", 
+        "definitions": [
+          { "meaning": "Lost", "example": "我在森林里迷路了。" },
+          { "meaning": "Fan / Enthusiast", "example": "他是一个足球迷。" }
+        ]
+      },
       { "id": "p2-l05-w17", "character": "坡", "pinyin": "po1", "meaning": "Slope", "exampleSentence": "山坡上有羊。" },
       { "id": "p2-l05-w18", "character": "久", "pinyin": "jiu3", "meaning": "Long time", "exampleSentence": "好久不见。" },
       { "id": "p2-l05-w19", "character": "答", "pinyin": "da2", "meaning": "Answer", "exampleSentence": "回答老师的问题。" },
@@ -155,12 +323,28 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l06-w1", "character": "脚", "pinyin": "jiao3", "meaning": "Foot", "exampleSentence": "脚上穿着新鞋。" },
       { "id": "p2-l06-w2", "character": "踏", "pinyin": "ta4", "meaning": "Step on", "exampleSentence": "脚踏车。" },
       { "id": "p2-l06-w3", "character": "应", "pinyin": "ying1", "meaning": "Should", "exampleSentence": "你应该早点睡觉。" },
-      { "id": "p2-l06-w4", "character": "该", "pinyin": "gai1", "meaning": "Should", "exampleSentence": "该去上学了。" },
-      { "id": "p2-l06-w5", "character": "行", "pinyin": "xing2", "meaning": "Walk/Ok", "exampleSentence": "行人过马路。" },
+      { "id": "p2-l06-w4", "character": " g gai1", "pinyin": "gai1", "meaning": "Should", "exampleSentence": "该去上学了。" },
+      { 
+        "id": "p2-l06-w5", 
+        "character": "行", 
+        "pinyin": "xing2", 
+        "definitions": [
+          { "meaning": "Walk", "example": "行人过马路。" },
+          { "meaning": "Ok / Correct", "example": "这样做也行。" }
+        ]
+      },
       { "id": "p2-l06-w6", "character": "桥", "pinyin": "qiao2", "meaning": "Bridge", "exampleSentence": "河上有一座桥。" },
       { "id": "p2-l06-w7", "character": "等", "pinyin": "deng3", "meaning": "Wait", "exampleSentence": "等公车。" },
       { "id": "p2-l06-w8", "character": "停", "pinyin": "ting2", "meaning": "Stop", "exampleSentence": "雨停了。" },
-      { "id": "p2-l06-w9", "character": "才", "pinyin": "cai2", "meaning": "Ability/Only", "exampleSentence": "他是天才。" },
+      { 
+        "id": "p2-l06-w9", 
+        "character": "才", 
+        "pinyin": "cai2", 
+        "definitions": [
+          { "meaning": "Ability / Talent", "example": "他是天才。" },
+          { "meaning": "Only / Just", "example": "你才来呀。" }
+        ]
+      },
       { "id": "p2-l06-w10", "character": "骑", "pinyin": "qi2", "meaning": "Ride", "exampleSentence": "骑脚踏车。" },
       { "id": "p2-l06-w11", "character": "灯", "pinyin": "deng1", "meaning": "Light", "exampleSentence": "红绿灯。" },
       { "id": "p2-l06-w12", "character": "亮", "pinyin": "liang4", "meaning": "Bright", "exampleSentence": "灯光很亮。" },
@@ -168,8 +352,24 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l06-w14", "character": "居", "pinyin": "ju1", "meaning": "Live", "exampleSentence": "居住在这里。" },
       { "id": "p2-l06-w15", "character": "互", "pinyin": "hu4", "meaning": "Each other", "exampleSentence": "互相关心。" },
       { "id": "p2-l06-w16", "character": "相", "pinyin": "xiang1", "meaning": "Each other", "exampleSentence": "我们是好朋友。" },
-      { "id": "p2-l06-w17", "character": "光", "pinyin": "guang1", "meaning": "Light/Ray", "exampleSentence": "月光很美。" },
-      { "id": "p2-l06-w18", "character": "照", "pinyin": "zhao4", "meaning": "Reflect/Photo", "exampleSentence": "照片里是我。" },
+      { 
+        "id": "p2-l06-w17", 
+        "character": "光", 
+        "pinyin": "guang1", 
+        "definitions": [
+          { "meaning": "Light / Ray", "example": "月光很美。" },
+          { "meaning": "Smooth / Empty", "example": "吃光了。" }
+        ]
+      },
+      { 
+        "id": "p2-l06-w18", 
+        "character": "照", 
+        "pinyin": "zhao4", 
+        "definitions": [
+          { "meaning": "Reflect / Shine", "example": "阳光照在身上。" },
+          { "meaning": "Photo / Image", "example": "照片里是我。" }
+        ]
+      },
       { "id": "p2-l06-w19", "character": "丽", "pinyin": "li4", "meaning": "Beautiful", "exampleSentence": "这里风景很美丽。" },
       { "id": "p2-l06-w20", "character": "极", "pinyin": "ji2", "meaning": "Extremely", "exampleSentence": "开心极了。" }
     ]
@@ -181,7 +381,15 @@ export const p2Lessons: Lesson[] = [
     "level": "p2",
     "words": [
       { "id": "p2-l07-w1", "character": "茶", "pinyin": "cha2", "meaning": "Tea", "exampleSentence": "爷爷在喝茶。" },
-      { "id": "p2-l07-w2", "character": "糖", "pinyin": "tang2", "meaning": "Sugar/Candy", "exampleSentence": "吃颗糖。" },
+      { 
+        "id": "p2-l07-w2", 
+        "character": "糖", 
+        "pinyin": "tang2", 
+        "definitions": [
+          { "meaning": "Sugar", "example": "炒菜要放点糖。" },
+          { "meaning": "Candy", "example": "吃颗糖。" }
+        ]
+      },
       { "id": "p2-l07-w3", "character": "炒", "pinyin": "chao3", "meaning": "Stir-fry", "exampleSentence": "妈妈在炒菜。" },
       { "id": "p2-l07-w4", "character": "油", "pinyin": "you2", "meaning": "Oil", "exampleSentence": "炒菜要放油。" },
       { "id": "p2-l07-w5", "character": "炸", "pinyin": "zha2", "meaning": "Deep-fry", "exampleSentence": "我喜欢吃炸鸡。" },
@@ -191,13 +399,45 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l07-w9", "character": "啡", "pinyin": "fei1", "meaning": "Coffee part", "exampleSentence": "爸爸爱喝咖啡。" },
       { "id": "p2-l07-w10", "character": "队", "pinyin": "dui4", "meaning": "Team/Row", "exampleSentence": "我们在排队。" },
       { "id": "p2-l07-w11", "character": "找", "pinyin": "zhao3", "meaning": "Find/Search", "exampleSentence": "找我的书包。" },
-      { "id": "p2-l07-w12", "character": "座", "pinyin": "zuo4", "meaning": "Seat/Measure word", "exampleSentence": "这里有一个座位。" },
-      { "id": "p2-l07-w13", "character": "位", "pinyin": "wei4", "meaning": "Position/Measure word", "exampleSentence": "老师是一位伟大的人。" },
+      { 
+        "id": "p2-l07-w12", 
+        "character": "座", 
+        "pinyin": "zuo4", 
+        "definitions": [
+          { "meaning": "Seat", "example": "这里有一个座位。" },
+          { "meaning": "Measure word (buildings/mountains)", "example": "一座大山。" }
+        ]
+      },
+      { 
+        "id": "p2-l07-w13", 
+        "character": "位", 
+        "pinyin": "wei4", 
+        "definitions": [
+          { "meaning": "Position", "example": "这是你的座位。" },
+          { "meaning": "Measure word (respected people)", "example": "老师是一位伟大的人。" }
+        ]
+      },
       { "id": "p2-l07-w14", "character": "特", "pinyin": "te4", "meaning": "Special", "exampleSentence": "今天的菜很特别。" },
-      { "id": "p2-l07-w15", "character": "别", "pinyin": "bie2", "meaning": "Other/Don't", "exampleSentence": "别哭了。" },
+      { 
+        "id": "p2-l07-w15", 
+        "character": "别", 
+        "pinyin": "bie2", 
+        "definitions": [
+          { "meaning": "Other", "example": "没有别人了。" },
+          { "meaning": "Don't", "example": "别哭了。" }
+        ]
+      },
       { "id": "p2-l07-w16", "character": "餐", "pinyin": "can1", "meaning": "Meal", "exampleSentence": "晚餐时间到了。" },
       { "id": "p2-l07-w17", "character": "闻", "pinyin": "wen2", "meaning": "Smell", "exampleSentence": "闻一闻花的香味。" },
-      { "id": "p2-l07-w18", "character": "味", "pinyin": "wei4", "meaning": "Taste/Smell", "exampleSentence": "这个苹果有甜味。" },
+      { 
+        "id": "p2-l07-w18", 
+        "character": "味", 
+        "pinyin": "wei4", 
+        "definitions": [
+          { "meaning": "Taste / Flavor", "example": "这个苹果有甜味。" },
+          { "meaning": "Smell", "example": "这是什么气味？" }
+        ]
+      },
       { "id": "p2-l07-w19", "character": "食", "pinyin": "shi2", "meaning": "Food", "exampleSentence": "我们要珍惜粮食。" },
       { "id": "p2-l07-w20", "character": "分", "pinyin": "fen4", "meaning": "Portion", "exampleSentence": "把蛋糕分成两份。" },
       { "id": "p2-l07-w21", "character": "懂", "pinyin": "dong3", "meaning": "Understand", "exampleSentence": "我听懂了老师的话。" }
@@ -215,14 +455,38 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l08-w4", "character": "顾", "pinyin": "gu4", "meaning": "Care", "exampleSentence": "我们要照顾小弟弟。" },
       { "id": "p2-l08-w5", "character": "贩", "pinyin": "fan4", "meaning": "Vendor", "exampleSentence": "小贩在卖水果。" },
       { "id": "p2-l08-w6", "character": "教", "pinyin": "jiao4", "meaning": "Teach", "exampleSentence": "老师在教我们唱歌。" },
-      { "id": "p2-l08-w7", "character": "种", "pinyin": "zhong3", "meaning": "Seed/Kind", "exampleSentence": "这种苹果很甜。" },
+      { 
+        "id": "p2-l08-w7", 
+        "character": "种", 
+        "pinyin": "zhong3", 
+        "definitions": [
+          { "meaning": "Seed", "example": "我们要播种。" },
+          { "meaning": "Kind / Type", "example": "这种苹果很甜。" }
+        ]
+      },
       { "id": "p2-l08-w8", "character": "姨", "pinyin": "yi2", "meaning": "Aunt", "exampleSentence": "阿姨送我一个玩具。" },
       { "id": "p2-l08-w9", "character": "员", "pinyin": "yuan2", "meaning": "Member", "exampleSentence": "售货员很亲切。" },
-      { "id": "p2-l08-w10", "character": "消", "pinyin": "xiao1", "meaning": "Disappear/Consume", "exampleSentence": "消防员在灭火。" },
+      { 
+        "id": "p2-l08-w10", 
+        "character": "消", 
+        "pinyin": "xiao1", 
+        "definitions": [
+          { "meaning": "Disappear / Melt", "example": "雪消了。" },
+          { "meaning": "Consume / Eliminate", "example": "消防员在灭火。" }
+        ]
+      },
       { "id": "p2-l08-w11", "character": "防", "pinyin": "fang2", "meaning": "Prevent", "exampleSentence": "我们要防备坏人。" },
       { "id": "p2-l08-w12", "character": "灾", "pinyin": "zai1", "meaning": "Disaster", "exampleSentence": "火灾很可怕。" },
       { "id": "p2-l08-w13", "character": "灭", "pinyin": "mie4", "meaning": "Extinguish", "exampleSentence": "灭火器。" },
-      { "id": "p2-l08-w14", "character": "保", "pinyin": "bao3", "meaning": "Keep/Protect", "exampleSentence": "警察保护市民。" },
+      { 
+        "id": "p2-l08-w14", 
+        "character": "保", 
+        "pinyin": "bao3", 
+        "definitions": [
+          { "meaning": "Keep / Maintain", "example": "保持安静。" },
+          { "meaning": "Protect", "example": "警察保护市民。" }
+        ]
+      },
       { "id": "p2-l08-w15", "character": "抓", "pinyin": "zhua1", "meaning": "Catch", "exampleSentence": "警察抓住了小偷。" },
       { "id": "p2-l08-w16", "character": "怕", "pinyin": "pa4", "meaning": "Fear", "exampleSentence": "我不怕黑。" },
       { "id": "p2-l08-w17", "character": "建", "pinyin": "jian4", "meaning": "Build", "exampleSentence": "这里建了一座桥。" },
@@ -242,7 +506,15 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l09-w5", "character": "热", "pinyin": "re4", "meaning": "Hot", "exampleSentence": "夏天很热。" },
       { "id": "p2-l09-w6", "character": "暗", "pinyin": "an4", "meaning": "Dark", "exampleSentence": "房间里很暗。" },
       { "id": "p2-l09-w7", "character": "乌", "pinyin": "wu1", "meaning": "Black", "exampleSentence": "乌云密布。" },
-      { "id": "p2-l09-w8", "character": "闪", "pinyin": "shan3", "meaning": "Flash/Lightning", "exampleSentence": "天上有闪电。" },
+      { 
+        "id": "p2-l09-w8", 
+        "character": "闪", 
+        "pinyin": "shan3", 
+        "definitions": [
+          { "meaning": "Flash / Lightning", "example": "天上有闪电。" },
+          { "meaning": "Dodge", "example": "闪开！" }
+        ]
+      },
       { "id": "p2-l09-w9", "character": "刮", "pinyin": "gua1", "meaning": "Blow (wind)", "exampleSentence": "外面在刮风。" },
       { "id": "p2-l09-w10", "character": "记", "pinyin": "ji4", "meaning": "Remember", "exampleSentence": "记在脑子里。" },
       { "id": "p2-l09-w11", "character": "得", "pinyin": "de5", "meaning": "Particle/Must", "exampleSentence": "记得。" },
@@ -264,7 +536,15 @@ export const p2Lessons: Lesson[] = [
     "words": [
       { "id": "p2-l10-w1", "character": "蚂", "pinyin": "ma3", "meaning": "Ant part", "exampleSentence": "蚂蚁在搬家。" },
       { "id": "p2-l10-w2", "character": "蚁", "pinyin": "yi3", "meaning": "Ant part", "exampleSentence": "一群小蚂蚁。" },
-      { "id": "p2-l10-w3", "character": "爬", "pinyin": "pa2", "meaning": "Crawl/Climb", "exampleSentence": "虫子在地上爬。" },
+      { 
+        "id": "p2-l10-w3", 
+        "character": "爬", 
+        "pinyin": "pa2", 
+        "definitions": [
+          { "meaning": "Crawl", "example": "虫子在地上爬。" },
+          { "meaning": "Climb", "example": "我们去爬山。" }
+        ]
+      },
       { "id": "p2-l10-w4", "character": "蜜", "pinyin": "mi4", "meaning": "Honey/Bee part", "exampleSentence": "蜂蜜很甜。" },
       { "id": "p2-l10-w5", "character": "蜂", "pinyin": "feng1", "meaning": "Bee part", "exampleSentence": "蜜蜂在采蜜。" },
       { "id": "p2-l10-w6", "character": "丛", "pinyin": "cong2", "meaning": "Bushes", "exampleSentence": "草丛里有小虫。" },
@@ -274,11 +554,27 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l10-w10", "character": "清", "pinyin": "qing1", "meaning": "Clear", "exampleSentence": "水很清。" },
       { "id": "p2-l10-w11", "character": "蛙", "pinyin": "wa1", "meaning": "Frog", "exampleSentence": "青蛙爱捉虫。" },
       { "id": "p2-l10-w12", "character": "害", "pinyin": "hai4", "meaning": "Harm", "exampleSentence": "害虫会吃庄稼。" },
-      { "id": "p2-l10-w13", "character": "情", "pinyin": "qing2", "meaning": "Emotion/Situation", "exampleSentence": "事情做完了。" },
+      { 
+        "id": "p2-l10-w13", 
+        "character": "情", 
+        "pinyin": "qing2", 
+        "definitions": [
+          { "meaning": "Emotion / Feeling", "example": "我们要有真情。" },
+          { "meaning": "Situation / Matter", "example": "这件事情做完了。" }
+        ]
+      },
       { "id": "p2-l10-w14", "character": "让", "pinyin": "rang4", "meaning": "Let/Allow", "exampleSentence": "让小猫睡觉。" },
       { "id": "p2-l10-w15", "character": "像", "pinyin": "xiang4", "meaning": "Look like", "exampleSentence": "他像他的爸爸。" },
       { "id": "p2-l10-w16", "character": "窝", "pinyin": "wo1", "meaning": "Nest", "exampleSentence": "鸟窝里有蛋。" },
-      { "id": "p2-l10-w17", "character": "结", "pinyin": "jie2", "meaning": "Knot/End", "exampleSentence": "蜘蛛结网。" },
+      { 
+        "id": "p2-l10-w17", 
+        "character": "结", 
+        "pinyin": "jie2", 
+        "definitions": [
+          { "meaning": "Knot / Tie", "example": "蜘蛛结网。" },
+          { "meaning": "End / Result", "example": "我们要总结经验。" }
+        ]
+      },
       { "id": "p2-l10-w18", "character": "掉", "pinyin": "diao4", "meaning": "Fall/Drop", "exampleSentence": "苹果掉下来了。" },
       { "id": "p2-l10-w19", "character": "泥", "pinyin": "ni2", "meaning": "Mud", "exampleSentence": "地上有泥。" },
       { "id": "p2-l10-w20", "character": "成", "pinyin": "cheng2", "meaning": "Become", "exampleSentence": "他成了一名学生。" }
@@ -293,7 +589,15 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l11-w1", "character": "纸", "pinyin": "zhi3", "meaning": "Paper", "exampleSentence": "在纸上写字。" },
       { "id": "p2-l11-w2", "character": "机", "pinyin": "ji1", "meaning": "Machine", "exampleSentence": "纸飞机。" },
       { "id": "p2-l11-w3", "character": "块", "pinyin": "kuai4", "meaning": "Piece", "exampleSentence": "一块蛋糕。" },
-      { "id": "p2-l11-w4", "character": "跟", "pinyin": "gen1", "meaning": "With/Follow", "exampleSentence": "跟我一起走。" },
+      { 
+        "id": "p2-l11-w4", 
+        "character": "跟", 
+        "pinyin": "gen1", 
+        "definitions": [
+          { "meaning": "With", "example": "跟我一起走。" },
+          { "meaning": "Follow", "example": "小狗跟在后面。" }
+        ]
+      },
       { "id": "p2-l11-w5", "character": "棋", "pinyin": "qi2", "meaning": "Chess", "exampleSentence": "我们去下棋。" },
       { "id": "p2-l11-w6", "character": "搭", "pinyin": "da1", "meaning": "Build/Construct", "exampleSentence": "搭积木。" },
       { "id": "p2-l11-w7", "character": "积", "pinyin": "ji1", "meaning": "Accumulate", "exampleSentence": "积木玩具。" },
@@ -301,7 +605,15 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l11-w9", "character": "娃", "pinyin": "wa2", "meaning": "Baby/Doll", "exampleSentence": "洋娃娃。" },
       { "id": "p2-l11-w10", "character": "吧", "pinyin": "ba5", "meaning": "Suggestion particle", "exampleSentence": "走吧。" },
       { "id": "p2-l11-w11", "character": "器", "pinyin": "qi4", "meaning": "Tool/Device", "exampleSentence": "乐器。" },
-      { "id": "p2-l11-w12", "character": "许", "pinyin": "xu3", "meaning": "Allow/Many", "exampleSentence": "许许多多的朋友。" },
+      { 
+        "id": "p2-l11-w12", 
+        "character": "许", 
+        "pinyin": "xu3", 
+        "definitions": [
+          { "meaning": "Allow / Permit", "example": "不许说话。" },
+          { "meaning": "Many / Much", "example": "许许多多的朋友。" }
+        ]
+      },
       { "id": "p2-l11-w13", "character": "绳", "pinyin": "sheng2", "meaning": "Rope", "exampleSentence": "跳绳比赛。" },
       { "id": "p2-l11-w14", "character": "捏", "pinyin": "nie1", "meaning": "Pinch/Mold", "exampleSentence": "捏泥人。" },
       { "id": "p2-l11-w15", "character": "拼", "pinyin": "pin1", "meaning": "Spell/Assemble", "exampleSentence": "拼图。" },
@@ -317,7 +629,15 @@ export const p2Lessons: Lesson[] = [
     "isPredefined": true,
     "level": "p2",
     "words": [
-      { "id": "p2-l12-w1", "character": "命", "pinyin": "ming4", "meaning": "Life/Command", "exampleSentence": "生命很宝贵。" },
+      { 
+        "id": "p2-l12-w1", 
+        "character": "命", 
+        "pinyin": "ming4", 
+        "definitions": [
+          { "meaning": "Life", "example": "生命很宝贵。" },
+          { "meaning": "Command / Order", "example": "我们要听从命令。" }
+        ]
+      },
       { "id": "p2-l12-w2", "character": "百", "pinyin": "bai3", "meaning": "Hundred", "exampleSentence": "一百分。" },
       { "id": "p2-l12-w3", "character": "健", "pinyin": "jian4", "meaning": "Healthy", "exampleSentence": "我们要天天运动。" },
       { "id": "p2-l12-w4", "character": "康", "pinyin": "kang1", "meaning": "Health", "exampleSentence": "身体健康。" },
@@ -327,16 +647,56 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l12-w8", "character": "糕", "pinyin": "gao1", "meaning": "Cake", "exampleSentence": "吃蛋糕。" },
       { "id": "p2-l12-w9", "character": "永", "pinyin": "yong3", "meaning": "Forever", "exampleSentence": "永远快乐。" },
       { "id": "p2-l12-w10", "character": "轻", "pinyin": "qing1", "meaning": "Light weight", "exampleSentence": "羽毛很轻。" },
-      { "id": "p2-l12-w11", "character": "首", "pinyin": "shou3", "meaning": "Head/Measure word for songs", "exampleSentence": "唱一首歌。" },
-      { "id": "p2-l12-w12", "character": "张", "pinyin": "zhang1", "meaning": "Open/Measure word for paper", "exampleSentence": "一张卡片。" },
+      { 
+        "id": "p2-l12-w11", 
+        "character": "首", 
+        "pinyin": "shou3", 
+        "definitions": [
+          { "meaning": "Head / Chief", "example": "首领带着大家前进。" },
+          { "meaning": "Measure word (songs/poems)", "example": "唱一首歌。" }
+        ]
+      },
+      { 
+        "id": "p2-l12-w12", 
+        "character": "张", 
+        "pinyin": "zhang1", 
+        "definitions": [
+          { "meaning": "Open / Spread", "example": "张开大嘴。" },
+          { "meaning": "Measure word (paper/tables)", "example": "一张卡片。" }
+        ]
+      },
       { "id": "p2-l12-w13", "character": "卡", "pinyin": "ka3", "meaning": "Card", "exampleSentence": "生日卡片。" },
       { "id": "p2-l12-w14", "character": "影", "pinyin": "ying3", "meaning": "Shadow/Film", "exampleSentence": "看电影。" },
       { "id": "p2-l12-w15", "character": "票", "pinyin": "piao4", "meaning": "Ticket", "exampleSentence": "买电影票。" },
-      { "id": "p2-l12-w16", "character": "礼", "pinyin": "li3", "meaning": "Gift/Courtesy", "exampleSentence": "我们要有礼貌。" },
+      { 
+        "id": "p2-l12-w16", 
+        "character": "礼", 
+        "pinyin": "li3", 
+        "definitions": [
+          { "meaning": "Gift", "example": "送你一个生日礼物。" },
+          { "meaning": "Courtesy / Etiquette", "example": "我们要有礼貌。" }
+        ]
+      },
       { "id": "p2-l12-w17", "character": "厅", "pinyin": "ting1", "meaning": "Hall/Room", "exampleSentence": "客厅里有电视。" },
-      { "id": "p2-l12-w18", "character": "奇", "pinyin": "qi2", "meaning": "Strange/Wonder", "exampleSentence": "好奇心。" },
+      { 
+        "id": "p2-l12-w18", 
+        "character": "奇", 
+        "pinyin": "qi2", 
+        "definitions": [
+          { "meaning": "Strange / Odd", "example": "他有很多奇妙的想法。" },
+          { "meaning": "Wonder / Surprising", "example": "真是太神奇了。" }
+        ]
+      },
       { "id": "p2-l12-w19", "character": "怪", "pinyin": "guai4", "meaning": "Strange", "exampleSentence": "奇怪的事情。" },
-      { "id": "p2-l12-w20", "character": "活", "pinyin": "huo2", "meaning": "Live/Work", "exampleSentence": "生活美好。" },
+      { 
+        "id": "p2-l12-w20", 
+        "character": "活", 
+        "pinyin": "huo2", 
+        "definitions": [
+          { "meaning": "Live / Alive", "example": "生活美好。" },
+          { "meaning": "Work / Activity", "example": "干家务活。" }
+        ]
+      },
       { "id": "p2-l12-w21", "character": "宝", "pinyin": "bao3", "meaning": "Treasure", "exampleSentence": "宝贝儿子。" }
     ]
   },
@@ -356,11 +716,35 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l13-w8", "character": "金", "pinyin": "jin1", "meaning": "Gold/Money", "exampleSentence": "金鱼。" },
       { "id": "p2-l13-w9", "character": "漂", "pinyin": "piao4", "meaning": "Beautiful part", "exampleSentence": "漂亮衣服。" },
       { "id": "p2-l13-w10", "character": "吐", "pinyin": "tu3", "meaning": "Spit/Vomit", "exampleSentence": "吐泡泡。" },
-      { "id": "p2-l13-w11", "character": "宠", "pinyin": "chong3", "meaning": "Pet/Spoil", "exampleSentence": "家里养了宠物。" },
+      { 
+        "id": "p2-l13-w11", 
+        "character": "宠", 
+        "pinyin": "chong3", 
+        "definitions": [
+          { "meaning": "Pet", "example": "家里养了小猫当宠物。" },
+          { "meaning": "Spoil", "example": "不要太宠孩子。" }
+        ]
+      },
       { "id": "p2-l13-w12", "character": "岛", "pinyin": "dao3", "meaning": "Island", "exampleSentence": "圣淘沙是个小岛。" },
       { "id": "p2-l13-w13", "character": "欺", "pinyin": "qi1", "meaning": "Bully part", "exampleSentence": "别欺负人。" },
-      { "id": "p2-l13-w14", "character": "负", "pinyin": "fu4", "meaning": "Bully part/Negative", "exampleSentence": "我们要保护弱小。" },
-      { "id": "p2-l13-w15", "character": "丢", "pinyin": "diu1", "meaning": "Lose/Throw", "exampleSentence": "丢垃圾。" },
+      { 
+        "id": "p2-l13-w14", 
+        "character": "负", 
+        "pinyin": "fu4", 
+        "definitions": [
+          { "meaning": "Bully part", "example": "我们要保护弱小。" },
+          { "meaning": "Negative", "example": "不要总是听负面的消息。" }
+        ]
+      },
+      { 
+        "id": "p2-l13-w15", 
+        "character": "丢", 
+        "pinyin": "diu1", 
+        "definitions": [
+          { "meaning": "Lose", "example": "我的笔丢了。" },
+          { "meaning": "Throw", "example": "不要乱丢垃圾。" }
+        ]
+      },
       { "id": "p2-l13-w16", "character": "梦", "pinyin": "meng4", "meaning": "Dream", "exampleSentence": "做个好梦。" },
       { "id": "p2-l13-w17", "character": "围", "pinyin": "wei2", "meaning": "Surround", "exampleSentence": "围在一起看书。" },
       { "id": "p2-l13-w18", "character": "迎", "pinyin": "ying2", "meaning": "Welcome", "exampleSentence": "欢迎来我家。" },
@@ -376,23 +760,71 @@ export const p2Lessons: Lesson[] = [
     "words": [
       { "id": "p2-l14-w1", "character": "粗", "pinyin": "cu1", "meaning": "Thick/Rough", "exampleSentence": "树干很粗。" },
       { "id": "p2-l14-w2", "character": "细", "pinyin": "xi4", "meaning": "Thin/Fine", "exampleSentence": "头发很细。" },
-      { "id": "p2-l14-w3", "character": "抢", "pinyin": "qiang3", "meaning": "Grab/Rush", "exampleSentence": "别抢玩具。" },
+      { 
+        "id": "p2-l14-w3", 
+        "character": "抢", 
+        "pinyin": "qiang3", 
+        "definitions": [
+          { "meaning": "Grab / Snatch", "example": "别抢玩具。" },
+          { "meaning": "Rush / Scramble", "example": "抢着做家务。" }
+        ]
+      },
       { "id": "p2-l14-w4", "character": "推", "pinyin": "tui1", "meaning": "Push", "exampleSentence": "用力推开。" },
       { "id": "p2-l14-w5", "character": "讨", "pinyin": "tao3", "meaning": "Discuss/Annoy part", "exampleSentence": "讨人厌。" },
       { "id": "p2-l14-w6", "character": "厌", "pinyin": "yan4", "meaning": "Bored/Annoy part", "exampleSentence": "讨厌苍蝇。" },
       { "id": "p2-l14-w7", "character": "争", "pinyin": "zheng1", "meaning": "Contest", "exampleSentence": "争取第一。" },
       { "id": "p2-l14-w8", "character": "吵", "pinyin": "chao3", "meaning": "Noisy", "exampleSentence": "别吵了。" },
-      { "id": "p2-l14-w9", "character": "难", "pinyin": "nan2", "meaning": "Difficult", "exampleSentence": "这题很难。" },
+      { 
+        "id": "p2-l14-w9", 
+        "character": "难", 
+        "pinyin": "nan2", 
+        "definitions": [
+          { "meaning": "Difficult / Hard", "example": "这道题很难。" },
+          { "meaning": "Unpleasant", "example": "很难听的声音。" }
+        ]
+      },
       { "id": "p2-l14-w10", "character": "易", "pinyin": "yi4", "meaning": "Easy", "exampleSentence": "很容易学。" },
-      { "id": "p2-l14-w11", "character": "弄", "pinyin": "nong4", "meaning": "Do/Mess with", "exampleSentence": "弄坏了。" },
+      { 
+        "id": "p2-l14-w11", 
+        "character": "弄", 
+        "pinyin": "nong4", 
+        "definitions": [
+          { "meaning": "Do / Manage", "example": "把事情弄好。" },
+          { "meaning": "Mess with", "example": "弄坏了玩具。" }
+        ]
+      },
       { "id": "p2-l14-w12", "character": "破", "pinyin": "po4", "meaning": "Broken", "exampleSentence": "衣服破了。" },
       { "id": "p2-l14-w13", "character": "撞", "pinyin": "zhuang4", "meaning": "Bump/Collide", "exampleSentence": "两车相撞。" },
-      { "id": "p2-l14-w14", "character": "倒", "pinyin": "dao3", "meaning": "Fall over", "exampleSentence": "大树倒了。" },
-      { "id": "p2-l14-w15", "character": "伤", "pinyin": "shang1", "meaning": "Injury/Sad", "exampleSentence": "受伤了。" },
+      { 
+        "id": "p2-l14-w14", 
+        "character": "倒", 
+        "pinyin": "dao3", 
+        "definitions": [
+          { "meaning": "Fall over", "example": "大树被大风吹倒了。" },
+          { "meaning": "Pour (water)", "example": "给我倒杯水。" }
+        ]
+      },
+      { 
+        "id": "p2-l14-w15", 
+        "character": "伤", 
+        "pinyin": "shang1", 
+        "definitions": [
+          { "meaning": "Injury / Wound", "example": "他腿上受了伤。" },
+          { "meaning": "Sad / Grieve", "example": "别太伤心。" }
+        ]
+      },
       { "id": "p2-l14-w16", "character": "容", "pinyin": "rong2", "meaning": "Contain/Easy part", "exampleSentence": "容易。" },
       { "id": "p2-l14-w17", "character": "能", "pinyin": "neng2", "meaning": "Can/Ability", "exampleSentence": "能干的小手。" },
       { "id": "p2-l14-w18", "character": "晶", "pinyin": "jing1", "meaning": "Crystal part", "exampleSentence": "亮晶晶。" },
-      { "id": "p2-l14-w19", "character": "道", "pinyin": "dao4", "meaning": "Road/Say part", "exampleSentence": "道理。" },
+      { 
+        "id": "p2-l14-w19", 
+        "character": "道", 
+        "pinyin": "dao4", 
+        "definitions": [
+          { "meaning": "Road / Path", "example": "这是一条大路。" },
+          { "meaning": "Say / Speak", "example": "向老师道歉。" }
+        ]
+      },
       { "id": "p2-l14-w20", "character": "虹", "pinyin": "hong2", "meaning": "Rainbow", "exampleSentence": "天上有彩虹。" }
     ]
   },
@@ -407,14 +839,38 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l15-w3", "character": "番", "pinyin": "fan1", "meaning": "Foreign/Time part", "exampleSentence": "番茄。" },
       { "id": "p2-l15-w4", "character": "芽", "pinyin": "ya2", "meaning": "Sprout", "exampleSentence": "种子发芽。" },
       { "id": "p2-l15-w5", "character": "扁", "pinyin": "bian3", "meaning": "Flat", "exampleSentence": "扁豆。" },
-      { "id": "p2-l15-w6", "character": "玉", "pinyin": "yu4", "meaning": "Jade/Corn part", "exampleSentence": "玉米很好吃。" },
+      { 
+        "id": "p2-l15-w6", 
+        "character": "玉", 
+        "pinyin": "yu4", 
+        "definitions": [
+          { "meaning": "Jade", "example": "美丽的玉佩。" },
+          { "meaning": "Corn part", "example": "玉米很好吃。" }
+        ]
+      },
       { "id": "p2-l15-w7", "character": "比", "pinyin": "bi3", "meaning": "Compare", "exampleSentence": "比一比谁快。" },
       { "id": "p2-l15-w8", "character": "伯", "pinyin": "bo2", "meaning": "Uncle", "exampleSentence": "伯伯你好。" },
       { "id": "p2-l15-w9", "character": "萝", "pinyin": "luo2", "meaning": "Radish part", "exampleSentence": "白萝卜。" },
       { "id": "p2-l15-w10", "character": "卜", "pinyin": "bu5", "meaning": "Radish part", "exampleSentence": "胡萝卜。" },
-      { "id": "p2-l15-w11", "character": "煮", "pinyin": "zhu3", "meaning": "Boil/Cook", "exampleSentence": "煮饭。" },
+      { 
+        "id": "p2-l15-w11", 
+        "character": "煮", 
+        "pinyin": "zhu3", 
+        "definitions": [
+          { "meaning": "Boil", "example": "水煮开了。" },
+          { "meaning": "Cook", "example": "妈妈在煮饭。" }
+        ]
+      },
       { "id": "p2-l15-w12", "character": "鼠", "pinyin": "shu3", "meaning": "Rat/Mouse", "exampleSentence": "老鼠躲进洞。" },
-      { "id": "p2-l15-w13", "character": "或", "pinyin": "huo4", "meaning": "Or", "exampleSentence": "或者是。" },
+      { 
+        "id": "p2-l15-w13", 
+        "character": "或", 
+        "pinyin": "huo4", 
+        "definitions": [
+          { "meaning": "Or", "example": "吃苹果或者是梨。" },
+          { "meaning": "Perhaps", "example": "或许他已经回家了。" }
+        ]
+      },
       { "id": "p2-l15-w14", "character": "者", "pinyin": "zhe3", "meaning": "Person suffix", "exampleSentence": "或者是。" },
       { "id": "p2-l15-w15", "character": "猪", "pinyin": "zhu1", "meaning": "Pig", "exampleSentence": "小猪吃得饱。" },
       { "id": "p2-l15-w16", "character": "拔", "pinyin": "ba2", "meaning": "Pull out", "exampleSentence": "拔萝卜。" },
@@ -422,7 +878,15 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l15-w18", "character": "挖", "pinyin": "wa1", "meaning": "Dig", "exampleSentence": "挖土机。" },
       { "id": "p2-l15-w19", "character": "考", "pinyin": "kao3", "meaning": "Test", "exampleSentence": "今天考试。" },
       { "id": "p2-l15-w20", "character": "根", "pinyin": "gen1", "meaning": "Root", "exampleSentence": "树根在土里。" },
-      { "id": "p2-l15-w21", "character": "实", "pinyin": "shi2", "meaning": "Fruit/Reality", "exampleSentence": "果实累累。" }
+      { 
+        "id": "p2-l15-w21", 
+        "character": "实", 
+        "pinyin": "shi2", 
+        "definitions": [
+          { "meaning": "Fruit / Seed", "example": "果实累累。" },
+          { "meaning": "Reality / Truth", "example": "实话实说。" }
+        ]
+      }
     ]
   },
   {
@@ -435,19 +899,59 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l16-w2", "character": "静", "pinyin": "jing4", "meaning": "Quiet", "exampleSentence": "安静看书。" },
       { "id": "p2-l16-w3", "character": "绘", "pinyin": "hui4", "meaning": "Draw", "exampleSentence": "绘本故事。" },
       { "id": "p2-l16-w4", "character": "趣", "pinyin": "qu4", "meaning": "Interest", "exampleSentence": "有趣的书。" },
-      { "id": "p2-l16-w5", "character": "借", "pinyin": "jie4", "meaning": "Borrow/Lend", "exampleSentence": "去图书馆借书。" },
-      { "id": "p2-l16-w6", "character": "次", "pinyin": "ci4", "meaning": "Time/Order", "exampleSentence": "下一次。" },
+      { 
+        "id": "p2-l16-w5", 
+        "character": "借", 
+        "pinyin": "jie4", 
+        "definitions": [
+          { "meaning": "Borrow", "example": "去图书馆借书。" },
+          { "meaning": "Lend", "example": "借你一支笔。" }
+        ]
+      },
+      { 
+        "id": "p2-l16-w6", 
+        "character": "次", 
+        "pinyin": "ci4", 
+        "definitions": [
+          { "meaning": "Times / Frequency", "example": "读三遍。" },
+          { "meaning": "Order / Next", "example": "下一次。" }
+        ]
+      },
       { "id": "p2-l16-w7", "character": "英", "pinyin": "ying1", "meaning": "English/Brave part", "exampleSentence": "英文课。" },
       { "id": "p2-l16-w8", "character": "遍", "pinyin": "bian4", "meaning": "Times", "exampleSentence": "读三遍。" },
-      { "id": "p2-l16-w9", "character": "架", "pinyin": "jia4", "meaning": "Shelf/Rack", "exampleSentence": "书架上有很多书。" },
-      { "id": "p2-l16-w10", "character": "箱", "pinyin": "xiang1", "meaning": "Box/Chest", "exampleSentence": "纸箱。" },
+      { 
+        "id": "p2-l16-w9", 
+        "character": "架", 
+        "pinyin": "jia4", 
+        "definitions": [
+          { "meaning": "Shelf / Rack", "example": "书架上有很多书。" },
+          { "meaning": "Frame / Support", "example": "这是电脑架。" }
+        ]
+      },
+      { 
+        "id": "p2-l16-w10", 
+        "character": "箱", 
+        "pinyin": "xiang1", 
+        "definitions": [
+          { "meaning": "Box / Case", "example": "一个大木箱。" },
+          { "meaning": "Trunk", "example": "放在车箱里。" }
+        ]
+      },
       { "id": "p2-l16-w11", "character": "盒", "pinyin": "he2", "meaning": "Small box", "exampleSentence": "铅笔盒。" },
       { "id": "p2-l16-w12", "character": "案", "pinyin": "an4", "meaning": "Plan/Case", "exampleSentence": "答案。" },
       { "id": "p2-l16-w13", "character": "附", "pinyin": "fu4", "meaning": "Attach part", "exampleSentence": "附近。" },
       { "id": "p2-l16-w14", "character": "近", "pinyin": "jin4", "meaning": "Near", "exampleSentence": "我家就在附近。" },
       { "id": "p2-l16-w15", "character": "满", "pinyin": "man3", "meaning": "Full", "exampleSentence": "杯子满了。" },
       { "id": "p2-l16-w16", "character": "始", "pinyin": "shi3", "meaning": "Begin", "exampleSentence": "开始上课。" },
-      { "id": "p2-l16-w17", "character": "样", "pinyin": "yang4", "meaning": "Type/Look", "exampleSentence": "什么样子？" },
+      { 
+        "id": "p2-l16-w17", 
+        "character": "样", 
+        "pinyin": "yang4", 
+        "definitions": [
+          { "meaning": "Type / Kind", "example": "各式各样。" },
+          { "meaning": "Look / Manner", "example": "什么样子？" }
+        ]
+      },
       { "id": "p2-l16-w18", "character": "候", "pinyin": "hou4", "meaning": "Wait/Time part", "exampleSentence": "这时候。" },
       { "id": "p2-l16-w19", "character": "知", "pinyin": "zhi1", "meaning": "Know", "exampleSentence": "知道道理。" },
       { "id": "p2-l16-w20", "character": "指", "pinyin": "zhi3", "meaning": "Point", "exampleSentence": "用手指指着。" }
@@ -461,21 +965,53 @@ export const p2Lessons: Lesson[] = [
     "words": [
       { "id": "p2-l17-w1", "character": "逛", "pinyin": "guang4", "meaning": "Stroll", "exampleSentence": "逛街。" },
       { "id": "p2-l17-w2", "character": "夜", "pinyin": "ye4", "meaning": "Night", "exampleSentence": "夜晚。" },
-      { "id": "p2-l17-w3", "character": "市", "pinyin": "shi4", "meaning": "Market/City", "exampleSentence": "夜市。" },
+      { 
+        "id": "p2-l17-w3", 
+        "character": "市", 
+        "pinyin": "shi4", 
+        "definitions": [
+          { "meaning": "Market", "example": "妈妈去菜市买菜。" },
+          { "meaning": "City", "example": "新加坡是一个美丽的城市。" }
+        ]
+      },
       { "id": "p2-l17-w4", "character": "烤", "pinyin": "kao3", "meaning": "Roast/Bake", "exampleSentence": "烤肉。" },
-      { "id": "p2-l17-w5", "character": "肠", "pinyin": "chang2", "meaning": "Intestine/Sausage part", "exampleSentence": "香肠很好吃。" },
+      { 
+        "id": "p2-l17-w5", 
+        "character": "肠", 
+        "pinyin": "chang2", 
+        "definitions": [
+          { "meaning": "Intestine", "example": "小肠。" },
+          { "meaning": "Sausage part", "example": "香肠很好吃。" }
+        ]
+      },
       { "id": "p2-l17-w6", "character": "翅", "pinyin": "chi4", "meaning": "Wing", "exampleSentence": "鸡翅。" },
       { "id": "p2-l17-w7", "character": "射", "pinyin": "she4", "meaning": "Shoot", "exampleSentence": "射飞镖。" },
       { "id": "p2-l17-w8", "character": "碰", "pinyin": "peng4", "meaning": "Touch/Bump", "exampleSentence": "碰碰车。" },
       { "id": "p2-l17-w9", "character": "饮", "pinyin": "yin3", "meaning": "Drink", "exampleSentence": "饮料。" },
-      { "id": "p2-l17-w10", "character": "料", "pinyin": "liao4", "meaning": "Material", "exampleSentence": "想喝饮料。" },
+      { 
+        "id": "p2-l17-w10", 
+        "character": "料", 
+        "pinyin": "liao4", 
+        "definitions": [
+          { "meaning": "Material / Data", "example": "查找资料。" },
+          { "meaning": "Expect / Predict", "example": "真没料到。" }
+        ]
+      },
       { "id": "p2-l17-w11", "character": "踢", "pinyin": "ti1", "meaning": "Kick", "exampleSentence": "踢足球。" },
       { "id": "p2-l17-w12", "character": "筝", "pinyin": "zheng1", "meaning": "Zither/Kite part", "exampleSentence": "放风筝。" },
       { "id": "p2-l17-w13", "character": "但", "pinyin": "dan4", "meaning": "But", "exampleSentence": "但是。" },
       { "id": "p2-l17-w14", "character": "闹", "pinyin": "nao4", "meaning": "Noisy", "exampleSentence": "热热闹闹。" },
       { "id": "p2-l17-w15", "character": "摊", "pinyin": "tan1", "meaning": "Stall", "exampleSentence": "小吃摊。" },
       { "id": "p2-l17-w16", "character": "阵", "pinyin": "zhen4", "meaning": "Period/Blast", "exampleSentence": "一阵风。" },
-      { "id": "p2-l17-w17", "character": "引", "pinyin": "yin3", "meaning": "Guide/Lead", "exampleSentence": "引人注目。" },
+      { 
+        "id": "p2-l17-w17", 
+        "character": "引", 
+        "pinyin": "yin3", 
+        "definitions": [
+          { "meaning": "Guide / Lead", "example": "引导学生。" },
+          { "meaning": "Attract", "example": "引人注目。" }
+        ]
+      },
       { "id": "p2-l17-w18", "character": "群", "pinyin": "qun2", "meaning": "Group", "exampleSentence": "一群小羊。" },
       { "id": "p2-l17-w19", "character": "套", "pinyin": "tao4", "meaning": "Set", "exampleSentence": "玩套圈。" },
       { "id": "p2-l17-w20", "character": "圈", "pinyin": "quan1", "meaning": "Circle", "exampleSentence": "转一圈。" }
@@ -487,8 +1023,24 @@ export const p2Lessons: Lesson[] = [
     "isPredefined": true,
     "level": "p2",
     "words": [
-      { "id": "p2-l18-w1", "character": "馆", "pinyin": "guan3", "meaning": "Building/Gallery", "exampleSentence": "博物馆。" },
-      { "id": "p2-l18-w2", "character": "院", "pinyin": "yuan4", "meaning": "Yard/Institute", "exampleSentence": "电影院。" },
+      { 
+        "id": "p2-l18-w1", 
+        "character": "馆", 
+        "pinyin": "guan3", 
+        "definitions": [
+          { "meaning": "Building / Hall", "example": "他在展览馆里。" },
+          { "meaning": "Gallery / Library part", "example": "博物馆。" }
+        ]
+      },
+      { 
+        "id": "p2-l18-w2", 
+        "character": "院", 
+        "pinyin": "yuan4", 
+        "definitions": [
+          { "meaning": "Yard / Courtyard", "example": "院子里开满花。" },
+          { "meaning": "Institute / Cinema part", "example": "电影院。" }
+        ]
+      },
       { "id": "p2-l18-w3", "character": "植", "pinyin": "zhi2", "meaning": "Plant", "exampleSentence": "植物园。" },
       { "id": "p2-l18-w4", "character": "海", "pinyin": "hai3", "meaning": "Sea", "exampleSentence": "大海边。" },
       { "id": "p2-l18-w5", "character": "岸", "pinyin": "an4", "meaning": "Bank/Coast", "exampleSentence": "海岸线。" },
@@ -499,11 +1051,35 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l18-w10", "character": "沙", "pinyin": "sha1", "meaning": "Sand", "exampleSentence": "沙滩上。" },
       { "id": "p2-l18-w11", "character": "捡", "pinyin": "jian3", "meaning": "Pick up", "exampleSentence": "捡贝壳。" },
       { "id": "p2-l18-w12", "character": "壳", "pinyin": "ke2", "meaning": "Shell", "exampleSentence": "贝壳。" },
-      { "id": "p2-l18-w13", "character": "区", "pinyin": "qu1", "meaning": "Area", "exampleSentence": "住宅区。" },
+      { 
+        "id": "p2-l18-w13", 
+        "character": "区", 
+        "pinyin": "qu1", 
+        "definitions": [
+          { "meaning": "Area / Zone", "example": "住宅区。" },
+          { "meaning": "Distinguish", "example": "我们要区分对错。" }
+        ]
+      },
       { "id": "p2-l18-w14", "character": "处", "pinyin": "chu4", "meaning": "Place", "exampleSentence": "处处有花。" },
       { "id": "p2-l18-w15", "character": "街", "pinyin": "jie1", "meaning": "Street", "exampleSentence": "街道。" },
-      { "id": "p2-l18-w16", "character": "整", "pinyin": "zheng3", "meaning": "Whole/Neat part", "exampleSentence": "整齐。" },
-      { "id": "p2-l18-w17", "character": "齐", "pinyin": "qi2", "meaning": "Equal/Neat part", "exampleSentence": "一齐走。" },
+      { 
+        "id": "p2-l18-w16", 
+        "character": "整", 
+        "pinyin": "zheng3", 
+        "definitions": [
+          { "meaning": "Whole / Complete", "example": "整整一天。" },
+          { "meaning": "Neat / Orderly part", "example": "整齐。" }
+        ]
+      },
+      { 
+        "id": "p2-l18-w17", 
+        "character": "齐", 
+        "pinyin": "qi2", 
+        "definitions": [
+          { "meaning": "Equal / Uniform", "example": "我们要看齐。" },
+          { "meaning": "Neat / Together part", "example": "一齐走。" }
+        ]
+      },
       { "id": "p2-l18-w18", "character": "离", "pinyin": "li2", "meaning": "Leave/From", "exampleSentence": "离学校很近。" },
       { "id": "p2-l18-w19", "character": "城", "pinyin": "cheng2", "meaning": "City", "exampleSentence": "城市。" }
     ]
@@ -518,16 +1094,40 @@ export const p2Lessons: Lesson[] = [
       { "id": "p2-l19-w2", "character": "桶", "pinyin": "tong3", "meaning": "Bucket", "exampleSentence": "一桶水。" },
       { "id": "p2-l19-w3", "character": "厕", "pinyin": "ce4", "meaning": "Toilet part", "exampleSentence": "上厕所。" },
       { "id": "p2-l19-w4", "character": "所", "pinyin": "suo3", "meaning": "Place part", "exampleSentence": "厕所。" },
-      { "id": "p2-l19-w5", "character": "告", "pinyin": "gao4", "meaning": "Tell part", "exampleSentence": "告诉你。" },
+      { 
+        "id": "p2-l19-w5", 
+        "character": "告", 
+        "pinyin": "gao4", 
+        "definitions": [
+          { "meaning": "Tell / Inform", "example": "告诉你一个好消息。" },
+          { "meaning": "Announce / Sue", "example": "我要告假。" }
+        ]
+      },
       { "id": "p2-l19-w6", "character": "诉", "pinyin": "su4", "meaning": "Tell part", "exampleSentence": "投诉。" },
       { "id": "p2-l19-w7", "character": "珍", "pinyin": "zhen1", "meaning": "Precious part", "exampleSentence": "珍惜。" },
       { "id": "p2-l19-w8", "character": "惜", "pinyin": "xi1", "meaning": "Value part", "exampleSentence": "我们要珍惜时间。" },
       { "id": "p2-l19-w9", "character": "滴", "pinyin": "di1", "meaning": "Drop", "exampleSentence": "一滴水。" },
-      { "id": "p2-l19-w10", "character": "约", "pinyin": "yue1", "meaning": "About/Appointment", "exampleSentence": "节约用水。" },
+      { 
+        "id": "p2-l19-w10", 
+        "character": "约", 
+        "pinyin": "yue1", 
+        "definitions": [
+          { "meaning": "About / Approximate", "example": "大约两点。" },
+          { "meaning": "Appointment / Save part", "example": "节约用水。" }
+        ]
+      },
       { "id": "p2-l19-w11", "character": "浪", "pinyin": "lang4", "meaning": "Wave/Waste part", "exampleSentence": "浪费。" },
       { "id": "p2-l19-w12", "character": "费", "pinyin": "fei4", "meaning": "Fee/Waste part", "exampleSentence": "不浪费粮食。" },
       { "id": "p2-l19-w13", "character": "流", "pinyin": "liu2", "meaning": "Flow", "exampleSentence": "流口水。" },
-      { "id": "p2-l19-w14", "character": "连", "pinyin": "lian2", "meaning": "Even/Connect", "exampleSentence": "连起来。" },
+      { 
+        "id": "p2-l19-w14", 
+        "character": "连", 
+        "pinyin": "lian2", 
+        "definitions": [
+          { "meaning": "Even / Including", "example": "连他都来了。" },
+          { "meaning": "Connect / Link", "example": "连起来。" }
+        ]
+      },
       { "id": "p2-l19-w15", "character": "线", "pinyin": "xian4", "meaning": "Line", "exampleSentence": "画一条线。" },
       { "id": "p2-l19-w16", "character": "断", "pinyin": "duan4", "meaning": "Break", "exampleSentence": "断了。" },
       { "id": "p2-l19-w17", "character": "猜", "pinyin": "cai1", "meaning": "Guess", "exampleSentence": "猜谜语。" },
