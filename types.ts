@@ -1,10 +1,12 @@
-// FIX: Import React to make the React namespace available for CSSProperties.
+
 import React from 'react';
 
 export interface Word {
   id: string;
   character: string;
   pinyin: string; // e.g., "ni3 hao3"
+  meaning?: string;
+  exampleSentence?: string;
 }
 
 export interface TestResult {
@@ -37,7 +39,6 @@ export interface Background {
 
 export type EvaluationState = 'expert' | 'competent' | 'learning' | 'beginner' | 'not_started';
 
-// Keep a simple enum for different views/screens in the app
 export enum AppView {
     Home = 'home',
     Test = 'test',

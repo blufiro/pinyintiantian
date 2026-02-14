@@ -9,10 +9,12 @@ import { ShopIcon } from './icons/ShopIcon';
 import { HistoricalScore, Word, Lesson, EvaluationState } from '../types';
 import { wordService } from '../services/wordService';
 import { PlayIcon } from './icons/PlayIcon';
+import { BookOpenIcon } from './icons/BookOpenIcon';
 import { TrophyIcon } from './icons/TrophyIcon';
 import { MedalIcon } from './icons/MedalIcon';
 import { LeafIcon } from './icons/LeafIcon';
 import { FootprintIcon } from './icons/FootprintIcon';
+import StudyModeModal from './StudyModeModal';
 
 interface HomeScreenProps {
   onStartTestRequest: () => void;
@@ -62,6 +64,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     dailyGoal
 }) => {
   const [activeTab, setActiveTab] = useState('my');
+  const [studyLesson, setStudyLesson] = useState<Lesson | null>(null);
 
   const lessonsToDisplay = useMemo(() => {
     if (activeTab === 'my') {
@@ -107,7 +110,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
       {/* Version on Top Right */}
       <div className="absolute -top-2 -right-2">
-        <span className="text-[10px] text-gray-400 font-mono opacity-50 bg-gray-100/50 px-2 py-0.5 rounded-full">v1.2.5</span>
+        <span className="text-[10px] text-gray-400 font-mono opacity-50 bg-gray-100/50 px-2 py-0.5 rounded-full">v0.7</span>
       </div>
 
       <div className="pt-4 flex flex-col items-center">
@@ -202,6 +205,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                                 <button onClick={() => onDeleteLesson(lesson.id)} className="p-2 text-gray-400 hover:text-red-500"><TrashIcon className="w-4 h-4" /></button>
                             </>
                         )}
+                        <button 
+                          onClick={() => setStudyLesson(lesson)}
+                          className="bg-purple-50 text-purple-600 p-2 rounded-lg hover:bg-purple-600 hover:text-white transition-colors"
+                          title="Study words"
+                        >
+                          <BookOpenIcon className="w-4 h-4" />
+                        </button>
                         <button onClick={() => onStartSingleLessonTest(lesson.id)} className="ml-1 bg-blue-50 text-blue-600 p-2 rounded-lg hover:bg-blue-600 hover:text-white transition-colors">
                           <PlayIcon className="w-4 h-4" />
                         </button>
@@ -221,7 +231,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                     <button onClick={onGoToImport} className="flex items-center gap-1.5 text-[11px] font-black text-purple-600 uppercase tracking-wider hover:bg-purple-50 px-3 py-2 rounded-lg transition-colors">
                         <ImportIcon className="w-4 h-4" /> Add List
                     </button>
-                    <button onClick={handleExport} className="flex items-center gap-1.5 text-[11px] font-black text-blue-600 uppercase tracking-wider hover:bg-blue-50 px-3 py-2 rounded-lg transition-colors">
+                    <button handleExport={handleExport} className="flex items-center gap-1.5 text-[11px] font-black text-blue-600 uppercase tracking-wider hover:bg-blue-50 px-3 py-2 rounded-lg transition-colors">
                         <DownloadIcon className="w-4 h-4" /> Backup
                     </button>
                 </div>
@@ -272,6 +282,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
           )}
         </div>
       </div>
+
+      {/* Study Mode Overlay */}
+      {studyLesson && (
+        <StudyModeModal 
+          lesson={studyLesson} 
+          onClose={() => setStudyLesson(null)}
+          testSize={testSize}
+          onSetTestSize={onSetTestSize}
+          onStartTest={() => {
+              onStartSingleLessonTest(studyLesson.id);
+              setStudyLesson(null);
+          }}
+        />
+      )}
     </div>
   );
 };
