@@ -77,10 +77,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   const renderStatusIcon = (lessonId: string) => {
       const status = lessonStatusMap[lessonId];
       switch(status) {
-          case 'expert': return <TrophyIcon className="w-5 h-5 text-yellow-500" />;
-          case 'competent': return <MedalIcon className="w-5 h-5 text-blue-400" />;
-          case 'learning': return <LeafIcon className="w-5 h-5 text-green-500" />;
-          case 'beginner': return <FootprintIcon className="w-5 h-5 text-gray-400" />;
+          case 'expert': return <TrophyIcon className="w-4 h-4 text-yellow-500" />;
+          case 'competent': return <MedalIcon className="w-4 h-4 text-blue-400" />;
+          case 'learning': return <LeafIcon className="w-4 h-4 text-green-500" />;
+          case 'beginner': return <FootprintIcon className="w-4 h-4 text-gray-400" />;
           default: return null;
       }
   };
@@ -100,205 +100,205 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   const goalPercent = Math.min(100, (dailyPoints / dailyGoal) * 100);
 
   return (
-    <div className="text-center flex flex-col items-center space-y-3 animate-fade-in relative px-1">
-      {/* Header Row: Compact Title & Version */}
-      <div className="w-full flex justify-between items-center pt-1 px-1">
-         <div className="flex flex-col items-start">
-            <h1 className="text-xl font-bold text-blue-600 font-chinese leading-tight">拼音天天练</h1>
-            <p className="text-[9px] uppercase tracking-widest text-gray-400 font-black">Pinyin Practice</p>
+    <div className="flex flex-col h-full gap-1.5 animate-fade-in overflow-hidden">
+      {/* Header Section - Minimal Height */}
+      <div className="shrink-0 flex justify-between items-center px-1 py-0.5">
+         <div className="flex items-center gap-2">
+            <h1 className="text-lg sm:text-xl font-black text-blue-600 font-chinese leading-none">拼音天天练</h1>
+            <p className="text-[8px] uppercase tracking-wider text-gray-300 font-black hidden xs:inline">Pinyin Practice</p>
          </div>
-         <span className="text-[10px] text-gray-400 font-mono opacity-50 bg-gray-50 px-2 py-0.5 rounded-full border border-gray-100">v0.8.1</span>
+         <span className="text-[8px] text-gray-300 font-mono opacity-40">v0.9</span>
       </div>
-      
-      {/* Toolbar: Points | Streak | Goal Bar | Shop - EXTRA LARGE VERSION */}
-      <div className="w-full flex items-center justify-between gap-2.5 bg-white/60 p-3 rounded-[2.5rem] border border-gray-100 shadow-sm">
-        {/* Points - Extra Large */}
-        <div className="bg-yellow-50 border-2 border-yellow-200 rounded-[1.5rem] px-4 py-3 flex items-center space-x-2.5 shadow-sm shrink-0 min-h-[80px]">
-          <CoinIcon className="w-8 h-8 text-yellow-500" />
-          <span className="text-2xl font-black text-yellow-700 leading-none">{screenTime}</span>
-        </div>
 
-        {/* Streak - Extra Large */}
-        <div className={`flex items-center gap-1.5 px-4 py-3 rounded-[1.5rem] bg-orange-50 border-2 border-orange-200 text-orange-600 font-black shrink-0 min-h-[80px] ${streak > 0 ? 'streak-active' : ''}`}>
-            <span className="text-2xl">🔥</span>
-            <div className="flex flex-col items-center">
-              <span className="text-xl leading-none">{streak}</span>
-              <span className="text-[8px] uppercase tracking-tighter">Days</span>
-            </div>
-        </div>
-
-        {/* Goal Box - Extra Large but Narrower Bar */}
-        <div className="flex-1 bg-white rounded-[1.5rem] px-3 py-3 shadow-sm border-2 border-gray-100 flex flex-col items-center justify-center gap-1.5 min-w-0 min-h-[80px]">
-            <div className="flex items-center gap-1.5 w-full">
-              <FlagIcon className="w-6 h-6 text-blue-500 shrink-0" />
-              <div className="flex-1 h-3.5 bg-gray-100 rounded-full overflow-hidden border border-gray-50">
-                  <div 
-                    className="h-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-1000" 
-                    style={{ width: `${goalPercent}%` }}
-                  ></div>
+      {/* Top Dash Cards - Compressed Row */}
+      <div className="shrink-0">
+          <div className="w-full flex gap-1.5 sm:gap-3 bg-white/80 p-1.5 sm:p-2 rounded-xl sm:rounded-[1.5rem] border border-blue-50 shadow-sm items-center">
+              {/* Points */}
+              <div className="flex-1 bg-yellow-50 border border-yellow-200 rounded-lg sm:rounded-xl px-1.5 py-1.5 flex items-center justify-center gap-1 sm:gap-1.5 shadow-sm min-h-[42px]">
+                <CoinIcon className="w-3.5 h-3.5 text-yellow-500" />
+                <span className="text-base sm:text-lg font-black text-yellow-700 leading-none">{screenTime}</span>
               </div>
-            </div>
-            <span className="text-xs font-black text-blue-600 whitespace-nowrap">{dailyPoints} / {dailyGoal}</span>
-        </div>
 
-        {/* Shop - Extra Large */}
-        <button
-          onClick={onGoToShop}
-          className="bg-gradient-to-tr from-pink-500 to-rose-400 hover:from-pink-600 hover:to-rose-500 text-white rounded-[1.5rem] p-4 shadow-md transform active:scale-95 transition-all shrink-0 min-h-[80px] w-[80px] flex items-center justify-center"
-        >
-          <ShopIcon className="w-8 h-8"/>
-        </button>
+              {/* Streak */}
+              <div className={`flex-1 flex items-center justify-center gap-1 px-1.5 py-1.5 rounded-lg sm:rounded-xl bg-orange-50 border border-orange-200 text-orange-600 font-black min-h-[42px] ${streak > 0 ? 'streak-active' : ''}`}>
+                  <span className="text-base sm:text-lg">🔥</span>
+                  <div className="flex flex-col items-center">
+                    <span className="text-sm sm:text-base leading-none">{streak}</span>
+                    <span className="text-[6px] uppercase tracking-tighter hidden xs:inline">Days</span>
+                  </div>
+              </div>
+
+              {/* Goal Bar - Compact */}
+              <div className="hidden sm:flex flex-[2] bg-white rounded-xl px-2 py-1.5 shadow-sm border border-blue-50 items-center gap-2 min-h-[42px]">
+                  <FlagIcon className="w-3 h-3 text-blue-500 shrink-0" />
+                  <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-blue-400 to-blue-600" style={{ width: `${goalPercent}%` }}></div>
+                  </div>
+                  <span className="text-[8px] font-black text-blue-600 whitespace-nowrap">{dailyPoints}/{dailyGoal}</span>
+              </div>
+
+              {/* Shop */}
+              <button
+                onClick={onGoToShop}
+                className="flex-[0.5] sm:flex-1 bg-gradient-to-tr from-pink-500 to-rose-400 text-white rounded-lg sm:rounded-xl p-1.5 shadow-md transform active:scale-95 transition-all min-h-[42px] flex items-center justify-center"
+              >
+                <ShopIcon className="w-4 h-4 sm:w-5 sm:h-5"/>
+              </button>
+          </div>
+          
+          {/* Goal bar for small mobile views */}
+          <div className="sm:hidden w-full bg-white rounded-lg px-2 py-1 shadow-sm border border-blue-50 flex items-center gap-1.5 mt-1">
+              <FlagIcon className="w-2.5 h-2.5 text-blue-500 shrink-0" />
+              <div className="flex-1 h-1 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-blue-400 to-blue-600" style={{ width: `${goalPercent}%` }}></div>
+              </div>
+              <span className="text-[7px] font-black text-blue-600">{dailyPoints}/{dailyGoal}</span>
+          </div>
       </div>
 
-      {/* Grouped Actions: Length + Play Buttons */}
-      <div className="w-full bg-blue-50/40 p-2 rounded-2xl border border-blue-100 flex flex-col gap-2 shadow-sm">
-        <div className="flex items-center justify-center gap-3">
-            <span className="text-[9px] font-black text-gray-400 uppercase tracking-tighter">Length</span>
-            <div className="bg-white/80 rounded-full p-0.5 shadow-sm flex items-center border border-gray-100">
-                {[5, 10, 20].map(size => (
-                    <button
-                        key={size}
-                        onClick={() => onSetTestSize(size)}
-                        className={`w-7 h-7 rounded-full text-[10px] font-black transition-all ${
-                            testSize === size 
-                            ? 'bg-blue-500 text-white shadow-sm' 
-                            : 'text-gray-400 hover:text-blue-500'
-                        }`}
-                    >
-                        {size}
-                    </button>
-                ))}
-            </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={onStartTestRequest}
-              className="bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-black py-2 rounded-xl text-[10px] shadow-md transform active:scale-95 transition-all uppercase tracking-tight"
-            >
-              Mixed Lessons 🚀
-            </button>
-            <button
-              onClick={onStartTopMistakesTest}
-              disabled={topMistakes.length === 0}
-              className="bg-gradient-to-b from-rose-400 to-rose-600 hover:from-rose-500 hover:to-rose-700 text-white font-black py-2 rounded-xl text-[10px] shadow-md transform active:scale-95 transition-all disabled:opacity-50 disabled:from-gray-300 disabled:to-gray-400 uppercase tracking-tight"
-            >
-              Mistakes 🎯
-            </button>
-        </div>
-      </div>
-
-      {/* Lists Tab Section */}
-      <div className="w-full bg-gray-50/50 p-2 rounded-2xl border border-gray-100">
-        <div className="flex space-x-1 bg-gray-200/50 p-1 rounded-xl mb-2">
-            {TABS.map(tab => (
-                <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex-1 py-1.5 px-1 text-[9px] font-black rounded-lg transition-all ${
-                        activeTab === tab.id
-                        ? 'bg-white text-blue-600 shadow-sm'
-                        : 'text-gray-500'
-                    }`}
-                >
-                    {tab.label}
-                </button>
-            ))}
-        </div>
-
-        <div className="min-h-[120px]">
-            {lessonsToDisplay.length > 0 ? (
-                <div className="grid grid-cols-1 gap-1.5 max-h-40 overflow-y-auto pr-1">
-                {lessonsToDisplay.map(lesson => (
-                    <div key={lesson.id} className="flex justify-between items-center p-2 bg-white rounded-xl border border-gray-100 shadow-sm hover:border-blue-200 transition-colors">
-                    <div className="flex items-center gap-2 overflow-hidden flex-1">
-                         {renderStatusIcon(lesson.id) || <div className="w-3.5 h-3.5 rounded-full border-2 border-dashed border-gray-200" />}
-                         <span className="font-bold text-gray-700 truncate text-[12px]" title={lesson.name}>{lesson.name}</span>
-                    </div>
-                    
-                    <div className="flex items-center gap-0.5">
-                        {activeTab === 'my' && (
-                            <>
-                                <button onClick={() => onEditLesson(lesson)} className="p-1 text-gray-400 hover:text-blue-500"><PencilIcon className="w-3.5 h-3.5" /></button>
-                                <button onClick={() => onDeleteLesson(lesson.id)} className="p-1 text-gray-400 hover:text-red-500"><TrashIcon className="w-3.5 h-3.5" /></button>
-                            </>
-                        )}
-                        <button 
-                          onClick={() => setStudyLesson(lesson)}
-                          className="bg-purple-50 text-purple-600 p-1.5 rounded-lg hover:bg-purple-600 hover:text-white transition-colors"
-                          title="Study words"
+      {/* Main Content Area - Flexible Height */}
+      <div className="flex-1 flex flex-col lg:flex-row gap-2 overflow-hidden">
+        
+        {/* Lesson List Column */}
+        <div className="flex-[3] flex flex-col min-h-0 bg-gray-50/50 p-1.5 sm:p-2.5 rounded-xl sm:rounded-[2rem] border border-gray-100 shadow-inner overflow-hidden">
+            <div className="shrink-0 flex flex-col gap-1.5 mb-2">
+                <div className="flex space-x-0.5 bg-gray-200/50 p-0.5 rounded-lg sm:rounded-xl">
+                    {TABS.map(tab => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`flex-1 py-1 px-0.5 text-[8px] sm:text-[10px] font-black rounded-md sm:rounded-lg transition-all ${
+                                activeTab === tab.id ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'
+                            }`}
                         >
-                          <BookOpenIcon className="w-3.5 h-3.5" />
+                            {tab.label}
                         </button>
-                        <button onClick={() => onStartSingleLessonTest(lesson.id)} className="ml-1 bg-blue-50 text-blue-600 p-1.5 rounded-lg hover:bg-blue-600 hover:text-white transition-colors">
-                          <PlayIcon className="w-3.5 h-3.5" />
+                    ))}
+                </div>
+                
+                <div className="flex items-center justify-between gap-2 px-0.5">
+                    <div className="flex items-center gap-1 bg-white/80 rounded-full p-0.5 border border-blue-50 shadow-sm shrink-0">
+                        {[5, 10, 20].map(size => (
+                            <button
+                                key={size}
+                                onClick={() => onSetTestSize(size)}
+                                className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[8px] sm:text-[9px] font-black transition-all ${
+                                    testSize === size ? 'bg-blue-500 text-white' : 'text-gray-400 hover:text-blue-400'
+                                }`}
+                            >
+                                {size}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="flex gap-1.5 shrink-0">
+                        <button
+                            onClick={onStartTestRequest}
+                            className="bg-green-500 hover:bg-green-600 text-white font-black py-1 px-2.5 rounded-md text-[8px] sm:text-[9px] shadow-sm uppercase tracking-wider transition-all transform active:scale-95"
+                        >
+                            Test 🚀
+                        </button>
+                        <button
+                            onClick={onStartTopMistakesTest}
+                            disabled={topMistakes.length === 0}
+                            className="bg-rose-500 hover:bg-rose-600 text-white font-black py-1 px-2.5 rounded-md text-[8px] sm:text-[9px] shadow-sm disabled:opacity-50 transition-all transform active:scale-95"
+                            title="Test Mistakes"
+                        >
+                            🎯
                         </button>
                     </div>
+                </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar-thin scroll-smooth">
+                {lessonsToDisplay.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5">
+                    {lessonsToDisplay.map(lesson => (
+                        <div key={lesson.id} className="flex justify-between items-center p-2 bg-white rounded-lg sm:rounded-xl border border-gray-100 shadow-sm hover:border-blue-200 transition-all">
+                        <div className="flex items-center gap-1.5 sm:gap-2 overflow-hidden flex-1">
+                             {renderStatusIcon(lesson.id) || <div className="w-3 h-3 rounded-full border border-dashed border-gray-200" />}
+                             <span className="font-bold text-gray-700 truncate text-[11px] sm:text-[13px]">{lesson.name}</span>
+                        </div>
+                        
+                        <div className="flex items-center gap-1 shrink-0">
+                            {activeTab === 'my' && (
+                                <>
+                                    <button onClick={() => onEditLesson(lesson)} className="p-0.5 text-gray-300 hover:text-blue-500"><PencilIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5" /></button>
+                                    <button onClick={() => onDeleteLesson(lesson.id)} className="p-0.5 text-gray-300 hover:text-red-500"><TrashIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5" /></button>
+                                </>
+                            )}
+                            <button 
+                              onClick={() => setStudyLesson(lesson)}
+                              className="bg-purple-50 text-purple-600 p-1 rounded-md hover:bg-purple-600 hover:text-white transition-all shadow-sm"
+                            >
+                              <BookOpenIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                            </button>
+                            <button onClick={() => onStartSingleLessonTest(lesson.id)} className="bg-blue-50 text-blue-600 p-1 rounded-md hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                              <PlayIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                            </button>
+                        </div>
+                        </div>
+                    ))}
                     </div>
-                ))}
-                </div>
-            ) : (
-                <div className="flex flex-col items-center justify-center py-6 text-gray-400">
-                    <div className="text-2xl mb-1">📥</div>
-                    <p className="text-[10px] font-bold uppercase tracking-widest">No lists</p>
-                </div>
-            )}
+                ) : (
+                    <div className="h-full flex flex-col items-center justify-center text-gray-200">
+                        <div className="text-2xl mb-1 opacity-20">📥</div>
+                        <p className="text-[8px] font-black uppercase tracking-widest">No lists found</p>
+                    </div>
+                )}
+            </div>
 
             {activeTab === 'my' && (
-                <div className="flex justify-center gap-3 mt-2 pt-2 border-t border-gray-100">
-                    <button onClick={onGoToImport} className="flex items-center gap-1 text-[9px] font-black text-purple-600 uppercase tracking-wider hover:bg-purple-50 px-2 py-1 rounded-lg transition-colors">
-                        <ImportIcon className="w-3.5 h-3.5" /> Add List
+                <div className="shrink-0 flex justify-center gap-4 mt-1.5 pt-1.5 border-t border-gray-100">
+                    <button onClick={onGoToImport} className="flex items-center gap-1 text-[8px] sm:text-[9px] font-black text-purple-600 uppercase hover:bg-purple-50 px-2 py-0.5 rounded-md">
+                        <ImportIcon className="w-2.5 h-2.5" /> Add
                     </button>
-                    <button onClick={handleExport} className="flex items-center gap-1 text-[9px] font-black text-blue-600 uppercase tracking-wider hover:bg-blue-50 px-2 py-1 rounded-lg transition-colors">
-                        <DownloadIcon className="w-3.5 h-3.5" /> Backup
+                    <button onClick={handleExport} className="flex items-center gap-1 text-[8px] sm:text-[9px] font-black text-blue-600 uppercase hover:bg-blue-50 px-2 py-0.5 rounded-md">
+                        <DownloadIcon className="w-2.5 h-2.5" /> Backup
                     </button>
                 </div>
             )}
         </div>
-      </div>
 
-      {/* Stats Quick View - Double height boxes */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
-        {/* Mistakes Box */}
-        <div className="bg-rose-50/50 p-2.5 rounded-2xl border border-rose-100 text-left flex flex-col">
-          <h3 className="text-[10px] font-black text-rose-700 uppercase tracking-wider mb-2 shrink-0">Mistakes Focus</h3>
-          {topMistakes.length > 0 ? (
-            <div className="space-y-1 max-h-[300px] overflow-y-auto pr-1 flex-1">
-              {topMistakes.map(word => (
-                <div key={word.id} className="flex justify-between items-center p-2 bg-white rounded-xl text-xs border border-rose-100 shadow-sm">
-                    <div className="flex items-center gap-2">
-                        <span className="text-base font-bold font-chinese leading-none">{word.character}</span>
-                        <span className="font-mono text-[9px] text-gray-400">{word.pinyin}</span>
+        {/* Stats Section */}
+        <div className="flex-1 grid grid-cols-2 lg:grid-cols-1 gap-1.5 lg:gap-2 lg:max-w-[180px] shrink-0 min-h-[110px] sm:min-h-0 overflow-hidden">
+          {/* Mistakes Box */}
+          <div className="bg-rose-50/30 p-1.5 sm:p-2 rounded-xl border border-rose-100 flex flex-col overflow-hidden">
+            <h3 className="text-[8px] font-black text-rose-700 uppercase mb-1 shrink-0">🎯 Mistakes</h3>
+            <div className="flex-1 overflow-y-auto pr-0.5 custom-scrollbar-thin">
+              {topMistakes.length > 0 ? (
+                <div className="grid grid-cols-2 gap-1 sm:gap-2">
+                  {topMistakes.slice(0, 10).map(word => (
+                    <div key={word.id} className="flex flex-col items-center justify-center p-1.5 bg-white rounded-lg border border-rose-50 shadow-sm hover:shadow-md transition-all">
+                        <span className="font-black font-chinese text-2xl sm:text-3xl text-gray-800 leading-none mb-0.5">{word.character}</span>
+                        <div className="bg-rose-50 px-1.5 rounded-full flex items-center gap-0.5">
+                           <span className="font-black text-rose-500 text-[10px] sm:text-xs">{word.mistakeCount}</span>
+                           <span className="text-[6px] font-black text-rose-300 uppercase tracking-tighter">x</span>
+                        </div>
                     </div>
-                    <span className="font-black text-rose-500 text-[10px]">{word.mistakeCount}❌</span>
+                  ))}
                 </div>
-              ))}
+              ) : (
+                <p className="h-full flex items-center justify-center text-[7px] text-rose-300 font-bold uppercase">Perfect! 🌟</p>
+              )}
             </div>
-          ) : (
-            <div className="flex-1 flex items-center justify-center py-8">
-              <p className="text-[10px] text-rose-400 font-bold text-center">PERFECT SCORE! 🌟</p>
-            </div>
-          )}
-        </div>
+          </div>
 
-        {/* Recent Scores Box */}
-        <div className="bg-blue-50/50 p-2.5 rounded-2xl border border-blue-100 text-left flex flex-col">
-          <h3 className="text-[10px] font-black text-blue-700 uppercase tracking-wider mb-2 shrink-0">History</h3>
-          {historicalScores.length > 0 ? (
-            <div className="space-y-1 max-h-[300px] overflow-y-auto pr-1 flex-1">
-              {historicalScores.map((s, i) => (
-                <div key={i} className="flex justify-between items-center p-2 bg-white rounded-xl text-[9px] border border-blue-100 shadow-sm">
-                  <span className="font-bold text-gray-400 shrink-0">{s.date.split('/')[1]}/{s.date.split('/')[0]}</span>
-                  <span className="flex-1 px-2 truncate font-bold text-gray-600">{s.lessonNames?.[0] || '...'}</span>
-                  <span className="font-black text-blue-600 shrink-0">{s.score}/{s.total}</span>
-                </div>
-              ))}
+          {/* History Box */}
+          <div className="bg-blue-50/30 p-1.5 sm:p-2 rounded-xl border border-blue-100 flex flex-col overflow-hidden">
+            <h3 className="text-[8px] font-black text-blue-700 uppercase mb-1 shrink-0">📅 History</h3>
+            <div className="flex-1 overflow-y-auto pr-0.5 space-y-0.5 custom-scrollbar-thin">
+              {historicalScores.length > 0 ? (
+                historicalScores.slice(0, 5).map((s, i) => (
+                  <div key={i} className="flex justify-between items-center p-1 bg-white rounded-md text-[8px] border border-blue-50 shadow-sm">
+                    <span className="font-bold text-gray-300">{s.date.split('/')[1]}/{s.date.split('/')[0]}</span>
+                    <span className="font-black text-blue-500">{s.score}/{s.total}</span>
+                  </div>
+                ))
+              ) : (
+                <p className="h-full flex items-center justify-center text-[7px] text-blue-300 font-bold uppercase">No data 🏁</p>
+              )}
             </div>
-          ) : (
-            <div className="flex-1 flex items-center justify-center py-8">
-              <p className="text-[10px] text-blue-400 font-bold text-center">NO TESTS YET 🎯</p>
-            </div>
-          )}
+          </div>
         </div>
       </div>
 
@@ -315,6 +315,15 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
           }}
         />
       )}
+      
+      <style>{`
+        .custom-scrollbar-thin::-webkit-scrollbar { width: 2px; }
+        .custom-scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.04); border-radius: 10px; }
+        @media (max-height: 450px) {
+           .xs\\:inline { display: inline !important; }
+        }
+      `}</style>
     </div>
   );
 };

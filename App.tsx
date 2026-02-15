@@ -61,7 +61,6 @@ const App: React.FC = () => {
       pressedKeys.current.add(e.key.toLowerCase());
       if (pressedKeys.current.has('q') && pressedKeys.current.has('p')) {
         setScreenTime(prev => prev + 50);
-        // Optional: clear to prevent accidental double-triggering if keys are held
         pressedKeys.current.delete('q');
         pressedKeys.current.delete('p');
       }
@@ -89,7 +88,7 @@ const App: React.FC = () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
     if (diffDays > 1) {
-      setStreak(0); // Missed a day
+      setStreak(0); 
     }
   };
 
@@ -180,7 +179,6 @@ const App: React.FC = () => {
     } else if (lastTestConfig.type === 'mistakes') {
         handleStartTopMistakesTest();
     } else {
-        // For specific words retry, we just restart with the same words
         setTestWords([...testWords]);
         setView('test');
     }
@@ -190,7 +188,6 @@ const App: React.FC = () => {
     const incorrectWords = lastTestResults.filter(r => !r.correct).map(r => r.word);
     if (incorrectWords.length === 0) return;
     
-    // Shuffle the incorrect words for the retry
     setTestWords([...incorrectWords].sort(() => Math.random() - 0.5));
     setLastTestConfig({ type: 'specific_words' });
     setView('test');
@@ -250,8 +247,8 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen font-sans flex items-start justify-center p-2 md:p-6 transition-all duration-500 overflow-x-hidden" style={activeBackground.style}>
-      <div className="w-full max-w-2xl bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-4 md:p-8 text-gray-800 border border-white/50">
+    <div className="h-[100dvh] w-full font-sans flex items-center justify-center p-0 sm:p-2 lg:p-6 transition-all duration-500 overflow-hidden" style={activeBackground.style}>
+      <div className="w-full max-w-4xl h-full sm:h-auto sm:max-h-[98dvh] bg-white/90 backdrop-blur-md rounded-none sm:rounded-[2rem] shadow-2xl p-2 sm:p-4 md:p-6 text-gray-800 border border-white/50 flex flex-col overflow-hidden">
         {renderContent()}
         {isLessonSelectionOpen && (
             <TestLessonSelectionModal 

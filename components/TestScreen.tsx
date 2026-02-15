@@ -18,7 +18,6 @@ const LoadingSpinner: React.FC<{ className?: string }> = ({ className = "w-4 h-4
   </svg>
 );
 
-// Helper to normalize pinyin input
 const normalizePinyin = (pinyin: string): string => {
     return pinyin.toLowerCase().replace(/\s+/g, ' ').trim();
 };
@@ -33,46 +32,37 @@ const TestScreen: React.FC<TestScreenProps> = ({ onTestComplete, onGoHome, words
 
   useEffect(() => {
     if (words.length === 0) {
-        // This case should ideally be handled before navigating to this screen
         alert("No words were provided for the test.");
         onGoHome();
     }
   }, [words, onGoHome]);
 
   useEffect(() => {
-    // Automatically focus the input when the word changes and we are not showing feedback
     if (!answerStatus) {
       inputRef.current?.focus();
     }
   }, [currentIndex, answerStatus]);
   
   const handleExit = () => {
-    if (window.confirm("Are you sure you want to exit? Your progress in this test will be lost.")) {
+    if (window.confirm("Exit test? Progress will be lost.")) {
         onGoHome();
     }
   };
   
-  // This effect handles the logic for moving to the next word after a delay.
   useEffect(() => {
-    if (!answerStatus) {
-      return;
-    }
+    if (!answerStatus) return;
 
-    // Set a timer to show the result feedback for 1.5 seconds.
     const timer = setTimeout(() => {
-      // If there are more words, move to the next one.
       if (currentIndex < words.length - 1) {
         setCurrentIndex(currentIndex + 1);
         setInputValue('');
-        setAnswerStatus(null); // Reset for the next word.
+        setAnswerStatus(null);
       } else {
-        // Otherwise, the test is over. The `results` state already has all the answers.
         const score = results.filter(r => r.correct).length;
         onTestComplete(results, score);
       }
     }, 1500);
 
-    // Clean up the timer if the component unmounts or dependencies change.
     return () => clearTimeout(timer);
   }, [answerStatus, currentIndex, words, results, onTestComplete]);
 
@@ -84,7 +74,8 @@ const TestScreen: React.FC<TestScreenProps> = ({ onTestComplete, onGoHome, words
     const currentWord = words[currentIndex];
     const isCorrect = normalizePinyin(inputValue) === normalizePinyin(currentWord.pinyin);
     
-    setResults(prev => [...prev, { word: currentWord, userInput: inputValue, correct: isCorrect }]);
+    const newResults = [...results, { word: currentWord, userInput: inputValue, correct: isCorrect }];
+    setResults(newResults);
     setAnswerStatus(isCorrect ? 'correct' : 'incorrect');
   };
   
@@ -105,62 +96,92 @@ const TestScreen: React.FC<TestScreenProps> = ({ onTestComplete, onGoHome, words
   const currentWord = words[currentIndex];
 
   return (
-    <div className="flex flex-col items-center p-0 xl:p-4 space-y-3 xl:space-y-6 relative">
+    <div className="flex flex-col landscape:flex-row h-full w-full gap-4 sm:gap-6 relative max-w-4xl mx-auto overflow-hidden">
+       {/* Exit Button - Stays top right */}
        <button 
           onClick={handleExit} 
-          className="absolute top-0 right-0 p-1 xl:p-2 rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-600 transition-colors"
+          className="absolute top-0 right-0 p-1.5 rounded-full text-gray-300 hover:bg-gray-100 hover:text-gray-500 transition-colors z-20"
           aria-label="Exit Test"
         >
-          <XMarkIcon className="w-5 h-5 xl:w-6 xl:h-6"/>
+          <XMarkIcon className="w-5 h-5 sm:w-6 sm:h-6"/>
         </button>
-      <div className="w-full flex justify-between items-center px-1">
-        <span className="text-sm xl:text-lg font-semibold text-gray-500">
-          Word {currentIndex + 1} / {words.length}
-        </span>
-        <button 
-          onClick={handleSpeak} 
-          disabled={isSpeaking}
-          className="p-1.5 xl:p-2 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors min-w-[36px] flex items-center justify-center"
-        >
-          {isSpeaking ? <LoadingSpinner className="w-5 h-5 xl:w-6 xl:h-6 text-blue-600" /> : <SpeakerIcon className="w-5 h-5 xl:w-6 xl:h-6"/>}
-        </button>
+        
+      {/* Left Column (Landscape) / Top Area (Portrait) */}
+      <div className="flex-1 flex flex-col items-center justify-center space-y-3 sm:space-y-4">
+        {/* Progress Badge - Compact on Landscape */}
+        <div className="bg-blue-50 px-4 py-1 rounded-full border border-blue-100 landscape:py-0.5">
+          <span className="text-[10px] sm:text-sm font-black text-blue-500 uppercase tracking-widest">
+            {currentIndex + 1} / {words.length}
+          </span>
+        </div>
+
+        {/* Character Card - Responsive sizing */}
+        <div className="relative w-full aspect-square max-w-[240px] sm:max-w-none sm:h-64 bg-white rounded-[2rem] sm:rounded-[2.5rem] flex items-center justify-center border border-blue-50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+          <p className="text-7xl sm:text-9xl font-bold font-chinese tracking-tighter text-gray-800">{currentWord.character}</p>
+          
+          {/* Audio trigger inside or near card for landscape efficiency */}
+          <button 
+            onClick={handleSpeak} 
+            disabled={isSpeaking}
+            className="absolute bottom-3 right-3 p-2.5 sm:p-4 rounded-2xl bg-blue-500/10 text-blue-500 hover:bg-blue-500 hover:text-white disabled:opacity-30 transition-all transform active:scale-90"
+          >
+            {isSpeaking ? <LoadingSpinner className="w-5 h-5" /> : <SpeakerIcon className="w-5 h-5 sm:w-6 sm:h-6"/>}
+          </button>
+
+          {answerStatus && (
+              <div className={`absolute inset-0 flex items-center justify-center text-white font-black text-xl sm:text-4xl transition-all duration-300 animate-fade-in ${answerStatus === 'correct' ? 'bg-green-500/95' : 'bg-rose-500/95'}`}>
+                  {answerStatus === 'correct' ? 'EXCELLENT!' : 'OOPS!'}
+              </div>
+          )}
+        </div>
       </div>
 
-      <div className="relative w-full h-32 xl:h-56 bg-gray-100 rounded-xl flex items-center justify-center mb-1 xl:mb-4 border border-gray-200 shadow-sm">
-        <p className="text-6xl xl:text-8xl font-bold tracking-widest">{currentWord.character}</p>
-        {answerStatus && (
-            <div className={`absolute inset-0 rounded-xl flex items-center justify-center text-white font-bold text-xl xl:text-2xl transition-opacity duration-300 ${answerStatus === 'correct' ? 'bg-green-500/90' : 'bg-red-500/90'}`}>
-                {answerStatus === 'correct' ? 'Correct! 🎉' : 'Oops!'}
+      {/* Right Column (Landscape) / Bottom Area (Portrait) */}
+      <div className="flex-1 flex flex-col justify-center space-y-3 sm:space-y-4">
+        
+        {/* Correction Feedback - Conditional Height */}
+        <div className={`transition-all duration-300 ${answerStatus === 'incorrect' ? 'opacity-100 h-auto' : 'opacity-0 h-0 pointer-events-none'}`}>
+            <div className="text-center p-2 sm:p-3 bg-rose-50 rounded-2xl border border-rose-100 animate-bounce-short">
+                <p className="text-[9px] font-black text-rose-400 uppercase tracking-widest mb-0.5">Correction</p>
+                <span className="font-mono text-lg sm:text-xl text-rose-600 font-bold">{currentWord.pinyin}</span>
             </div>
-        )}
-      </div>
-        {answerStatus === 'incorrect' && (
-            <p className="text-center text-red-600 font-semibold text-base xl:text-lg">
-                Correct: <span className="font-mono">{currentWord.pinyin}</span>
-            </p>
-        )}
+        </div>
 
-      <form onSubmit={handleSubmit} className="w-full flex flex-col items-center space-y-2 xl:space-y-4">
-        <input
-          ref={inputRef}
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          disabled={!!answerStatus}
-          placeholder="Type pinyin here"
-          className="w-full text-center p-3 xl:p-4 bg-gray-100 border-2 border-gray-300 rounded-lg text-lg xl:text-xl focus:border-blue-500 focus:ring-blue-500 focus:bg-white transition-colors disabled:bg-gray-200"
-          autoCapitalize="off"
-          autoCorrect="off"
-          spellCheck="false"
-        />
-        <button
-          type="submit"
-          disabled={!!answerStatus || inputValue.trim() === ''}
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg text-lg shadow-md disabled:bg-gray-400 disabled:cursor-not-allowed transform active:scale-95 transition-all duration-200"
-        >
-          {answerStatus ? 'Checking...' : 'Check Answer'}
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 sm:gap-4">
+          <div className="relative">
+            <input
+              ref={inputRef}
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              disabled={!!answerStatus}
+              placeholder="Type pinyin..."
+              className="w-full text-center py-3 sm:py-4 px-4 sm:px-6 bg-white border-2 border-blue-50 rounded-2xl sm:rounded-[1.5rem] text-lg sm:text-2xl font-mono focus:border-blue-400 focus:ring-0 focus:shadow-lg transition-all disabled:bg-gray-50 placeholder:text-gray-200"
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck="false"
+            />
+          </div>
+          
+          <button
+            type="submit"
+            disabled={!!answerStatus || inputValue.trim() === ''}
+            className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-black py-3 sm:py-4 rounded-2xl text-sm sm:text-lg shadow-xl disabled:from-gray-300 disabled:to-gray-400 disabled:shadow-none transform active:scale-[0.98] transition-all uppercase tracking-widest"
+          >
+            {answerStatus ? 'Validating...' : 'Check Answer! ✨'}
+          </button>
+        </form>
+      </div>
+
+      <style>{`
+        @keyframes bounce-short {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+        .animate-bounce-short {
+          animation: bounce-short 0.5s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };

@@ -39,28 +39,26 @@ const MistakeItem: React.FC<{ word: { character: string, pinyin: string, id: str
   };
 
   return (
-    <li className="flex items-center justify-between p-3 bg-white rounded-xl border border-gray-100 shadow-sm transition-all hover:shadow-md">
-      <div className="flex items-center gap-4">
+    <li className="flex items-center justify-between p-2 sm:p-2.5 bg-white rounded-xl border border-gray-100 shadow-sm transition-all hover:bg-blue-50/30">
+      <div className="flex items-center gap-2 sm:gap-3">
         <button 
           onClick={handleSpeak}
           disabled={isSpeaking}
-          className="p-2 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors shadow-sm active:scale-95 min-w-[36px] flex items-center justify-center"
-          title="Hear pronunciation"
+          className="p-1 sm:p-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shrink-0 flex items-center justify-center min-w-[28px] sm:min-w-[32px]"
         >
-          {isSpeaking ? <LoadingSpinner className="w-5 h-5 text-blue-600" /> : <SpeakerIcon className="w-5 h-5" />}
+          {isSpeaking ? <LoadingSpinner className="w-3.5 h-3.5 sm:w-4 h-4" /> : <SpeakerIcon className="w-3.5 h-3.5 sm:w-4 h-4" />}
         </button>
-        <span className="text-3xl font-bold text-gray-800 font-chinese">{word.character}</span>
+        <span className="text-xl sm:text-2xl font-bold text-gray-800 font-chinese leading-none">{word.character}</span>
       </div>
-      <div className="flex flex-col items-end gap-1">
-        <span className="text-xs text-gray-400 font-medium line-through decoration-red-300">{userInput || 'no answer'}</span>
+      <div className="flex flex-col items-end gap-0.5 overflow-hidden">
+        <span className="text-[8px] sm:text-[9px] text-gray-300 font-bold uppercase truncate max-w-[60px] sm:max-w-[80px] line-through decoration-rose-300">{userInput || '...'}</span>
         <span 
           onClick={() => setRevealed(!revealed)}
-          className={`text-sm font-mono px-2.5 py-1 rounded-md border transition-all cursor-pointer ${
+          className={`text-[9px] sm:text-[10px] font-black font-mono px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md border transition-all cursor-pointer ${
             isPinyinHidden 
-              ? 'bg-gray-100 text-transparent border-gray-200 select-none' 
+              ? 'bg-gray-100 text-transparent border-gray-100 select-none' 
               : 'bg-green-50 text-green-600 border-green-100'
           }`}
-          title={isPinyinHidden ? "Click to reveal" : ""}
         >
           {word.pinyin}
         </span>
@@ -74,87 +72,121 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ score, totalQuestions, re
   const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
   
   const getFeedback = () => {
-    if (percentage === 100) return "Perfect! You're a Pinyin master! ✨";
-    if (percentage >= 80) return "Great job! Keep up the excellent work! 👍";
-    if (percentage >= 60) return "Good effort! Practice makes perfect. 💪";
-    return "Don't worry, let's try again! You can do it! 😊";
+    if (percentage === 100) return "Master Class! 💎";
+    if (percentage >= 80) return "Super Effort! ⭐";
+    if (percentage >= 60) return "Keep Going! 💪";
+    return "Try Again! 😊";
   };
 
   const mistakes = results.filter(r => !r.correct);
 
   return (
-    <div className="text-center flex flex-col items-center justify-center p-4 space-y-6 animate-fade-in">
-      <h2 className="text-3xl font-black text-blue-600 uppercase tracking-tight">Test Complete!</h2>
-      
-      <div className="bg-yellow-100 text-yellow-800 font-bold py-2 px-6 rounded-full shadow-sm border border-yellow-200">
-        You earned {score} {score === 1 ? 'point' : 'points'} of screen time! ⭐
-      </div>
-
-      <div className="w-48 h-48 bg-blue-100 rounded-full flex flex-col items-center justify-center border-8 border-blue-200 shadow-inner">
-        <span className="text-5xl font-black text-blue-700">{score}/{totalQuestions}</span>
-        <span className="text-xl text-blue-500 font-bold">{percentage}%</span>
+    <div className="flex flex-col h-full animate-fade-in overflow-hidden">
+      {/* Header - Fixed */}
+      <div className="shrink-0 text-center mb-2 sm:mb-6 landscape:mb-1">
+        <h2 className="text-xl sm:text-3xl font-black text-blue-600 uppercase tracking-tighter landscape:text-lg">Test Finished!</h2>
+        <p className="text-[8px] sm:text-[9px] font-black text-blue-300 uppercase tracking-[0.3em] landscape:hidden sm:block">Evaluation Complete</p>
       </div>
       
-      <p className="text-xl font-bold text-gray-700 max-w-xs">{getFeedback()}</p>
-
-      {mistakes.length > 0 && (
-        <div className="w-full max-w-md bg-gray-50 p-5 rounded-3xl shadow-inner border border-gray-100">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-sm font-black text-gray-500 uppercase tracking-widest">Review Mistakes</h3>
-            <button 
-              onClick={() => setHidePinyin(!hidePinyin)}
-              className={`text-[10px] font-black uppercase px-3 py-1.5 rounded-full transition-all border ${
-                hidePinyin 
-                  ? 'bg-blue-600 text-white border-blue-600' 
-                  : 'bg-white text-blue-600 border-blue-200 hover:border-blue-400'
-              }`}
-            >
-              {hidePinyin ? 'Show Pinyin' : 'Hide Pinyin'}
-            </button>
-          </div>
-          
-          <ul className="space-y-3 text-left">
-            {mistakes.map((result) => (
-              <MistakeItem 
-                key={result.word.id} 
-                word={result.word} 
-                userInput={result.userInput} 
-                hideAllPinyin={hidePinyin}
-              />
-            ))}
-          </ul>
+      {/* Main Body - Split Layout on landscape or sm+ screens */}
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 landscape:grid-cols-2 gap-3 sm:gap-6 min-h-0 items-center">
+        
+        {/* Left: Score Column */}
+        <div className="flex flex-col items-center justify-center space-y-2 sm:space-y-4 landscape:space-y-1">
+            <div className="relative group">
+                <div className="absolute -inset-3 bg-yellow-400/20 rounded-full blur-xl animate-pulse"></div>
+                <div className="relative w-28 h-28 sm:w-44 sm:h-44 landscape:w-24 landscape:h-24 bg-white rounded-full flex flex-col items-center justify-center border-[6px] sm:border-[10px] border-blue-500 shadow-2xl overflow-hidden">
+                    <span className="text-2xl sm:text-5xl landscape:text-xl font-black text-blue-600 mb-0.5">{score}/{totalQuestions}</span>
+                    <div className="bg-blue-500 text-white px-2 py-0.5 rounded-full text-[8px] sm:text-xs font-black">
+                        {percentage}%
+                    </div>
+                </div>
+            </div>
+            
+            <div className="text-center space-y-1 sm:space-y-2 landscape:space-y-0">
+                <p className="text-lg sm:text-2xl landscape:text-base font-black text-gray-700 italic">"{getFeedback()}"</p>
+                <div className="inline-flex items-center gap-1.5 bg-yellow-100 text-yellow-800 font-black py-1 px-3 sm:py-1.5 sm:px-5 rounded-2xl text-[8px] sm:text-[10px] uppercase tracking-wider shadow-sm border border-yellow-200">
+                    Earned {score} Points 🪙
+                </div>
+            </div>
         </div>
-      )}
 
-      <div className="flex flex-col gap-4 w-full max-w-sm pt-4">
-        <div className="flex flex-col sm:flex-row gap-3">
-          <button
-            onClick={onRetry}
-            className="flex-1 flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-black py-4 px-4 rounded-2xl text-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-          >
-            <RestartIcon className="w-6 h-6" />
-            <span>Play Again</span>
-          </button>
-          
-          {mistakes.length > 0 && (
+        {/* Right: Revision Column */}
+        <div className="h-full flex flex-col min-h-0 landscape:max-h-full">
+            {mistakes.length > 0 ? (
+                <div className="flex-1 flex flex-col bg-gray-50/50 p-2 sm:p-4 rounded-[1.5rem] sm:rounded-[2rem] border border-gray-100 shadow-inner min-h-0 overflow-hidden">
+                    <div className="shrink-0 flex justify-between items-center mb-1.5 sm:mb-3 px-1">
+                        <h3 className="text-[8px] sm:text-[9px] font-black text-gray-400 uppercase tracking-[0.2em]">Mistakes ({mistakes.length})</h3>
+                        <button 
+                            onClick={() => setHidePinyin(!hidePinyin)}
+                            className={`text-[7px] sm:text-[8px] font-black uppercase px-2 py-0.5 sm:py-1 rounded-lg transition-all shadow-sm border ${
+                                hidePinyin 
+                                ? 'bg-blue-600 text-white border-blue-600' 
+                                : 'bg-white text-blue-600 border-blue-100'
+                            }`}
+                        >
+                            {hidePinyin ? 'Show Pinyin' : 'Hide Pinyin'}
+                        </button>
+                    </div>
+                    
+                    <ul className="flex-1 overflow-y-auto space-y-1.5 sm:space-y-2 pr-1 custom-scrollbar-thin scroll-smooth">
+                        {mistakes.map((result) => (
+                            <MistakeItem 
+                                key={result.word.id} 
+                                word={result.word} 
+                                userInput={result.userInput} 
+                                hideAllPinyin={hidePinyin}
+                            />
+                        ))}
+                    </ul>
+                </div>
+            ) : (
+                <div className="flex-1 flex flex-col items-center justify-center bg-green-50/30 rounded-[1.5rem] sm:rounded-[2rem] border border-green-100 border-dashed p-4 sm:p-6 text-center">
+                    <span className="text-3xl sm:text-5xl mb-2 sm:mb-4">✨ 🏆 ✨</span>
+                    <h3 className="text-base sm:text-lg font-black text-green-600 uppercase tracking-widest">Perfect Score!</h3>
+                    <p className="text-[8px] sm:text-[10px] text-green-400 font-bold max-w-[180px] mt-1 sm:mt-2">You didn't make any mistakes this time. Keep up the amazing work!</p>
+                </div>
+            )}
+        </div>
+      </div>
+
+      {/* Footer Actions - Fixed */}
+      <div className="shrink-0 mt-3 sm:mt-6 pt-2 sm:pt-4 border-t border-gray-100 landscape:mt-2 landscape:pt-1">
+        <div className="flex flex-col sm:flex-row landscape:flex-row gap-2 sm:gap-3 max-w-2xl mx-auto">
+            <div className="flex-1 grid grid-cols-2 gap-2 sm:gap-3">
+                <button
+                    onClick={onRetry}
+                    className="flex items-center justify-center gap-1.5 sm:gap-2 bg-green-500 hover:bg-green-600 text-white font-black py-2 sm:py-4 px-3 rounded-xl sm:rounded-2xl text-[9px] sm:text-xs shadow-lg transition-all transform active:scale-95 uppercase tracking-widest"
+                >
+                    <RestartIcon className="w-3.5 h-3.5 sm:w-4 h-4" />
+                    <span>Retry</span>
+                </button>
+                
+                <button
+                    onClick={onRetryMistakes}
+                    disabled={mistakes.length === 0}
+                    className="flex items-center justify-center gap-1.5 sm:gap-2 bg-orange-500 hover:bg-orange-600 text-white font-black py-2 sm:py-4 px-3 rounded-xl sm:rounded-2xl text-[9px] sm:text-xs shadow-lg transition-all transform active:scale-95 disabled:opacity-50 disabled:grayscale uppercase tracking-widest"
+                >
+                    <RestartIcon className="w-3.5 h-3.5 sm:w-4 h-4" />
+                    <span>Fix Errors</span>
+                </button>
+            </div>
+
             <button
-              onClick={onRetryMistakes}
-              className="flex-1 flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-black py-4 px-4 rounded-2xl text-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+                onClick={onHome}
+                className="flex-1 flex items-center justify-center gap-1.5 sm:gap-2 bg-gray-700 hover:bg-gray-800 text-white font-black py-2 sm:py-4 px-4 sm:px-6 rounded-xl sm:rounded-2xl text-[9px] sm:text-xs shadow-lg transition-all transform active:scale-95 uppercase tracking-[0.1em] sm:tracking-[0.2em]"
             >
-              <RestartIcon className="w-6 h-6" />
-              <span>Retry Mistakes</span>
+                <HomeIcon className="w-3.5 h-3.5 sm:w-4 h-4" />
+                <span>Home Menu</span>
             </button>
-          )}
         </div>
-
-        <button
-          onClick={onHome}
-          className="w-full flex items-center justify-center gap-2 bg-gray-500 hover:bg-gray-600 text-white font-black py-4 px-6 rounded-2xl text-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-        >
-          <HomeIcon className="w-6 h-6" />
-          <span>Home</span>
-        </button>
       </div>
+
+      <style>{`
+        .custom-scrollbar-thin::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.1); border-radius: 10px; }
+      `}</style>
     </div>
   );
 };

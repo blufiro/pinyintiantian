@@ -44,22 +44,22 @@ const SentenceControls: React.FC<{ sentence: string; targetWord: string }> = ({ 
   };
 
   return (
-    <div className="flex gap-2 mt-2 pl-6">
+    <div className="flex gap-2 mt-1 pl-4">
       <button 
         onClick={handleHear}
         disabled={!!loading}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm disabled:opacity-50"
+        className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm disabled:opacity-50"
       >
-        {loading === 'hear' ? <LoadingSpinner className="w-3 h-3" /> : <SpeakerIcon className="w-3.5 h-3.5" />}
-        {loading === 'hear' ? 'Loading...' : 'Hear'}
+        {loading === 'hear' ? <LoadingSpinner className="w-2.5 h-2.5" /> : <SpeakerIcon className="w-3 h-3" />}
+        {loading === 'hear' ? '...' : 'Hear'}
       </button>
       <button 
         onClick={handleExplain}
         disabled={!!loading}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-purple-50 text-purple-600 hover:bg-purple-600 hover:text-white transition-all shadow-sm disabled:opacity-50"
+        className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-purple-50 text-purple-600 hover:bg-purple-600 hover:text-white transition-all shadow-sm disabled:opacity-50"
       >
-        {loading === 'explain' ? <LoadingSpinner className="w-3 h-3 text-purple-600" /> : <InformationCircleIcon className="w-3.5 h-3.5" />}
-        {loading === 'explain' ? 'Thinking...' : 'Explain'}
+        {loading === 'explain' ? <LoadingSpinner className="w-2.5 h-2.5 text-purple-600" /> : <InformationCircleIcon className="w-3 h-3" />}
+        {loading === 'explain' ? '...' : 'Explain'}
       </button>
     </div>
   );
@@ -92,36 +92,36 @@ const StudyWordCard: React.FC<{
 
   return (
     <div className="bg-white rounded-2xl border border-purple-100 shadow-sm overflow-hidden transition-all duration-300">
-      <div className="p-4 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-4 flex-1 overflow-hidden">
+      <div className="p-3 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3 flex-1 overflow-hidden">
           <button 
             onClick={handleSpeak}
             disabled={isSpeaking}
-            className="p-2 bg-purple-50 text-purple-600 rounded-full hover:bg-purple-100 transition-colors shrink-0 min-w-[40px] flex items-center justify-center"
+            className="p-2 bg-purple-50 text-purple-600 rounded-full hover:bg-purple-100 transition-colors shrink-0 min-w-[32px] flex items-center justify-center"
           >
-            {isSpeaking ? <LoadingSpinner className="w-5 h-5 text-purple-600" /> : <SpeakerIcon className="w-5 h-5" />}
+            {isSpeaking ? <LoadingSpinner className="w-4 h-4 text-purple-600" /> : <SpeakerIcon className="w-4 h-4" />}
           </button>
           
           <div className="flex flex-col min-w-0">
             <div className="flex items-baseline gap-2">
               <span 
                 onClick={() => setShowCharOverride(!showCharOverride)}
-                className={`text-3xl font-bold font-chinese cursor-pointer transition-all ${
-                  hideCharacter && !showCharOverride ? 'bg-gray-200 text-transparent rounded px-2' : 'text-gray-800'
+                className={`text-xl font-bold font-chinese cursor-pointer transition-all ${
+                  hideCharacter && !showCharOverride ? 'bg-gray-200 text-transparent rounded px-1.5' : 'text-gray-800'
                 }`}
               >
                 {word.character}
               </span>
               <span 
                 onClick={() => setShowPinyinOverride(!showPinyinOverride)}
-                className={`font-mono text-sm cursor-pointer transition-all ${
-                  hidePinyin && !showPinyinOverride ? 'bg-purple-100 text-transparent rounded px-2' : 'text-purple-500'
+                className={`font-mono text-[11px] cursor-pointer transition-all ${
+                  hidePinyin && !showPinyinOverride ? 'bg-purple-100 text-transparent rounded px-1.5' : 'text-purple-500'
                 }`}
               >
                 {word.pinyin}
               </span>
             </div>
-            <p className="text-gray-500 text-sm font-medium truncate italic" title={displayMeaning}>
+            <p className="text-gray-500 text-[10px] font-medium truncate italic" title={displayMeaning}>
               {displayMeaning}
             </p>
           </div>
@@ -129,23 +129,23 @@ const StudyWordCard: React.FC<{
 
         <button 
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`p-2 text-gray-400 hover:text-purple-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+          className={`p-1.5 text-gray-300 hover:text-purple-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
         >
-          <ChevronDownIcon className="w-5 h-5" />
+          <ChevronDownIcon className="w-4 h-4" />
         </button>
       </div>
 
       {isExpanded && (
-        <div className="px-4 pb-4 pt-2 bg-purple-50/30 border-t border-purple-50 animate-slide-down">
+        <div className="px-3 pb-3 pt-1.5 bg-purple-50/20 border-t border-purple-50 animate-slide-down">
           {word.definitions && word.definitions.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {word.definitions.map((def, idx) => (
-                <div key={idx} className="flex flex-col space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="flex items-center justify-center w-4 h-4 rounded-full bg-purple-200 text-purple-700 text-[10px] font-black">{idx + 1}</span>
-                    <span className="text-xs font-black text-purple-400 uppercase tracking-widest">{def.meaning}</span>
+                <div key={idx} className="flex flex-col">
+                  <div className="flex items-center gap-1.5">
+                    <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-purple-200 text-purple-700 text-[8px] font-black">{idx + 1}</span>
+                    <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest">{def.meaning}</span>
                   </div>
-                  <p className="text-gray-700 font-chinese text-lg leading-relaxed pl-6">
+                  <p className="text-gray-700 font-chinese text-base leading-tight pl-5">
                     {def.example}
                   </p>
                   <SentenceControls sentence={def.example} targetWord={word.character} />
@@ -153,10 +153,10 @@ const StudyWordCard: React.FC<{
               ))}
             </div>
           ) : (
-            <div className="flex flex-col space-y-2">
-              <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest">Example Sentence</span>
-              <p className="text-gray-700 font-chinese text-lg leading-relaxed">
-                {word.exampleSentence || "Let's use this word in a sentence!"}
+            <div className="flex flex-col space-y-1">
+              <span className="text-[9px] font-black text-purple-400 uppercase tracking-widest">Example</span>
+              <p className="text-gray-700 font-chinese text-base leading-tight">
+                {word.exampleSentence || "Example missing"}
               </p>
               {word.exampleSentence && <SentenceControls sentence={word.exampleSentence} targetWord={word.character} />}
             </div>
@@ -172,16 +172,16 @@ const StudyModeModal: React.FC<StudyModeModalProps> = ({ lesson, onClose, onStar
   const [hideCharacter, setHideCharacter] = useState(false);
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-purple-900/40 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white w-full max-w-xl h-[85vh] rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden border-4 border-white">
-        {/* Sticky Header */}
-        <div className="p-6 pb-4 bg-gradient-to-br from-purple-50 to-white border-b border-purple-100 shrink-0">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h2 className="text-2xl font-black text-purple-600 font-chinese mb-1">{lesson.name}</h2>
-              <p className="text-xs font-bold text-purple-400 uppercase tracking-widest">Study Mode • {lesson.words.length} Words</p>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-purple-900/60 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white w-full max-w-lg h-full max-h-[85vh] rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden border border-white/20">
+        {/* Header - Fixed Height */}
+        <div className="p-4 sm:p-5 bg-gradient-to-br from-purple-50 to-white border-b border-purple-100 shrink-0">
+          <div className="flex justify-between items-start mb-3">
+            <div className="overflow-hidden">
+              <h2 className="text-lg sm:text-xl font-black text-purple-600 font-chinese truncate leading-tight">{lesson.name}</h2>
+              <p className="text-[9px] font-bold text-purple-400 uppercase tracking-widest">Study Mode • {lesson.words.length} Words</p>
             </div>
-            <button onClick={onClose} className="p-2 bg-gray-100 text-gray-500 rounded-full hover:bg-gray-200 transition-colors">
+            <button onClick={onClose} className="p-1.5 bg-gray-100 text-gray-500 rounded-full hover:bg-gray-200 transition-colors shadow-sm ml-4 shrink-0">
               <XMarkIcon className="w-5 h-5" />
             </button>
           </div>
@@ -189,25 +189,25 @@ const StudyModeModal: React.FC<StudyModeModalProps> = ({ lesson, onClose, onStar
           <div className="flex gap-2">
             <button 
               onClick={() => setHidePinyin(!hidePinyin)}
-              className={`flex-1 py-2 px-3 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${
-                hidePinyin ? 'bg-purple-600 text-white shadow-lg' : 'bg-white text-purple-600 border border-purple-200'
+              className={`flex-1 py-2 px-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm ${
+                hidePinyin ? 'bg-purple-600 text-white border-transparent' : 'bg-white text-purple-600 border border-purple-200'
               }`}
             >
-              {hidePinyin ? 'Showing Pinyin...' : 'Hide Pinyin'}
+              {hidePinyin ? 'Show Pinyin' : 'Hide Pinyin'}
             </button>
             <button 
               onClick={() => setHideCharacter(!hideCharacter)}
-              className={`flex-1 py-2 px-3 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all ${
-                hideCharacter ? 'bg-purple-600 text-white shadow-lg' : 'bg-white text-purple-600 border border-purple-200'
+              className={`flex-1 py-2 px-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm ${
+                hideCharacter ? 'bg-purple-600 text-white border-transparent' : 'bg-white text-purple-600 border border-purple-200'
               }`}
             >
-              {hideCharacter ? 'Showing Chinese...' : 'Hide Chinese'}
+              {hideCharacter ? 'Show Character' : 'Hide Character'}
             </button>
           </div>
         </div>
 
-        {/* Word List Container */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50">
+        {/* Word List Container - Scrollable */}
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 bg-gray-50/50 custom-scrollbar">
           {lesson.words.map((word) => (
             <StudyWordCard 
               key={word.id} 
@@ -216,25 +216,25 @@ const StudyModeModal: React.FC<StudyModeModalProps> = ({ lesson, onClose, onStar
               hideCharacter={hideCharacter}
             />
           ))}
-          <div className="py-8 text-center">
-            <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">You've reached the end! 🎉</p>
+          <div className="py-6 text-center">
+            <p className="text-gray-400 text-[10px] font-black uppercase tracking-widest opacity-40">End of List 🎉</p>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="p-6 bg-white border-t border-gray-100 shrink-0 space-y-4">
+        {/* Bottom Bar - Fixed Height */}
+        <div className="p-4 sm:p-5 bg-white border-t border-gray-100 shrink-0 shadow-[0_-4px_12px_rgba(0,0,0,0.02)]">
             <div className="flex flex-col items-center gap-3">
-              <div className="flex items-center gap-2 bg-purple-50 p-1.5 rounded-2xl border border-purple-100">
-                <span className="text-[10px] font-black text-purple-400 px-2 uppercase tracking-widest">Test Length</span>
+              <div className="flex items-center gap-3 bg-purple-50 p-1.5 rounded-2xl border border-purple-100 w-full justify-center">
+                <span className="text-[10px] font-black text-purple-400 px-1 uppercase tracking-widest">Test Size</span>
                 <div className="flex gap-1.5">
                   {[5, 10, 20].map(size => (
                     <button
                       key={size}
                       onClick={() => onSetTestSize(size)}
-                      className={`w-10 h-10 rounded-xl text-sm font-black transition-all ${
+                      className={`w-9 h-9 rounded-xl text-xs font-black transition-all ${
                         testSize === size 
-                        ? 'bg-purple-600 text-white shadow-lg scale-110' 
-                        : 'bg-white text-purple-400 hover:text-purple-600'
+                        ? 'bg-purple-600 text-white shadow-md' 
+                        : 'bg-white text-purple-400 hover:text-purple-600 border border-purple-100'
                       }`}
                     >
                       {size}
@@ -245,9 +245,9 @@ const StudyModeModal: React.FC<StudyModeModalProps> = ({ lesson, onClose, onStar
 
               <button 
                 onClick={onStartTest}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-black py-4 rounded-2xl shadow-xl transition-all active:scale-95 uppercase tracking-widest text-lg"
+                className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-black py-4 rounded-2xl shadow-xl transition-all active:scale-[0.98] uppercase tracking-widest text-sm"
               >
-                I'M READY TO PLAY! 🚀
+                I'M READY! 🚀
               </button>
             </div>
         </div>
