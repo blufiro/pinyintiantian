@@ -28,7 +28,7 @@ const App: React.FC = () => {
   const [lessonToEdit, setLessonToEdit] = useState<Lesson | null>(null);
   
   const [testWords, setTestWords] = useState<Word[]>([]);
-  const [lastTestConfig, setLastTestConfig] = useState<{type: 'lessons', ids: string[]} | {type: 'mistakes'} | null>(null);
+  const [lastTestConfig, setLastTestConfig] = useState<{type: 'lessons', ids: string[]} | {type: 'mistakes'} | {type: 'specific_words'} | null>(null);
 
   const [purchasedBackgroundIds, setPurchasedBackgroundIds] = useLocalStorage<string[]>('purchasedBackgrounds', [defaultBackground.id]);
   const [activeBackgroundId, setActiveBackgroundId] = useLocalStorage<string>('activeBackground', defaultBackground.id);
@@ -156,6 +156,8 @@ const App: React.FC = () => {
             .map(lesson => lesson.name);
     } else if (lastTestConfig?.type === 'mistakes') {
         lessonNames = ["Mistakes Revision"];
+    } else if (lastTestConfig?.type === 'specific_words') {
+        lessonNames = ["Mistakes Retry"];
     }
 
     const newScore: HistoricalScore = {
@@ -175,9 +177,23 @@ const App: React.FC = () => {
     }
     if (lastTestConfig.type === 'lessons') {
         handleTestStart(lastTestConfig.ids);
-    } else {
+    } else if (lastTestConfig.type === 'mistakes') {
         handleStartTopMistakesTest();
+    } else {
+        // For specific words retry, we just restart with the same words
+        setTestWords([...testWords]);
+        setView('test');
     }
+  };
+
+  const handleRetryMistakes = () => {
+    const incorrectWords = lastTestResults.filter(r => !r.correct).map(r => r.word);
+    if (incorrectWords.length === 0) return;
+    
+    // Shuffle the incorrect words for the retry
+    setTestWords([...incorrectWords].sort(() => Math.random() - 0.5));
+    setLastTestConfig({ type: 'specific_words' });
+    setView('test');
   };
 
   const goHome = () => {
@@ -226,7 +242,7 @@ const App: React.FC = () => {
     switch(view) {
         case 'home': return <HomeScreen {...homeProps} />;
         case 'test': return <TestScreen onTestComplete={finishTest} onGoHome={goHome} words={testWords}/>;
-        case 'results': return <ResultsScreen score={score} totalQuestions={lastTestResults.length} results={lastTestResults} onRetry={handleRetry} onHome={goHome} />;
+        case 'results': return <ResultsScreen score={score} totalQuestions={lastTestResults.length} results={lastTestResults} onRetry={handleRetry} onRetryMistakes={handleRetryMistakes} onHome={goHome} />;
         case 'import': return <ImportScreen onGoHome={goHome} lessonToEdit={lessonToEdit} />;
         case 'shop': return <ShopScreen onGoHome={goHome} screenTime={screenTime} backgrounds={allBackgrounds} purchasedIds={purchasedBackgroundIds} activeId={activeBackgroundId} onPurchase={handlePurchaseBackground} onApply={handleApplyBackground} />;
         default: return <HomeScreen {...homeProps} />;

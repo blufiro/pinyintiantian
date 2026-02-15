@@ -11,6 +11,7 @@ interface ResultsScreenProps {
   totalQuestions: number;
   results: TestResult[];
   onRetry: () => void;
+  onRetryMistakes: () => void;
   onHome: () => void;
 }
 
@@ -68,7 +69,7 @@ const MistakeItem: React.FC<{ word: { character: string, pinyin: string, id: str
   );
 };
 
-const ResultsScreen: React.FC<ResultsScreenProps> = ({ score, totalQuestions, results, onRetry, onHome }) => {
+const ResultsScreen: React.FC<ResultsScreenProps> = ({ score, totalQuestions, results, onRetry, onRetryMistakes, onHome }) => {
   const [hidePinyin, setHidePinyin] = useState(false);
   const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
   
@@ -125,17 +126,30 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ score, totalQuestions, re
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm pt-4">
-        <button
-          onClick={onRetry}
-          className="flex-1 flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-black py-4 px-6 rounded-2xl text-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
-        >
-          <RestartIcon className="w-6 h-6" />
-          <span>Try Again</span>
-        </button>
+      <div className="flex flex-col gap-4 w-full max-w-sm pt-4">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={onRetry}
+            className="flex-1 flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-black py-4 px-4 rounded-2xl text-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+          >
+            <RestartIcon className="w-6 h-6" />
+            <span>Play Again</span>
+          </button>
+          
+          {mistakes.length > 0 && (
+            <button
+              onClick={onRetryMistakes}
+              className="flex-1 flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-black py-4 px-4 rounded-2xl text-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+            >
+              <RestartIcon className="w-6 h-6" />
+              <span>Retry Mistakes</span>
+            </button>
+          )}
+        </div>
+
         <button
           onClick={onHome}
-          className="flex-1 flex items-center justify-center gap-2 bg-gray-500 hover:bg-gray-600 text-white font-black py-4 px-6 rounded-2xl text-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+          className="w-full flex items-center justify-center gap-2 bg-gray-500 hover:bg-gray-600 text-white font-black py-4 px-6 rounded-2xl text-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
         >
           <HomeIcon className="w-6 h-6" />
           <span>Home</span>
