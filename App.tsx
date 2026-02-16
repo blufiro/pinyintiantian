@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import HomeScreen from './components/HomeScreen';
 import TestScreen from './components/TestScreen';
@@ -10,6 +9,7 @@ import { TestResult, HistoricalScore, Word, Lesson, Background, EvaluationState 
 import useLocalStorage from './hooks/useLocalStorage';
 import { wordService } from './services/wordService';
 import { backgrounds, defaultBackground } from './data/backgrounds';
+import useDebugCheats from './hooks/useDebugCheats';
 
 type View = 'home' | 'test' | 'results' | 'import' | 'shop';
 
@@ -40,7 +40,7 @@ const App: React.FC = () => {
           
   const activeBackground = allBackgrounds.find(bg => bg.id === activeBackgroundId) || defaultBackground;
 
-  const pressedKeys = useRef<Set<string>>(new Set());
+  const highlightedLessonIdRef = useRef<string | null>(null);
 
   const refreshData = useCallback(() => {
     const allLessons = wordService.getAllLessons();
@@ -55,28 +55,12 @@ const App: React.FC = () => {
     checkStreak();
   }, [refreshData]);
 
-  // Cheat code effect
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      pressedKeys.current.add(e.key.toLowerCase());
-      if (pressedKeys.current.has('q') && pressedKeys.current.has('p')) {
-        setScreenTime(prev => prev + 50);
-        pressedKeys.current.delete('q');
-        pressedKeys.current.delete('p');
-      }
-    };
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      pressedKeys.current.delete(e.key.toLowerCase());
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
-    };
-  }, [setScreenTime]);
+  // Use debug cheats hook
+  useDebugCheats({
+    setScreenTime,
+    highlightedLessonIdRef,
+    onStatusChanged: refreshData
+  });
 
   const checkStreak = () => {
     const today = new Date().toLocaleDateString();
@@ -215,6 +199,10 @@ const App: React.FC = () => {
       }
   };
 
+  const setHighlightedLessonId = (id: string | null) => {
+    highlightedLessonIdRef.current = id;
+  };
+
   const renderContent = () => {
     const homeProps = {
       onStartTestRequest: handleStartTestRequest, 
@@ -233,7 +221,8 @@ const App: React.FC = () => {
       onSetTestSize: setTestSize,
       streak,
       dailyPoints: dailyPointsEarned,
-      dailyGoal: DAILY_GOAL
+      dailyGoal: DAILY_GOAL,
+      setHighlightedLessonId: setHighlightedLessonId
     };
 
     switch(view) {

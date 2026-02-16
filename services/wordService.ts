@@ -417,5 +417,32 @@ export const wordService = {
             stateMap[lesson.id] = wordService.getLessonEvaluationState(lesson.id);
         });
         return stateMap;
+    },
+
+    debugIncrementLessonStatus: (lessonId: string) => {
+        const stats = getFromStorage<Record<string, LessonTestRecord[]>>(LESSON_STATS_KEY, {});
+        const currentState = wordService.getLessonEvaluationState(lessonId);
+        let history: LessonTestRecord[] = stats[lessonId] || [];
+
+        // Cycle through states: not_started -> beginner -> learning -> competent -> expert -> reset
+        if (currentState === 'not_started') {
+            // Move to beginner: 1 test
+            history = [{ timestamp: Date.now(), score: 1, total: 10 }];
+        } else if (currentState === 'beginner') {
+            // Move to learning: 3 tests avg >= 50
+            history = Array(3).fill(null).map(() => ({ timestamp: Date.now(), score: 5, total: 10 }));
+        } else if (currentState === 'learning') {
+            // Move to competent: 5 tests avg >= 80
+            history = Array(5).fill(null).map(() => ({ timestamp: Date.now(), score: 8, total: 10 }));
+        } else if (currentState === 'competent') {
+            // Move to expert: 5 tests avg >= 95
+            history = Array(5).fill(null).map(() => ({ timestamp: Date.now(), score: 10, total: 10 }));
+        } else {
+            // Expert or other: reset
+            history = [];
+        }
+
+        stats[lessonId] = history;
+        saveToStorage(LESSON_STATS_KEY, stats);
     }
 };

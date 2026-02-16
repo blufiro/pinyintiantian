@@ -1,9 +1,7 @@
-
 import React from 'react';
 
 export const LeafIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" enableBackground="new 0 0 64 64" xmlSpace="preserve" fill="#000000" width="24" height="24">
-    {/* FIX: Converted hyphenated attributes to camelCase for React */}
+  <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" enableBackground="new 0 0 64 64" xmlSpace="preserve" fill="currentColor" {...props}>
     <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
     <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"/>
     <g id="SVGRepo_iconCarrier">

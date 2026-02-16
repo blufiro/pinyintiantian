@@ -1,9 +1,7 @@
-
 import React from 'react';
 
 export const FootprintIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg fill="#000000" height="24px" width="24px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 41.16 41.16" xmlSpace="preserve">
-    {/* FIX: Converted hyphenated attributes to camelCase for React */}
+  <svg fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 41.16 41.16" xmlSpace="preserve" {...props}>
     <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
     <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"/>
     <g id="SVGRepo_iconCarrier">

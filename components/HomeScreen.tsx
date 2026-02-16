@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { CoinIcon } from './icons/CoinIcon';
 import { ImportIcon } from './icons/ImportIcon';
@@ -35,6 +34,7 @@ interface HomeScreenProps {
   streak: number;
   dailyPoints: number;
   dailyGoal: number;
+  setHighlightedLessonId?: (id: string | null) => void;
 }
 
 const TABS = [
@@ -62,7 +62,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     onSetTestSize,
     streak,
     dailyPoints,
-    dailyGoal
+    dailyGoal,
+    setHighlightedLessonId
 }) => {
   const [activeTab, setActiveTab] = useState('my');
   const [studyLesson, setStudyLesson] = useState<Lesson | null>(null);
@@ -213,7 +214,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 {lessonsToDisplay.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5">
                     {lessonsToDisplay.map(lesson => (
-                        <div key={lesson.id} className="flex justify-between items-center p-2 bg-white rounded-lg sm:rounded-xl border border-gray-100 shadow-sm hover:border-blue-200 transition-all">
+                        <div 
+                          key={lesson.id} 
+                          className="flex justify-between items-center p-2 bg-white rounded-lg sm:rounded-xl border border-gray-100 shadow-sm hover:border-blue-200 transition-all cursor-default"
+                          onMouseEnter={() => setHighlightedLessonId?.(lesson.id)}
+                          onMouseLeave={() => setHighlightedLessonId?.(null)}
+                        >
                         <div className="flex items-center gap-1.5 sm:gap-2 overflow-hidden flex-1">
                              {renderStatusIcon(lesson.id) || <div className="w-3 h-3 rounded-full border border-dashed border-gray-200" />}
                              <span className="font-bold text-gray-700 truncate text-[11px] sm:text-[13px]">{lesson.name}</span>
