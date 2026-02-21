@@ -16,6 +16,7 @@ const INITIAL_WORDS: Omit<Word, 'id'>[] = [
 
 const LESSONS_KEY = 'lessons';
 const MISTAKES_KEY = 'mistakes'; // Stored as Record<string, number> { wordId: count }
+const CONSECUTIVE_CORRECT_KEY = 'consecutiveCorrect'; // Stored as Record<string, number> { wordId: count }
 const SEEN_WORDS_KEY = 'seenWords';
 const LAST_WORD_ID_KEY = 'lastWordId';
 const LESSON_STATS_KEY = 'lessonStats';
@@ -131,6 +132,7 @@ export const wordService = {
     
     saveTestResults: (results: TestResult[]) => {
         let mistakes = getFromStorage<Record<string, number>>(MISTAKES_KEY, {});
+        let consecutiveCorrect = getFromStorage<Record<string, number>>(CONSECUTIVE_CORRECT_KEY, {});
         let seenWordIds = getFromStorage<string[]>(SEEN_WORDS_KEY, []);
         
         results.forEach(result => {
@@ -141,13 +143,23 @@ export const wordService = {
             }
             
             if (result.correct) {
-                if (mistakes[wordId]) {
+                // Increment consecutive correct count
+                consecutiveCorrect[wordId] = (consecutiveCorrect[wordId] || 0) + 1;
+
+                if (consecutiveCorrect[wordId] >= 2) {
+                    // Remove from mistakes if correct 2 times in a row
+                    delete mistakes[wordId];
+                    delete consecutiveCorrect[wordId];
+                } else if (mistakes[wordId]) {
+                    // Still decrement mistake count if it exists, but don't delete yet unless consecutive reached
                     mistakes[wordId]--;
                     if (mistakes[wordId] <= 0) {
                         delete mistakes[wordId];
                     }
                 }
             } else {
+                // Reset consecutive correct count on mistake
+                consecutiveCorrect[wordId] = 0;
                 mistakes[wordId] = (mistakes[wordId] || 0) + 1;
             }
         });
@@ -165,25 +177,40 @@ export const wordService = {
         }
 
         saveToStorage(MISTAKES_KEY, mistakes);
+        saveToStorage(CONSECUTIVE_CORRECT_KEY, consecutiveCorrect);
         saveToStorage(SEEN_WORDS_KEY, seenWordIds);
     },
 
-    getTopMistakes: (count: number): (Word & { mistakeCount: number })[] => {
-        const allWords = getAllWordsFromLessons(wordService.getAllLessons());
+    getTopMistakes: (count: number): (Word & { mistakeCount: number, lessonName?: string })[] => {
+        const allLessons = wordService.getAllLessons();
+        const allWords = getAllWordsFromLessons(allLessons);
         const mistakes = getFromStorage<Record<string, number>>(MISTAKES_KEY, {});
         
         const sortedMistakeIds = Object.keys(mistakes)
             .sort((a, b) => mistakes[b] - mistakes[a]);
         
         const wordMap = new Map(allWords.map(w => [w.id, w]));
-
+        
+        // Create a map of wordId to lessonName for efficiency
+        const wordToLessonMap = new Map<string, string>();
+        allLessons.forEach(lesson => {
+            lesson.words.forEach(word => {
+                if (!wordToLessonMap.has(word.id)) {
+                    wordToLessonMap.set(word.id, lesson.name);
+                }
+            });
+        });
+        
         return sortedMistakeIds
             .map(id => {
                 const word = wordMap.get(id);
                 if (!word) return null;
-                return { ...word, mistakeCount: mistakes[id] };
+                
+                const lessonName = wordToLessonMap.get(id) || "Unknown";
+
+                return { ...word, mistakeCount: mistakes[id], lessonName };
             })
-            .filter((w): w is Word & { mistakeCount: number } => w !== null)
+            .filter((w): w is Word & { mistakeCount: number, lessonName: string } => w !== null)
             .slice(0, count);
     },
 

@@ -276,10 +276,15 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                   {topMistakes.slice(0, 10).map(word => (
                     <div key={word.id} className="flex flex-col items-center justify-center p-1.5 bg-white rounded-lg border border-rose-50 shadow-sm hover:shadow-md transition-all">
                         <span className="font-black font-chinese text-2xl sm:text-3xl text-gray-800 leading-none mb-0.5">{word.character}</span>
-                        <div className="bg-rose-50 px-1.5 rounded-full flex items-center gap-0.5">
+                        <div className="bg-rose-50 px-1.5 rounded-full flex items-center gap-0.5 mb-1">
                            <span className="font-black text-rose-500 text-[10px] sm:text-xs">{word.mistakeCount}</span>
                            <span className="text-[6px] font-black text-rose-300 uppercase tracking-tighter">x</span>
                         </div>
+                        {word.lessonName && (
+                          <span className="text-[6px] text-gray-400 font-medium truncate w-full text-center px-1" title={word.lessonName}>
+                            {word.lessonName}
+                          </span>
+                        )}
                     </div>
                   ))}
                 </div>
@@ -295,9 +300,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             <div className="flex-1 overflow-y-auto pr-0.5 space-y-0.5 custom-scrollbar-thin">
               {historicalScores.length > 0 ? (
                 historicalScores.slice(0, 5).map((s, i) => (
-                  <div key={i} className="flex justify-between items-center p-1 bg-white rounded-md text-[8px] border border-blue-50 shadow-sm">
-                    <span className="font-bold text-gray-300">{s.date.split('/')[1]}/{s.date.split('/')[0]}</span>
-                    <span className="font-black text-blue-500">{s.score}/{s.total}</span>
+                  <div key={i} className="flex flex-col p-1 bg-white rounded-md border border-blue-50 shadow-sm">
+                    <div className="flex justify-between items-center text-[8px]">
+                      <span className="font-bold text-gray-300">{s.date.split('/')[1]}/{s.date.split('/')[0]}</span>
+                      <span className="font-black text-blue-500">{s.score}/{s.total}</span>
+                    </div>
+                    <div className="text-[7px] text-gray-400 truncate font-medium mt-0.5" title={s.lessonNames.join(', ')}>
+                      {s.lessonNames.join(', ')}
+                    </div>
                   </div>
                 ))
               ) : (
