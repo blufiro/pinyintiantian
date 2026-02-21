@@ -108,7 +108,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             <h1 className="text-lg sm:text-xl font-black text-blue-600 font-chinese leading-none">拼音天天练</h1>
             <p className="text-[8px] uppercase tracking-wider text-gray-300 font-black hidden xs:inline">Pinyin Practice</p>
          </div>
-         <span className="text-[8px] text-gray-300 font-mono opacity-40">v0.9</span>
+         <span className="text-[8px] text-gray-300 font-mono opacity-40">v0.10</span>
       </div>
 
       {/* Top Dash Cards - Compressed Row */}
